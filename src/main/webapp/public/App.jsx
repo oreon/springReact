@@ -5,6 +5,8 @@ import SkyLight from 'react-skylight';
 import Alert from 'react-s-alert';
 import 'react-s-alert/dist/s-alert-default.css';
 import 'react-s-alert/dist/s-alert-css-effects/slide.css';
+var fetch = require('node-fetch');
+
 
 class App extends React.Component {
   constructor(props) {
@@ -23,7 +25,7 @@ class App extends React.Component {
   
   // Load students from database
   loadStudentsFromServer() {
-      fetch('http://localhost:8080/api/students', 
+      fetch('http://localhost:9011/api/students', 
       {credentials: 'same-origin'}) 
       .then((response) => response.json()) 
       .then((responseData) => { 
@@ -52,7 +54,7 @@ class App extends React.Component {
   
   // Create new student
   createStudent(student) {
-      fetch('http://localhost:8080/api/students', 
+      fetch('http://localhost:9011/api/students', 
       {   method: 'POST', 
           credentials: 'same-origin',
           headers: {
