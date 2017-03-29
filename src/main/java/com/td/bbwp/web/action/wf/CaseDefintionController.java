@@ -13,12 +13,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.witchcraft.base.spring.BaseService;
 
 import com.td.bbwp.wf.CaseDefinition;
 
 @RestController
+@RequestMapping("/rest/caseDefintions")
 public class CaseDefintionController extends BaseController<CaseDefinition>{
 	
 	@Autowired
@@ -35,13 +38,13 @@ public class CaseDefintionController extends BaseController<CaseDefinition>{
 	private CaseDefinitionService caseDefinitionService;
 
 	
-	@GetMapping("/rest/caseDefintions")
+	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public List<CaseDefinition> getCaseDefinitions() {
 		return StreamSupport.stream(caseDefinitionService.findAll().spliterator(), false).collect(Collectors.toList());
 		
 	}
 
-	@GetMapping("/rest/caseDefintions/{id}")
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity getCaseDefinition(@PathVariable("id") Long id) {
 
 		CaseDefinition caseDefinition = caseDefinitionService.findOne(id);
@@ -52,35 +55,35 @@ public class CaseDefintionController extends BaseController<CaseDefinition>{
 		return new ResponseEntity(caseDefinition, HttpStatus.OK);
 	}
 
-	@PostMapping("/rest/caseDefintions")
-	public ResponseEntity createCaseDefinition(@RequestBody CaseDefinition caseDefinition) {
-		caseDefinitionService.save(caseDefinition);
-		return new ResponseEntity(caseDefinition, HttpStatus.OK);
-	}
-
-	@DeleteMapping("/rest/caseDefintions/{id}")
-	public ResponseEntity deleteCaseDefinition(@PathVariable Long id) {
-
-//		if (null == caseDefinitionService.delete(id)) {
-//			return new ResponseEntity("No CaseDefinition found for ID " + id, HttpStatus.NOT_FOUND);
-//		}
-		caseDefinitionService.delete(id);
-		return new ResponseEntity(id, HttpStatus.OK);
-
-	}
-
-	@PutMapping("/rest/caseDefintions/{id}")
-	public ResponseEntity updateCaseDefinition(@PathVariable Long id, @RequestBody CaseDefinition caseDefinition) {
-		
-
-//		caseDefinition = caseDefinitionDAO.update(id, caseDefinition);
+//	@PostMapping("/rest/caseDefintions")
+//	public ResponseEntity createCaseDefinition(@RequestBody CaseDefinition caseDefinition) {
+//		caseDefinitionService.save(caseDefinition);
+//		return new ResponseEntity(caseDefinition, HttpStatus.OK);
+//	}
 //
-//		if (null == caseDefinition) {
-//			return new ResponseEntity("No CaseDefinition found for ID " + id, HttpStatus.NOT_FOUND);
-//		}
-
-		return new ResponseEntity(caseDefinitionService.save(caseDefinition), HttpStatus.OK);
-	}
+//	@DeleteMapping("/rest/caseDefintions/{id}")
+//	public ResponseEntity deleteCaseDefinition(@PathVariable Long id) {
+//
+////		if (null == caseDefinitionService.delete(id)) {
+////			return new ResponseEntity("No CaseDefinition found for ID " + id, HttpStatus.NOT_FOUND);
+////		}
+//		caseDefinitionService.delete(id);
+//		return new ResponseEntity(id, HttpStatus.OK);
+//
+//	}
+//
+//	@PutMapping("/rest/caseDefintions/{id}")
+//	public ResponseEntity updateCaseDefinition(@PathVariable Long id, @RequestBody CaseDefinition caseDefinition) {
+//		
+//
+////		caseDefinition = caseDefinitionDAO.update(id, caseDefinition);
+////
+////		if (null == caseDefinition) {
+////			return new ResponseEntity("No CaseDefinition found for ID " + id, HttpStatus.NOT_FOUND);
+////		}
+//
+//		return new ResponseEntity(caseDefinitionService.save(caseDefinition), HttpStatus.OK);
+//	}
 
 	
 
