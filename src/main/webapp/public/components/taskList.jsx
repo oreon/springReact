@@ -16,6 +16,13 @@ export class TaskList extends React.Component {
         if ( props.mine ) {
             this.url = this.url + "/myTasks"
         }
+        
+        this.doPost = this.doPost.bind( this );
+        this.claimTask = this.claimTask.bind( this )
+        
+        this.releaseTask = this.releaseTask.bind( this )
+        this.startTask = this.startTask.bind( this )
+
         // this.name = 'students'
         this.state = {
             records: [],
@@ -74,7 +81,11 @@ export class TaskList extends React.Component {
 
         return (
             <div>
-                <TaskTable records={this.state.records} mine={this.props.mine} />
+                <TaskTable records={this.state.records} mine={this.props.mine}
+                claimTask = {this.claimTask}
+                releaseTask = {this.releaseTask}
+                startTask = {this.startTask}
+                />
 
             </div>
         );
@@ -93,7 +104,12 @@ class TaskTable extends React.Component {
         if ( !this.props.records ) return;
 
         let records = this.props.records.map( task =>
-            <Task key={task.id} task={task} mine={this.props.mine} />
+            <Task key={task.id} task={task} mine={this.props.mine} 
+        claimTask = {this.props.claimTask}
+        releaseTask = {this.props.releaseTask}
+        startTask = {this.props.startTask}
+        
+        />
         );
 
         return (
@@ -120,19 +136,11 @@ class TaskTable extends React.Component {
 class Task extends React.Component {
     constructor( props ) {
         super( props );
-        this.deleteRecord = this.deleteRecord.bind( this );
-        this.editRecord = this.editRecord.bind( this );
-
-        this.doPost = this.doPost.bind( this );
-        this.claimTask = this.claimTask.bind( this )
-        
-        this.releaseTask = this.releaseTask.bind( this )
-        this.startTask = this.startTask.bind( this )
+       // this.deleteRecord = this.deleteRecord.bind( this );
+       // this.editRecord = this.editRecord.bind( this );
 
         this.toLink = "/entities/task/" + this.props.task.id
     }
-
-
 
 
     render() {
@@ -152,7 +160,7 @@ class Task extends React.Component {
                         <p>
                         <button className="btn btn-danger btn-xs" onClick={this.props.releaseTask}>Release</button>
                             {this.props.statusId === "Reserved" &&
-                            < button className="btn btn-primary btn-xs" onClick={this.props.startTask}>Start</button>
+                            < button className="btn btn-primary btn-xs" onClick={this.props.rstartTask}>Start</button>
                             }
                         </p>
                     }
