@@ -2,13 +2,17 @@ import React from 'react';
 import SkyLight from 'react-skylight';
 import Alert from 'react-s-alert';
 var fetch = require('node-fetch');
-import { Link, NavLink, Switch, Redirect} from 'react-router-dom';
-//import { browserHistory } from 'react-router';
+import {Link, NavLink, Switch, Redirect} from 'react-router-dom';
+import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
 
-const URL = "http://localhost:9033/api/";
+
 
 import Form from "react-jsonschema-form";
-import BaseComponent from '../commons/BaseComponent.jsx'
+import {BaseComponent, BaseEditComponent} from '../commons/BaseComponent.jsx'
+import Griddle, {plugins} from 'griddle-react';
+import {SimpleList} from '../commons/SimpleList.jsx'
+
+const log = (type) => console.log.bind(console, type);
 
 const studentSchema = {
     title: "Todo",
@@ -18,150 +22,72 @@ const studentSchema = {
         firstname: {type: "string", title: "First Name", default: "A new task"},
         lastname: {type: "string", title: "Last", default: "A new task"},
         email: {type: "string", title: "Email"}
-
-        //done: {type: "boolean", title: "Done?", default: false}
     }
 };
 
-const log = (type) => console.log.bind(console, type);
+export const studentHeaders = [
 
-// render((
-//
-// ), document.getElementById("app"));
+    {property: "firstname", title: "first Name"},
+    {property: "lastname", title: "Last Name"},
+    {property: "email", title: "email"},
+    {property: "", title: "Edit"}
+
+]
 
 
-export  class Students extends BaseComponent {
+export class StudentList extends BaseComponent {
 
     constructor(props) {
         super(props);
-        this.url = URL + 'students';
+        this.url = this.URL + 'students';
         this.name = 'students'
+        this.editLink = "/entities/students/edit/"
     }
 
-    componentDidMount() {
-        this.loadRecordsFromServer();
+    renderExtra(record) {
+        return null
+    }
+    
+    getEntityName() { return  'students' }
+
+
+
+    handleRowSelection(selectedRows) {
+        this.props.push(<Link className="btn btn-default btn-xs" to={this.toLink}>Edit</Link>)
+        console.log('selectedRows: ' + selectedRows);
     }
 
-    // Create new student
+
     render() {
+        let records = this.props.nested ? this.props.records : this.state.records
+
+        if (!records)
+            return (<p>Loading...</p>)
 
         return (
             <div>
-                <StudentTable deleteRecord={this.deleteRecord} records={this.state.records}/>
-                <StudentForm createRecord={this.createRecord}/>
-                <Alert stack={true} timeout={2000}/>
+                <SimpleList headers={studentHeaders} editLink={this.editLink}
+                            renderExtra={this.renderExtra}
+                            records={ records } nested={this.props.nested}
+                            container={this.props.container} uneditable={this.props.uneditable}
+                            containerId={this.props.containerId}
+                            prev={this.props.prev}
+                />
             </div>
         );
     }
 }
 
-class StudentTable extends React.Component {
-    constructor(props) {
-        super(props);
-        this.toLink = "/entities/students/edit/"
-    }
-
-    render() {
-        let records = this.props.records.map(student =>
-            <Student key={student._links.self.href} student={student} deleteRecord={this.props.deleteRecord}/>
-        );
-
-        return (
-
-            <div>
-                <Link className="btn btn-default btn-xs" to={this.toLink}>Edit</Link>
-                <table className="table table-striped">
-                    <thead>
-                    <tr>
-                        <th>Firstname</th>
-                        <th>Lastname</th>
-                        <th>Email</th>
-                        <th></th>
-                        <th></th>
-                    </tr>
-                    </thead>
-                    <tbody>{records}</tbody>
-                </table>
-            </div>);
-    }
-}
-
-class Student extends React.Component {
-    constructor(props) {
-        super(props);
-        this.deleteRecord = this.deleteRecord.bind(this);
-        this.editRecord = this.editRecord.bind(this);
-        this.toLink = "/entities/students/edit/" + props.student.id
-    }
-
-    deleteRecord() {
-        this.props.deleteRecord(this.props.student);
-    }
-
-    editRecord() {
-        this.props.editRecord(this.props.student);
-    }
-
-    render() {
-        console.log(this.props.student)
-        return (
-            <tr>
-                <td>{this.props.student.firstname}</td>
-                <td>{this.props.student.lastname}</td>
-                <td>{this.props.student.email}</td>
-                <td>
-                    <Link className="btn btn-default btn-xs" to={this.toLink}>Edit</Link>
-                </td>
-                <td>
-                    <button className="btn btn-danger btn-xs" onClick={this.deleteRecord}>Delete</button>
-                </td>
-            </tr>
-        );
-    }
-}
-
-export class EditStudent extends React.Component {
-
-    fetchSingleRecord(id) {
-        let url = this.url + "/" + id
-        console.log("Fetiching " + url)
-        fetch(this.url + "/" + id,
-            {credentials: 'same-origin'})
-            .then((response) => response.json())
-            .then((responseData) => {
-                this.setState({
-                    entity: responseData
-                });
-            });
-    }
-
-    editRecord(record) {
-        let url = record.id ? this.url + "/" + record.id : this.url;
-        let restMethod = record.id ? 'PUT' : 'POST';
-        fetch(url,
-            {
-                method: restMethod,
-                credentials: 'same-origin',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(record)
-            })
-            .then(
-                //res => this.loadRecordsFromServer()
-
-            )
-            .catch(err => console.error(err))
-    }
+export class EditStudent extends BaseEditComponent {
 
     componentDidMount() {
-        if(this.props.match.params.id)
+        if (this.props.match.params.id)
             this.fetchSingleRecord(this.props.match.params.id);
     }
 
     constructor(props) {
         super(props);
-        this.state = {entity: {} };
+        this.state = {entity: {}};
         this.url = URL + 'students';
         this.onSubmit = this.onSubmit.bind(this);
         //this.handleChange = this.handleChange.bind(this);
@@ -170,9 +96,6 @@ export class EditStudent extends React.Component {
     onSubmit(formData) {
         this.editRecord(formData)
         this.props.history.push('/entities/students')
-        //var newRecord = formData
-        //this.props.editRecord(formData);
-        //this.refs.simpleDialog.hide();
     }
 
     render() {
@@ -232,7 +155,7 @@ class StudentForm extends React.Component {
                 <SkyLight hideOnOverlayClicked ref="simpleDialog">
 
                     <Form schema={studentSchema}
-                          onChange={log("changed")}
+                          //onChange={log("changed")}
                           onSubmit={({formData}) => this.onSubmit(formData) }
                           onError={log("errors")}/>
 
@@ -241,38 +164,80 @@ class StudentForm extends React.Component {
         )
     }
 
-    // render() {
-    //     return (
-    //         <div>
-    //             <SkyLight hideOnOverlayClicked ref="simpleDialog">
-    //                 <div className="panel panel-default">
-    //                     <div className="panel-heading">Create student</div>
-    //                     <div className="panel-body">
-    //                         <form className="form">
-    //                             <div className="col-md-4">
-    //                                 <input type="text" placeholder="Firstname" className="form-control" name="firstname"
-    //                                        onChange={this.handleChange}/>
-    //                             </div>
-    //                             <div className="col-md-4">
-    //                                 <input type="text" placeholder="Lastname" className="form-control" name="lastname"
-    //                                        onChange={this.handleChange}/>
-    //                             </div>
-    //                             <div className="col-md-4">
-    //                                 <input type="text" placeholder="Email" className="form-control" name="email"
-    //                                        onChange={this.handleChange}/>
-    //                             </div>
-    //                             <div className="col-md-2">
-    //                                 <button className="btn btn-primary" onClick={this.handleSubmit}>Save</button>
-    //                             </div>
-    //                         </form>
-    //                     </div>
-    //                 </div>
-    //             </SkyLight>
-    //             <div className="col-md-2">
-    //                 <button className="btn btn-primary" onClick={() => this.refs.simpleDialog.show()}>New student
-    //                 </button>
-    //             </div>
-    //         </div>
-    //     );
-    // }
+
 }
+
+
+
+
+let headers = ["firstName", "lastName", "email"]
+
+class StudentTable extends React.Component {
+    constructor(props) {
+        super(props);
+        this.toLink = "/entities/students/edit/"
+    }
+
+    render() {
+        let records = this.props.records.map(student =>
+            <Student key={student._links.self.href} student={student} deleteRecord={this.props.deleteRecord}/>
+        );
+
+        let titles = headers.map(x => `<th> ${x}  </th>`)
+
+        return (
+
+            <div>
+                <Link className="btn btn-primary" to={this.toLink}>New Student</Link>
+                <table className="table table-striped">
+                    <thead>
+                    <tr>headers.map( (x,i) =>
+                        <th key={x}>{i} </th>
+                        )
+
+                        <th></th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>{records}</tbody>
+                </table>
+            </div>);
+    }
+}
+
+class Student extends React.Component {
+    constructor(props) {
+        super(props);
+        this.deleteRecord = this.deleteRecord.bind(this);
+        this.editRecord = this.editRecord.bind(this);
+        this.toLink = "/entities/students/edit/" + props.student.id
+    }
+
+    deleteRecord() {
+        this.props.deleteRecord(this.props.student);
+    }
+
+    editRecord() {
+        this.props.editRecord(this.props.student);
+    }
+
+    render() {
+
+        let rowVals = headers.map(x => `<td> ${this.props.student[x]} </td>`)
+
+        //console.log(this.props.student)
+        return (
+            <tr>
+                {rowVals}
+                <td>
+                    <Link className="btn btn-default btn-xs" to={this.toLink}>Edit</Link>
+                </td>
+                <td>
+                    <button className="btn btn-danger btn-xs" onClick={this.deleteRecord}>Delete</button>
+                </td>
+            </tr>
+        );
+    }
+}
+
+

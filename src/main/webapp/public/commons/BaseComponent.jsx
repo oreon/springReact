@@ -1,11 +1,18 @@
 import React from 'react'
 
-export default class BaseComponent extends React.Component {
+export const URL = "http://localhost:9033/api/";
+
+export  class BaseComponent extends React.Component {
+
+    componentDidMount() {
+        this.loadRecordsFromServer();
+    }
 
     constructor(props) {
         super(props);
         this.deleteRecord = this.deleteRecord.bind(this);
         this.createRecord = this.createRecord.bind(this);
+        this.url = URL + this.getEntityName()
 
         this.state = {
             records: [],
@@ -13,7 +20,7 @@ export default class BaseComponent extends React.Component {
     }
 
     createRecord(record) {
-        fetch(this.url,
+        fetch(this.url ,
             {
                 method: 'POST',
                 credentials: 'same-origin',
@@ -60,3 +67,46 @@ export default class BaseComponent extends React.Component {
     }
 
 }
+
+export class BaseEditComponent extends React.Component{
+    
+   
+    fetchSingleRecord(id) {
+        let url = URL  + this.entityName + "/" + id
+        
+        console.log("Fetching " + url)
+        fetch(url ,
+            {credentials: 'same-origin'})
+            .then((response) => response.json())
+            .then((responseData) => {
+                this.setState({
+                    entity: responseData
+                }); 
+            })
+            
+            //.error(e => console.log(e))
+    }
+
+    editRecord(record) {
+        let myurl = URL  + this.entityName + "/" + (record.id ? record.id : '');
+        console.log(myurl)
+        
+        let restMethod = record.id ? 'PUT' : 'POST';
+        fetch(myurl,
+            {
+                method: restMethod,
+                credentials: 'same-origin',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(record)
+            })
+            .then(
+                //res => this.loadRecordsFromServer()
+
+            )
+            .catch(err => console.error(err))
+    }
+}
+
+

@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<entity-mappings xmlns="http://java.sun.com/xml/ns/persistence/orm"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm http://java.sun.com/xml/ns/persistence/orm_1_0.xsd"
+	version="1.0">
+	<description></description>
+	
+	
+	<!--  Employee  JPA Configurations -->
+	<entity class="com.td.bbwp.commerce.Employee" name="Employee">
+		<table name="EMPLOYEE"  >
+				
+		
+		  
+		
+		
+		
+		</table>
+ 	
+ 	
+	
+
+	
+
+	
+
+	
+
+	</entity>
+
+	<!--  Department  JPA Configurations -->
+	<entity class="com.td.bbwp.commerce.Department" name="Department">
+		<table name="s_department"  >
+				
+		
+		  
+		
+		
+		
+		</table>
+ 	
+ 	
+	
+
+	
+	<named-query name="department.findByUnqName">
+		<query>
+			<![CDATA[
+			select u from Department u where u.name = ?1
+			]]>
+		</query>
+	</named-query>
+	
+
+	</entity>
+
+	<!--  Customer  JPA Configurations -->
+	<entity class="com.td.bbwp.commerce.Customer" name="Customer">
+		<table name="CUSTOMER"  >
+				
+		
+		  
+		
+		
+		
+		</table>
+ 	
+ 	
+	
+
+	
+
+	</entity>
+
+	<!--  CustomerOrder  JPA Configurations -->
+	<entity class="com.td.bbwp.commerce.CustomerOrder" name="CustomerOrder">
+		<table name="CUSTOMER_ORDER"  >
+				
+		
+		  
+		
+		
+		
+		</table>
+ 	
+ 	
+	
+
+	
+
+	
+
+	
+
+	
+
+	</entity>
+
+	<!--  Product  JPA Configurations -->
+	<entity class="com.td.bbwp.commerce.Product" name="Product">
+		<table name="PRODUCT"  >
+				
+		
+		  
+		
+		
+		
+		</table>
+ 	
+ 	
+	
+
+	</entity>
+
+	<!--  OrderItem  JPA Configurations -->
+	<entity class="com.td.bbwp.commerce.OrderItem" name="OrderItem">
+		<table name="ORDER_ITEM"  >
+				
+		
+		  
+		
+		
+		
+		</table>
+ 	
+ 	
+	
+
+	
+
+	
+
+	</entity>
+
+	<!--  PaymentMethod  JPA Configurations -->
+	<entity class="com.td.bbwp.commerce.PaymentMethod" name="PaymentMethod">
+		<table name="PAYMENT_METHOD"  >
+				
+		
+		  
+		
+		
+		
+		</table>
+ 	
+ 	
+	
+
+	</entity>
+
+	<!--  CreditCard  JPA Configurations -->
+	<entity class="com.td.bbwp.commerce.CreditCard" name="CreditCard">
+		<table name="CREDIT_CARD"  >
+				
+		
+		  
+		
+		
+		
+		</table>
+ 	
+ 	
+	
+
+	
+
+	</entity>
+
+	<!--  PayPal  JPA Configurations -->
+	<entity class="com.td.bbwp.commerce.PayPal" name="PayPal">
+		<table name="PAY_PAL"  >
+				
+		
+		  
+		
+		
+		
+		</table>
+ 	
+ 	
+	
+
+	</entity>
+
+	<!--  AppUser  JPA Configurations -->
+	<entity class="com.td.bbwp.users.AppUser" name="AppUser">
+		<table name="APP_USER"  >
+				
+		
+		  
+		
+		
+		
+		</table>
+ 	
+ 	
+	
+	<named-query name="appUser.findByUnqUserName">
+		<query>
+			<![CDATA[
+			select u from AppUser u where u.userName = ?1
+			]]>
+		</query>
+	</named-query>
+	
+
+	
+
+	
+
+	
+
+	</entity>
+
+	<!--  AppRole  JPA Configurations -->
+	<entity class="com.td.bbwp.users.AppRole" name="AppRole">
+		<table name="APP_ROLE"  >
+				
+		
+		  
+		
+		
+		
+		</table>
+ 	
+ 	
+	
+	<named-query name="appRole.findByUnqName">
+		<query>
+			<![CDATA[
+			select u from AppRole u where u.name = ?1
+			]]>
+		</query>
+	</named-query>
+	
+
+	
+
+	</entity>
+
+	<!--  CaseDefinition  JPA Configurations -->
+	<entity class="com.td.bbwp.wf.CaseDefinition" name="CaseDefinition">
+		<table name="CASE_DEFINITION"  >
+				
+		
+		  
+		
+		
+		
+		</table>
+ 	
+ 	
+	
+
+	
+
+	</entity>
+
+	<!--  TaskDefinition  JPA Configurations -->
+	<entity class="com.td.bbwp.wf.TaskDefinition" name="TaskDefinition">
+		<table name="TASK_DEFINITION"  >
+				
+		
+		  
+		
+		
+		
+		</table>
+ 	
+ 	
+	
+
+	
+
+	
+
+	</entity>
+
+	<!--  Field  JPA Configurations -->
+	<entity class="com.td.bbwp.wf.Field" name="Field">
+		<table name="FIELD"  >
+				
+		
+		  
+		
+		
+		
+		</table>
+ 	
+ 	
+	
+
+	
+
+	
+
+	</entity>
+
+	
+	
+</entity-mappings>
+	

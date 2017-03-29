@@ -1,0 +1,334 @@
+    
+	
+{
+ "model":"com.td.bbwp.commerce.Employee"
+ "pk": 1,
+ "fields": {
+  
+
+	
+	
+	"gender": 1 ,
+
+
+	
+	"dob":dateFormat.parse("2017.04.02 11:13:09 EDT"),
+
+
+	
+	"department":1,
+
+
+	
+	"firstName":"firstName-1490386454956-26795",
+
+
+	
+	"lastName":"lastName-1490386454956-1112",
+
+
+	
+	"code":"code-1490386454956-27975",
+
+	
+  address:{
+	
+
+	
+	
+	"street":"street-1490386454957-45816",
+
+
+	
+	"city":"city-1490386454957-15653",
+
+
+	
+	"province":"province-1490386454957-41788",
+
+		
+
+  }		
+		
+
+ }
+}
+
+{
+ "model":"com.td.bbwp.commerce.Department"
+ "pk": 1,
+ "fields": {
+  
+
+	
+	
+	"name":"name-1490386454957-73121",
+
+		
+
+ }
+}
+
+{
+ "model":"com.td.bbwp.commerce.Customer"
+ "pk": 1,
+ "fields": {
+  
+
+	
+	
+	"gender": 1 ,
+
+
+	
+	"dob":dateFormat.parse("2017.04.13 19:08:11 EDT"),
+
+
+	
+	"firstName":"firstName-1490386454958-57708",
+
+
+	
+	"lastName":"lastName-1490386454958-62598",
+
+	
+  address:{
+	
+
+	
+	
+	"street":"street-1490386454958-92446",
+
+
+	
+	"city":"city-1490386454958-8578",
+
+
+	
+	"province":"province-1490386454958-27348",
+
+		
+
+  }		
+		
+
+ }
+}
+
+{
+ "model":"com.td.bbwp.commerce.CustomerOrder"
+ "pk": 1,
+ "fields": {
+  
+
+	
+	
+	"notes":"notes-1490386454958-7790",
+
+
+	
+	"customer":1,
+
+
+	
+	"shipDate":dateFormat.parse("2017.04.18 05:57:02 EDT"),
+
+
+	
+	"paymentMethod":1,
+
+		
+
+ }
+}
+
+{
+ "model":"com.td.bbwp.commerce.Product"
+ "pk": 1,
+ "fields": {
+  
+
+	
+	
+	"name":"name-1490386454959-70908",
+
+		
+
+ }
+}
+
+{
+ "model":"com.td.bbwp.commerce.OrderItem"
+ "pk": 1,
+ "fields": {
+  
+
+	
+	
+	"qty":47454,
+
+
+	
+	"product":1,
+
+
+	
+	"customerOrder":1,
+
+		
+
+ }
+}
+
+{
+ "model":"com.td.bbwp.commerce.PaymentMethod"
+ "pk": 1,
+ "fields": {
+  
+
+	
+	
+	"accountAddress":"accountAddress-1490386454960-17601",
+
+		
+
+ }
+}
+
+{
+ "model":"com.td.bbwp.commerce.CreditCard"
+ "pk": 1,
+ "fields": {
+  
+
+	
+	
+	"accountAddress":"accountAddress-1490386454960-208",
+
+
+	
+	"ccNumber":"ccNumber-1490386454960-11921",
+
+
+	
+	"expiry":dateFormat.parse("2017.03.18 19:46:29 EDT"),
+
+		
+
+ }
+}
+
+{
+ "model":"com.td.bbwp.commerce.PayPal"
+ "pk": 1,
+ "fields": {
+  
+
+	
+	
+	"accountAddress":"accountAddress-1490386454961-27619",
+
+
+	
+	"paypalAccountNumber":"paypalAccountNumber-1490386454961-48257",
+
+		
+
+ }
+}
+
+{
+ "model":"com.td.bbwp.users.AppUser"
+ "pk": 1,
+ "fields": {
+  
+
+	
+	
+	"userName":"userName-1490386454961-44456",
+
+
+	
+	"password":"password-1490386454961-93156",
+
+
+	
+	"enabled":true,
+
+		
+
+ }
+}
+
+{
+ "model":"com.td.bbwp.users.AppRole"
+ "pk": 1,
+ "fields": {
+  
+
+	
+	
+	"name":"name-1490386454962-14744",
+
+		
+
+ }
+}
+
+{
+ "model":"com.td.bbwp.wf.CaseDefinition"
+ "pk": 1,
+ "fields": {
+  
+
+	
+	
+	"name":"name-1490386454963-75622",
+
+		
+
+ }
+}
+
+{
+ "model":"com.td.bbwp.wf.TaskDefinition"
+ "pk": 1,
+ "fields": {
+  
+
+	
+	
+	"name":"name-1490386454963-4119",
+
+
+	
+	"caseDefinition":1,
+
+		
+
+ }
+}
+
+{
+ "model":"com.td.bbwp.wf.Field"
+ "pk": 1,
+ "fields": {
+  
+
+	
+	
+	"name":"name-1490386454963-10555",
+
+
+	
+	"type":"type-1490386454963-84320",
+
+
+	
+	"taskDefinition":1,
+
+		
+
+ }
+}
+
