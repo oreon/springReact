@@ -146,13 +146,13 @@ class Task extends React.Component {
                 <td>{this.props.task.statusId}</td>
                 <td>
                     {!this.props.mine &&
-                        <button className="btn btn-danger btn-xs" onClick={this.claimTask}>Claim</button>
+                        <button className="btn btn-danger btn-xs" onClick={this.props.claimTask}>Claim</button>
                     }
                     {this.props.mine &&
                         <p>
-                        <button className="btn btn-danger btn-xs" onClick={this.releaseTask}>Release</button>
+                        <button className="btn btn-danger btn-xs" onClick={this.props.releaseTask}>Release</button>
                             {this.props.statusId === "Reserved" &&
-                            < button className="btn btn-primary btn-xs" onClick={this.startTask}>Start</button>
+                            < button className="btn btn-primary btn-xs" onClick={this.props.startTask}>Start</button>
                             }
                         </p>
                     }
