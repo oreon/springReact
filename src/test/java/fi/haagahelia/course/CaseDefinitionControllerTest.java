@@ -1,6 +1,5 @@
 package fi.haagahelia.course;
 
-
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -30,15 +29,14 @@ import org.springframework.web.context.WebApplicationContext;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.td.bbwp.MainApp;
+import com.td.bbwp.web.action.wf.CaseDefinitionService;
 import com.td.bbwp.wf.CaseDefinition;
-
 
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.*;
-
 
 /**
  * Created by jsingh on 2017-02-12.
@@ -49,97 +47,91 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.*;
 @Transactional
 public class CaseDefinitionControllerTest {
 
-    private MockMvc mockMvc;
-    ObjectMapper ojbectMapper = new ObjectMapper();
-    private HttpMessageConverter mappingJackson2HttpMessageConverter;
+	private MockMvc mockMvc;
+	ObjectMapper ojbectMapper = new ObjectMapper();
+	private HttpMessageConverter mappingJackson2HttpMessageConverter;
 
-    
-    @Autowired
-    void setConverters(HttpMessageConverter<?>[] converters) {
+	@Autowired
+	CaseDefinitionService caseDefinitionService;
 
-        this.mappingJackson2HttpMessageConverter = Arrays.asList(converters).stream()
-            .filter(hmc -> hmc instanceof MappingJackson2HttpMessageConverter)
-            .findAny()
-            .orElse(null);
+	@Autowired
+	void setConverters(HttpMessageConverter<?>[] converters) {
 
-        assertNotNull("the JSON message converter must not be null",
-                this.mappingJackson2HttpMessageConverter);
-    }
+		this.mappingJackson2HttpMessageConverter = Arrays.asList(converters).stream()
+				.filter(hmc -> hmc instanceof MappingJackson2HttpMessageConverter).findAny().orElse(null);
 
-    
-    protected String json(Object o) throws IOException {
-        MockHttpOutputMessage mockHttpOutputMessage = new MockHttpOutputMessage();
-        this.mappingJackson2HttpMessageConverter.write(
-                o, MediaType.APPLICATION_JSON, mockHttpOutputMessage);
-        return mockHttpOutputMessage.getBodyAsString();
-    }
+		assertNotNull("the JSON message converter must not be null", this.mappingJackson2HttpMessageConverter);
+	}
 
+	protected String json(Object o) throws IOException {
+		MockHttpOutputMessage mockHttpOutputMessage = new MockHttpOutputMessage();
+		this.mappingJackson2HttpMessageConverter.write(o, MediaType.APPLICATION_JSON, mockHttpOutputMessage);
+		return mockHttpOutputMessage.getBodyAsString();
+	}
 
-    @Autowired
-    private WebApplicationContext webApplicationContext;
+	@Autowired
+	private WebApplicationContext webApplicationContext;
 
-    private MediaType contentType = new MediaType(MediaType.APPLICATION_JSON.getType(),
-            MediaType.APPLICATION_JSON.getSubtype(), Charset.forName("utf8"));
+	private MediaType contentType = new MediaType(MediaType.APPLICATION_JSON.getType(),
+			MediaType.APPLICATION_JSON.getSubtype(), Charset.forName("utf8"));
 
-    @Before
-    public void setup() throws Exception {
-        this.mockMvc = webAppContextSetup(webApplicationContext)
-                .apply(springSecurity())
-                .build();
-    }
+	@Before
+	public void setup() throws Exception {
+		this.mockMvc = webAppContextSetup(webApplicationContext).apply(springSecurity()).build();
+	}
 
-    @Test
-    @WithUserDetails("admin")
-    public void testReadCaseDefintionById() throws Exception {
-        mockMvc.perform(get("/rest/caseDefinitions/1"))
-                .andExpect(status().isOk())
-                //.andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-                .andExpect(jsonPath("$.name").value("aam_lending"));
-    }
-    
-//    @Test
-//    @WithUserDetails("admin2")
-//    public void testReadCaseDefintionByIdNotAllowed() throws Exception {
-//        mockMvc.perform(get("/rest/caseDefinitions/1"))
-//                .andExpect(status().isMethodNotAllowed());
-//    }
-    
-    @Test
-    @WithUserDetails("admin")
-    public void testReadCaseDefintionByIdNF() throws Exception {
-        mockMvc.perform(get("/rest/caseDefinitions/6"))
-                .andExpect(status().isNotFound());
-    }
-    
-    @Test
-    @WithUserDetails("admin")
-    public void testCreationOfANewProjectSucceeds() throws Exception {
-        CaseDefinition caseDefinition = new CaseDefinition();
-        caseDefinition.setName("MyName");
-        
-        this.mockMvc.perform(post("/rest/caseDefinitions")
-                .contentType(contentType)
-                .content(json(caseDefinition)))
-                .andExpect(status().isCreated());
-       
-    }
-    
-    //@Test
-    //@WithUserDetails("admin")
-    public void testCreationOfANewProjectNA() throws Exception {
-        CaseDefinition caseDefinition = new CaseDefinition();
-        caseDefinition.setName("MyName");
-  
-        mockMvc.perform(
-        		post("/rest/caseDefinitions/")
-                        .accept(MediaType.APPLICATION_JSON)
-                     //   .contentType(MediaType.APPLICATION_JSON)
-                        .content(ojbectMapper.writeValueAsString(caseDefinition)))
-                .andExpect(status().isMethodNotAllowed());
-    }
+	@Test
+	@WithUserDetails("admin")
+	public void testReadCaseDefintionById() throws Exception {
+		mockMvc.perform(get("/rest/caseDefinitions/1")).andExpect(status().isOk())
+				// .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+				.andExpect(jsonPath("$.name").value("aam_lending"));
+	}
 
-    
-    
-    
-    
+	@Test
+	@WithUserDetails("krisv")
+	public void testDeleteCaseDefintionByIdNotAllowed() throws Exception {
+		mockMvc.perform(delete("/rest/caseDefinitions/1")).andExpect(status().isMethodNotAllowed());
+	}
+
+	@Test
+	@WithUserDetails("admin")
+	public void testReadCaseDefintionByIdNF() throws Exception {
+		mockMvc.perform(get("/rest/caseDefinitions/6")).andExpect(status().isNotFound());
+	}
+
+	@Test
+	@WithUserDetails("admin")
+	public void testCreationOfCaseDefintion() throws Exception {
+		CaseDefinition caseDefinition = new CaseDefinition();
+		caseDefinition.setName("MyName");
+
+		this.mockMvc.perform(post("/rest/caseDefinitions").contentType(contentType).content(json(caseDefinition)))
+				.andExpect(status().isCreated());
+
+	}
+
+	@Test
+	@WithUserDetails("admin")
+	public void testEditOfCaseDefintion() throws Exception {
+
+		CaseDefinition caseDef = caseDefinitionService.findOne(1L).map(x -> x)
+				.orElseThrow(() -> new RuntimeException("Record not found"));
+
+		this.mockMvc.perform(put("/rest/caseDefinitions/1").contentType(contentType).content(json(caseDef)))
+				.andExpect(status().isOk());
+
+	}
+
+	// @Test
+	// @WithUserDetails("admin")
+	public void testCreationOfANewProjectNA() throws Exception {
+		CaseDefinition caseDefinition = new CaseDefinition();
+		caseDefinition.setName("MyName");
+
+		mockMvc.perform(post("/rest/caseDefinitions/").accept(MediaType.APPLICATION_JSON)
+				// .contentType(MediaType.APPLICATION_JSON)
+				.content(ojbectMapper.writeValueAsString(caseDefinition))).andExpect(status().isMethodNotAllowed());
+	}
+
 }
