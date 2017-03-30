@@ -267,7 +267,7 @@ PUT/PATCH CaseDefinitions/<<CaseDefinition>> , Edit existing CaseDefinition,
 POST  , Create new CaseDefinition, 
 DELETE CaseDefinitions/id  , Delete by id, 
 
-findByName,    Find CaseDefinitions containing  name   , 
+findByName,    Return unique CaseDefinition for  given name    , 
 
 
 
@@ -305,6 +305,7 @@ GET caseInstances/id,   Find a  CaseInstance by id,
   caseDefinition ,   CaseDefinition   , Case Definition
   taskInstances ,   TaskInstance    Array , Task Instances
   processInstanceId ,   long   , Process Instance Id
+  name ,  String   , Name
 
 dateCreated,DateTime, Timestamp of creation
 createdBy, String, acfid of the user who created the record
@@ -318,6 +319,9 @@ DELETE CaseInstances/id  , Delete by id,
 
 
 
+findByProcessInstanceId,    Return unique CaseInstance for  given processInstanceId    , 
+
+findByName,    Find CaseInstances containing  name   , 
 
 
 

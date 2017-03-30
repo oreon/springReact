@@ -48,9 +48,17 @@ public abstract class CaseInstanceBase extends BaseEntity {
 
 	;
 
-	@Column(name = "PROCESS_INSTANCE_ID", unique = false)
+	//@Unique(entityName = "com.td.bbwp.wf.CaseInstance", fieldName = "PROCESS_INSTANCE_ID")
+
+	@Column(name = "PROCESS_INSTANCE_ID", unique = true)
 
 	protected Long processInstanceId
+
+	;
+
+	@Column(name = "NAME", unique = false)
+
+	protected String name
 
 	;
 
@@ -103,11 +111,20 @@ public abstract class CaseInstanceBase extends BaseEntity {
 		return processInstanceId;
 	}
 
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getName() {
+
+		return name;
+	}
+
 	@Transient
 	//Display name
 	public String getDisplayName() {
 		try {
-			return caseDefinition + "";
+			return name;
 		} catch (Exception e) {
 			return "Exception - " + e.getMessage();
 		}

@@ -39,7 +39,7 @@ public class OrderItemTestDataFactory extends AbstractTestDataFactory<com.td.bbw
 
 			register(orderItem);
 
-			orderItem.setQty(5354);
+			orderItem.setQty(80883);
 
 			orderItem.setProduct(productTestDataFactory.createProductOne());
 
@@ -59,7 +59,7 @@ public class OrderItemTestDataFactory extends AbstractTestDataFactory<com.td.bbw
 
 			register(orderItem);
 
-			orderItem.setQty(17577);
+			orderItem.setQty(78348);
 
 			orderItem.setProduct(productTestDataFactory.createProductTwo());
 
@@ -79,7 +79,7 @@ public class OrderItemTestDataFactory extends AbstractTestDataFactory<com.td.bbw
 
 			register(orderItem);
 
-			orderItem.setQty(14056);
+			orderItem.setQty(59550);
 
 			orderItem.setProduct(productTestDataFactory.createProductThree());
 
@@ -99,7 +99,7 @@ public class OrderItemTestDataFactory extends AbstractTestDataFactory<com.td.bbw
 
 			register(orderItem);
 
-			orderItem.setQty(98214);
+			orderItem.setQty(78453);
 
 			orderItem.setProduct(productTestDataFactory.createProductFour());
 
@@ -119,7 +119,7 @@ public class OrderItemTestDataFactory extends AbstractTestDataFactory<com.td.bbw
 
 			register(orderItem);
 
-			orderItem.setQty(636);
+			orderItem.setQty(47729);
 
 			orderItem.setProduct(productTestDataFactory.createProductFive());
 

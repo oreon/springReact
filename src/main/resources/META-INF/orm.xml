@@ -251,6 +251,14 @@
  	
  	
 	
+	<named-query name="caseDefinition.findByUnqName">
+		<query>
+			<![CDATA[
+			select u from CaseDefinition u where u.name = ?1
+			]]>
+		</query>
+	</named-query>
+	
 
 	
 
@@ -294,6 +302,8 @@
 
 	
 
+	
+
 	</entity>
 
 	<!--  CaseInstance  JPA Configurations -->
@@ -313,6 +323,16 @@
 	
 
 	
+	<named-query name="caseInstance.findByUnqProcessInstanceId">
+		<query>
+			<![CDATA[
+			select u from CaseInstance u where u.processInstanceId = ?1
+			]]>
+		</query>
+	</named-query>
+	
+
+	
 
 	</entity>
 
@@ -328,6 +348,14 @@
 		</table>
  	
  	
+	
+	<named-query name="taskInstance.findByUnqTaskId">
+		<query>
+			<![CDATA[
+			select u from TaskInstance u where u.taskId = ?1
+			]]>
+		</query>
+	</named-query>
 	
 
 	

@@ -39,6 +39,11 @@ processInstanceId:{ type: "integer", title: "Process Instance Id",
 },
 
 
+
+name:{ type: "string", title: "Name",  	
+},
+
+
     
 taskInstances: {
             title: "Task Instances",
@@ -96,6 +101,10 @@ caseDefinition: {  'ui:placeholder': "Case Definition" },
 processInstanceId: { 'ui:widget': "updown" , 'ui:placeholder': "Process Instance Id" },
 
 
+
+name: {  'ui:placeholder': "Name" },
+
+
     
 taskInstances: {
  	items:{
@@ -132,6 +141,9 @@ caseInstance: {
 	 ,
 	 
 	 {property:"processInstanceId",title:"Process Instance Id" }
+	 ,
+	 
+	 {property:"name",title:"Name" }
 	      
 	 ]
 

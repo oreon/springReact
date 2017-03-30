@@ -20,9 +20,11 @@ public class FieldDto
 
 	protected String name;
 
-	protected String type;
+	protected FieldType type;
 
 	protected TaskDefinitionDto taskDefinitionDto;
+
+	protected Boolean required;
 
 	public void setName(String name) {
 		this.name = name;
@@ -32,11 +34,11 @@ public class FieldDto
 		return name;
 	}
 
-	public void setType(String type) {
+	public void setType(FieldType type) {
 		this.type = type;
 	}
 
-	public String getType() {
+	public FieldType getType() {
 		return type;
 	}
 
@@ -46,6 +48,14 @@ public class FieldDto
 
 	public TaskDefinitionDto getTaskDefinition() {
 		return taskDefinitionDto;
+	}
+
+	public void setRequired(Boolean required) {
+		this.required = required;
+	}
+
+	public Boolean getRequired() {
+		return required;
 	}
 
 }

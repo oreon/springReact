@@ -32,9 +32,11 @@ import org.witchcraft.base.entity.BaseEntity;
 
 public abstract class CaseDefinitionBase extends BaseEntity {
 
+	//@Unique(entityName = "com.td.bbwp.wf.CaseDefinition", fieldName = "NAME")
+
 	@NotNull
 	@Size(min = 1, max = 50)
-	@Column(name = "NAME", unique = false)
+	@Column(name = "NAME", unique = true)
 
 	protected String name
 

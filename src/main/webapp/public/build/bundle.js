@@ -61797,10 +61797,7 @@ var log = function log(type) {
     return console.log.bind(console, type);
 };
 
-var studentSchema = {
-    title: "Todo",
-    type: "object",
-    required: ["firstname", "lastname"],
+var studentSchema = { title: "Todo", type: "object",
     properties: {
         firstname: { type: "string", title: "First Name", default: "A new task" },
         lastname: { type: "string", title: "Last", default: "A new task" },
@@ -62461,16 +62458,20 @@ var log = function log(type) {
     return console.log.bind(console, type);
 };
 
-var taskSchema = {
-    title: "Todo",
-    type: "object",
-    required: ["firstname", "lastname"],
-    properties: {
-        firstname: { type: "string", title: "First Name", default: "xxx" },
-        lastname: { type: "string", title: "Last", default: "yyy" },
-        email: { type: "string", title: "Email" }
-    }
-};
+//const taskSchema = {
+//    title: "Todo",
+//    type: "object",
+//    required: ["firstname", "lastname"],
+//    properties: {
+//        firstname: { type: "string", title: "First Name", default: "xxx" },
+//        lastname: { type: "string", title: "Last", default: "yyy" },
+//        email: { type: "string", title: "Email" }
+//    }
+//};
+
+
+var taskSchema = { title: 'Todo', type: 'object', properties: {
+        color: { title: 'color', type: 'string', required: true }, riskrating: { title: 'riskrating', type: 'string', required: true } } };
 
 var TaskView = exports.TaskView = function (_React$Component4) {
     _inherits(TaskView, _React$Component4);

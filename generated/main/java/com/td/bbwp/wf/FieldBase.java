@@ -42,7 +42,7 @@ public abstract class FieldBase extends BaseEntity {
 
 	@Column(name = "TYPE", unique = false)
 
-	protected String type
+	protected FieldType type
 
 	;
 
@@ -51,6 +51,12 @@ public abstract class FieldBase extends BaseEntity {
 	@com.fasterxml.jackson.annotation.JsonBackReference
 
 	protected TaskDefinition taskDefinition
+
+	;
+
+	@Column(name = "REQUIRED", unique = false)
+
+	protected Boolean required
 
 	;
 
@@ -63,11 +69,11 @@ public abstract class FieldBase extends BaseEntity {
 		return name;
 	}
 
-	public void setType(String type) {
+	public void setType(FieldType type) {
 		this.type = type;
 	}
 
-	public String getType() {
+	public FieldType getType() {
 
 		return type;
 	}
@@ -79,6 +85,15 @@ public abstract class FieldBase extends BaseEntity {
 	public TaskDefinition getTaskDefinition() {
 
 		return taskDefinition;
+	}
+
+	public void setRequired(Boolean required) {
+		this.required = required;
+	}
+
+	public Boolean getRequired() {
+
+		return required;
 	}
 
 	@Transient

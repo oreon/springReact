@@ -39,6 +39,8 @@ public class CaseInstanceTestDataFactory extends AbstractTestDataFactory<com.td.
 
 			caseInstance.setProcessInstanceId(null/*unknown attrib type:long*/);
 
+			caseInstance.setName("name-1490903698467-One");
+
 			caseInstance.setCaseDefinition(caseDefinitionTestDataFactory.createCaseDefinitionOne());
 
 		} catch (Exception ex) {
@@ -56,6 +58,8 @@ public class CaseInstanceTestDataFactory extends AbstractTestDataFactory<com.td.
 			register(caseInstance);
 
 			caseInstance.setProcessInstanceId(null/*unknown attrib type:long*/);
+
+			caseInstance.setName("name-1490903698470-Two");
 
 			caseInstance.setCaseDefinition(caseDefinitionTestDataFactory.createCaseDefinitionTwo());
 
@@ -75,6 +79,8 @@ public class CaseInstanceTestDataFactory extends AbstractTestDataFactory<com.td.
 
 			caseInstance.setProcessInstanceId(null/*unknown attrib type:long*/);
 
+			caseInstance.setName("name-1490903698473-Three");
+
 			caseInstance.setCaseDefinition(caseDefinitionTestDataFactory.createCaseDefinitionThree());
 
 		} catch (Exception ex) {
@@ -93,6 +99,8 @@ public class CaseInstanceTestDataFactory extends AbstractTestDataFactory<com.td.
 
 			caseInstance.setProcessInstanceId(null/*unknown attrib type:long*/);
 
+			caseInstance.setName("name-1490903698474-Four");
+
 			caseInstance.setCaseDefinition(caseDefinitionTestDataFactory.createCaseDefinitionFour());
 
 		} catch (Exception ex) {
@@ -110,6 +118,8 @@ public class CaseInstanceTestDataFactory extends AbstractTestDataFactory<com.td.
 			register(caseInstance);
 
 			caseInstance.setProcessInstanceId(null/*unknown attrib type:long*/);
+
+			caseInstance.setName("name-1490903698474-Five");
 
 			caseInstance.setCaseDefinition(caseDefinitionTestDataFactory.createCaseDefinitionFive());
 

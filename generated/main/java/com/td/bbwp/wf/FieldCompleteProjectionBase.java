@@ -24,8 +24,10 @@ interface FieldCompleteProjectionBase {
 
 	Optional<String> getName();
 
-	Optional<String> getType();
+	Optional<com.td.bbwp.wf.FieldType> getType();
 
 	Optional<com.td.bbwp.wf.TaskDefinition> getTaskDefinition();
+
+	Optional<Boolean> getRequired();
 
 }

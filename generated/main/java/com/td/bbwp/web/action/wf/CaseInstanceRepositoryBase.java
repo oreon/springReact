@@ -27,6 +27,11 @@ public interface CaseInstanceRepositoryBase extends BaseRepository<CaseInstance>
 	Page<CaseInstance> findByCaseDefinition(@Param("caseDefinition") com.td.bbwp.wf.CaseDefinition caseDefinition,
 			Pageable pageable);
 
-	Page<CaseInstance> findByProcessInstanceId(@Param("processInstanceId") Long processInstanceId, Pageable pageable);
+	Optional<CaseInstance> findByProcessInstanceId(@Param("processInstanceId") Long processInstanceId);
+
+	Page<CaseInstance> findByNameContainingAllIgnoringCase(@Param("name") String name, Pageable pageable);
+
+	Page<CaseInstance> findByName(@Param("name") String name, Pageable pageable);
+	Page<CaseInstance> findByNameIgnoringCase(@Param("name") String name, Pageable pageable);
 
 }

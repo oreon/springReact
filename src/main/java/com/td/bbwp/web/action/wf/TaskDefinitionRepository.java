@@ -14,9 +14,12 @@ import java.util.Optional;
 import org.springframework.data.repository.query.Param;
 import org.springframework.security.access.prepost.PreAuthorize;
 
+import com.td.bbwp.wf.CaseDefinition;
 import com.td.bbwp.wf.TaskDefinition;
 
 @RepositoryRestResource(exported=true)
 public interface TaskDefinitionRepository extends TaskDefinitionRepositoryBase {
+	
+	Optional<TaskDefinition> findByNameAndCaseDefinition(String name, CaseDefinition caseDefinition);
 
 }

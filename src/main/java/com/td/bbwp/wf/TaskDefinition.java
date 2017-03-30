@@ -25,13 +25,14 @@ public class TaskDefinition extends TaskDefinitionBase implements java.io.Serial
 	@Transient
 	public String getForm(){
 		
-		String result = "{title: ''Todo',type: 'object',properties: {";
+		String result = "{title: 'Todo',type: 'object',properties: {";
 		
 		String fields = getFields().stream().map(x ->  
-		 String.format( "%s: {  title: '%s',type: '%s',  required:true}", x.getName(), x.getName(), x.getType()))
+		 String.format( "%s: {  title: '%s',type: '%s', required:%s}", x.getName(), x.getName(), x.getType().toString(),
+				 (x.getRequired() ?"true":"false")
+				 ))
 		.collect(Collectors.joining(", "));
 		
-		System.out.println(fields);
 		return result + fields + "}}";
 	}
 }

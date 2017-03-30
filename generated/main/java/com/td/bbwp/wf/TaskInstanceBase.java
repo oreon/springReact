@@ -32,7 +32,9 @@ import org.witchcraft.base.entity.BaseEntity;
 
 public abstract class TaskInstanceBase extends BaseEntity {
 
-	@Column(name = "TASK_ID", unique = false)
+	//@Unique(entityName = "com.td.bbwp.wf.TaskInstance", fieldName = "TASK_ID")
+
+	@Column(name = "TASK_ID", unique = true)
 
 	protected Long taskId
 

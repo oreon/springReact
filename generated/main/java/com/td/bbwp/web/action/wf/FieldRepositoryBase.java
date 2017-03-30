@@ -27,12 +27,11 @@ public interface FieldRepositoryBase extends BaseRepository<Field> {
 	Page<Field> findByName(@Param("name") String name, Pageable pageable);
 	Page<Field> findByNameIgnoringCase(@Param("name") String name, Pageable pageable);
 
-	Page<Field> findByTypeContainingAllIgnoringCase(@Param("type") String type, Pageable pageable);
-
-	Page<Field> findByType(@Param("type") String type, Pageable pageable);
-	Page<Field> findByTypeIgnoringCase(@Param("type") String type, Pageable pageable);
+	Page<Field> findByType(@Param("type") com.td.bbwp.wf.FieldType type, Pageable pageable);
 
 	Page<Field> findByTaskDefinition(@Param("taskDefinition") com.td.bbwp.wf.TaskDefinition taskDefinition,
 			Pageable pageable);
+
+	Page<Field> findByRequired(@Param("required") Boolean required, Pageable pageable);
 
 }

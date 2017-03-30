@@ -28,4 +28,6 @@ interface CaseInstanceCompleteProjectionBase {
 
 	Optional<Long> getProcessInstanceId();
 
+	Optional<String> getName();
+
 }

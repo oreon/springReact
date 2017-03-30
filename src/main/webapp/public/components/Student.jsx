@@ -14,10 +14,7 @@ import {SimpleList} from '../commons/SimpleList.jsx'
 
 const log = (type) => console.log.bind(console, type);
 
-const studentSchema = {
-    title: "Todo",
-    type: "object",
-    required: ["firstname", "lastname"],
+const studentSchema = {title: "Todo",type: "object",
     properties: {
         firstname: {type: "string", title: "First Name", default: "A new task"},
         lastname: {type: "string", title: "Last", default: "A new task"},

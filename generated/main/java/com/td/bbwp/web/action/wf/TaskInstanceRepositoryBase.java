@@ -22,7 +22,7 @@ import com.td.bbwp.wf.TaskInstance;
 //@RepositoryRestResource(exported=false)
 public interface TaskInstanceRepositoryBase extends BaseRepository<TaskInstance> {
 
-	Page<TaskInstance> findByTaskId(@Param("taskId") Long taskId, Pageable pageable);
+	Optional<TaskInstance> findByTaskId(@Param("taskId") Long taskId);
 
 	Page<TaskInstance> findByNameContainingAllIgnoringCase(@Param("name") String name, Pageable pageable);
 

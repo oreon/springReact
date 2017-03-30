@@ -65,7 +65,14 @@ name:{ type: "string", title: "Name",
 
 
 
-type:{ type: "string", title: "Type",  	
+type:{ type: "string", title: "Type",   
+'enum' : [
+'','0' ,'1' ,'2'   
+],
+'enumNames' : [
+'Select','string' ,'number' ,'date'   
+]
+	
 },
 
 
@@ -73,6 +80,11 @@ type:{ type: "string", title: "Type",
 taskDefinition: {
       "type": "number",
     },
+
+
+
+required:{ type: "boolean", title: "Required",  	
+},
 
  
                  
@@ -125,6 +137,10 @@ type: {  'ui:placeholder': "Type" },
 taskDefinition: {
       "ui:widget": "hidden"
     },
+
+
+
+required: {  'ui:placeholder': "Required" },
 
  
          

@@ -35,11 +35,11 @@ public class CreditCardTestDataFactory extends AbstractTestDataFactory<com.td.bb
 
 			register(creditCard);
 
-			creditCard.setAccountAddress("accountAddress-1490822647083-One");
+			creditCard.setAccountAddress("accountAddress-1490903698387-One");
 
-			creditCard.setCcNumber("ccNumber-1490822647083-One");
+			creditCard.setCcNumber("ccNumber-1490903698387-One");
 
-			creditCard.setExpiry(dateFormat.parse("2017.04.22 19:30:14 EDT"));
+			creditCard.setExpiry(dateFormat.parse("2017.03.20 02:49:27 EDT"));
 
 		} catch (Exception ex) {
 			handleCreationException(ex);
@@ -55,11 +55,11 @@ public class CreditCardTestDataFactory extends AbstractTestDataFactory<com.td.bb
 
 			register(creditCard);
 
-			creditCard.setAccountAddress("accountAddress-1490822647084-Two");
+			creditCard.setAccountAddress("accountAddress-1490903698388-Two");
 
-			creditCard.setCcNumber("ccNumber-1490822647084-Two");
+			creditCard.setCcNumber("ccNumber-1490903698388-Two");
 
-			creditCard.setExpiry(dateFormat.parse("2017.03.05 17:03:34 EST"));
+			creditCard.setExpiry(dateFormat.parse("2017.04.23 18:43:20 EDT"));
 
 		} catch (Exception ex) {
 			handleCreationException(ex);
@@ -75,11 +75,11 @@ public class CreditCardTestDataFactory extends AbstractTestDataFactory<com.td.bb
 
 			register(creditCard);
 
-			creditCard.setAccountAddress("accountAddress-1490822647084-Three");
+			creditCard.setAccountAddress("accountAddress-1490903698389-Three");
 
-			creditCard.setCcNumber("ccNumber-1490822647085-Three");
+			creditCard.setCcNumber("ccNumber-1490903698389-Three");
 
-			creditCard.setExpiry(dateFormat.parse("2017.03.27 02:55:48 EDT"));
+			creditCard.setExpiry(dateFormat.parse("2017.04.22 00:17:12 EDT"));
 
 		} catch (Exception ex) {
 			handleCreationException(ex);
@@ -95,11 +95,11 @@ public class CreditCardTestDataFactory extends AbstractTestDataFactory<com.td.bb
 
 			register(creditCard);
 
-			creditCard.setAccountAddress("accountAddress-1490822647085-Four");
+			creditCard.setAccountAddress("accountAddress-1490903698390-Four");
 
-			creditCard.setCcNumber("ccNumber-1490822647085-Four");
+			creditCard.setCcNumber("ccNumber-1490903698390-Four");
 
-			creditCard.setExpiry(dateFormat.parse("2017.03.19 00:10:14 EDT"));
+			creditCard.setExpiry(dateFormat.parse("2017.03.26 05:36:40 EDT"));
 
 		} catch (Exception ex) {
 			handleCreationException(ex);
@@ -115,11 +115,11 @@ public class CreditCardTestDataFactory extends AbstractTestDataFactory<com.td.bb
 
 			register(creditCard);
 
-			creditCard.setAccountAddress("accountAddress-1490822647086-Five");
+			creditCard.setAccountAddress("accountAddress-1490903698390-Five");
 
-			creditCard.setCcNumber("ccNumber-1490822647086-Five");
+			creditCard.setCcNumber("ccNumber-1490903698391-Five");
 
-			creditCard.setExpiry(dateFormat.parse("2017.04.06 21:51:56 EDT"));
+			creditCard.setExpiry(dateFormat.parse("2017.04.16 06:36:40 EDT"));
 
 		} catch (Exception ex) {
 			handleCreationException(ex);

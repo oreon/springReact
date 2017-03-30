@@ -24,6 +24,8 @@ public class CaseInstanceDto
 
 	protected Long processInstanceId;
 
+	protected String name;
+
 	public void setCaseDefinition(CaseDefinitionDto caseDefinitionDto) {
 		this.caseDefinitionDto = caseDefinitionDto;
 	}
@@ -56,6 +58,14 @@ public class CaseInstanceDto
 
 	public Long getProcessInstanceId() {
 		return processInstanceId;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getName() {
+		return name;
 	}
 
 }

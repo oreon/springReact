@@ -24,9 +24,9 @@ import com.td.bbwp.wf.TaskDefinition;
 //@RepositoryRestResource(exported=false)
 public interface CaseDefinitionRepositoryBase extends BaseRepository<CaseDefinition> {
 
-	Page<CaseDefinition> findByNameContainingAllIgnoringCase(@Param("name") String name, Pageable pageable);
+	Optional<CaseDefinition> findByNameContainingAllIgnoringCase(@Param("name") String name);
 
-	Page<CaseDefinition> findByName(@Param("name") String name, Pageable pageable);
-	Page<CaseDefinition> findByNameIgnoringCase(@Param("name") String name, Pageable pageable);
+	Optional<CaseDefinition> findByName(@Param("name") String name);
+	Optional<CaseDefinition> findByNameIgnoringCase(@Param("name") String name);
 
 }

@@ -29,7 +29,14 @@ name:{ type: "string", title: "Name",
 
 
 
-type:{ type: "string", title: "Type",  	
+type:{ type: "string", title: "Type",   
+'enum' : [
+'','0' ,'1' ,'2'   
+],
+'enumNames' : [
+'Select','string' ,'number' ,'date'   
+]
+	
 },
 
 
@@ -37,6 +44,11 @@ type:{ type: "string", title: "Type",
 taskDefinition: {
       "type": "number",
     },
+
+
+
+required:{ type: "boolean", title: "Required",  	
+},
 
 
     
@@ -61,6 +73,10 @@ taskDefinition: {
     },
 
 
+
+required: {  'ui:placeholder': "Required" },
+
+
     
  }
 
@@ -75,6 +91,9 @@ taskDefinition: {
 	 ,
 	 
 	 {property:"taskDefinition_displayName",title:"Task Definition" }
+	 ,
+	 
+	 {property:"required",title:"Required" }
 	      
 	 ]
 

@@ -21,6 +21,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.td.bbwp.OptionsHelper;
+import com.td.bbwp.web.action.wf.CaseDefinitionRepository;
+import com.td.bbwp.web.action.wf.CaseInstanceRepository;
+import com.td.bbwp.web.action.wf.TaskDefinitionRepository;
+import com.td.bbwp.web.action.wf.TaskInstanceRepository;
+import com.td.bbwp.wf.CaseDefinition;
+import com.td.bbwp.wf.CaseInstance;
+import com.td.bbwp.wf.TaskDefinition;
+import com.td.bbwp.wf.TaskInstance;
+
 @RestController
 @RequestMapping("/api/task")
 public class UserTaskController {
@@ -33,7 +43,19 @@ public class UserTaskController {
 
 	@Autowired
 	private JbpmTaskService jbpmTaskService;
-
+	
+	@Autowired
+	CaseInstanceRepository caseInstanceRepository;
+	
+	@Autowired
+	TaskInstanceRepository taskInstanceRepository;
+	
+	@Autowired
+	TaskDefinitionRepository taskDefinitionRepository;
+	
+	@Autowired
+	CaseDefinitionRepository caseDefinitionRepository;
+	
 
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
@@ -45,10 +67,43 @@ public class UserTaskController {
 	    List<String> groups = Arrays.asList(new String[] {"lenders"});
 	    
 	    List<TaskSummary> tasks = jbpmTaskService.getTaskService().getTasksByGroup(groups);
+	    
+	    populateTasks(tasks);
 
 		return tasks.stream()
 				.filter(task -> task.getStatusId().equalsIgnoreCase("Ready"))
 				.collect(Collectors.toList());
+	}
+
+	private void populateTasks(List<TaskSummary> tasks) {
+		tasks.stream().map(x -> 
+	    	caseInstanceRepository.findByProcessInstanceId(x.getProcessInstanceId())
+	    	.orElseGet( () -> {
+	    		CaseInstance caseInstance = new CaseInstance();
+	    		caseInstance.setProcessInstanceId(x.getProcessInstanceId());
+	    		caseInstanceRepository.save(caseInstance);
+	    		return caseInstance;})
+	    );
+	    
+	    tasks.stream().map(x -> 
+	    	taskInstanceRepository.findByTaskId(x.getId())
+	    	.orElseGet( () -> {
+	    		
+	    		CaseDefinition caseDef = OptionsHelper.getOrThrow( caseDefinitionRepository.findByName(x.getProcessId()),
+	    				new RuntimeException("No process configured " + x.getProcessId()));
+	    		
+	    		TaskDefinition taskDefinition  = taskDefinitionRepository.findByNameAndCaseDefinition(x.getName(),
+	    				caseDef).get();
+	    		
+	    		TaskInstance taskInstance = new TaskInstance();
+	    		taskInstance.setTaskId(x.getId());
+	    		taskInstance.setTaskDefinition(taskDefinition);
+	    		taskInstance.setName(x.getName());
+	    		taskInstance.setCaseInstance(caseInstanceRepository.findByProcessInstanceId(x.getProcessInstanceId()).get());
+	    		taskInstanceRepository.save(taskInstance);
+	    		return taskInstance;
+	    	})
+	    );
 	}
 	
 	@RequestMapping(value = "/myTasks", method = RequestMethod.GET)
