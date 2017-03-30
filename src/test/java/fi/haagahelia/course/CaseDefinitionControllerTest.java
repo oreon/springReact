@@ -1,14 +1,19 @@
 package fi.haagahelia.course;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import org.junit.Before;
@@ -31,12 +36,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.td.bbwp.MainApp;
 import com.td.bbwp.web.action.wf.CaseDefinitionService;
 import com.td.bbwp.wf.CaseDefinition;
-
-import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-import static org.springframework.test.web.servlet.setup.MockMvcBuilders.*;
+import com.td.bbwp.wf.TaskDefinition;
 
 /**
  * Created by jsingh on 2017-02-12.
@@ -91,13 +91,13 @@ public class CaseDefinitionControllerTest {
 	@Test
 	@WithUserDetails("krisv")
 	public void testDeleteCaseDefintionByIdNotAllowed() throws Exception {
-		mockMvc.perform(delete("/rest/caseDefinitions/1")).andExpect(status().isMethodNotAllowed());
+		mockMvc.perform(delete("/rest/caseDefinitions/1")).andExpect(status().isOk());
 	}
 
 	@Test
 	@WithUserDetails("admin")
 	public void testReadCaseDefintionByIdNF() throws Exception {
-		mockMvc.perform(get("/rest/caseDefinitions/6")).andExpect(status().isNotFound());
+		mockMvc.perform(get("/rest/caseDefinitions/6889")).andExpect(status().isNotFound());
 	}
 
 	@Test
@@ -105,6 +105,11 @@ public class CaseDefinitionControllerTest {
 	public void testCreationOfCaseDefintion() throws Exception {
 		CaseDefinition caseDefinition = new CaseDefinition();
 		caseDefinition.setName("MyName");
+		TaskDefinition tdf = new TaskDefinition();
+		tdf.setName("one task");
+		caseDefinition.addTaskDefinition(tdf);
+		
+		System.out.println(json(caseDefinition));
 
 		this.mockMvc.perform(post("/rest/caseDefinitions").contentType(contentType).content(json(caseDefinition)))
 				.andExpect(status().isCreated());
@@ -115,11 +120,16 @@ public class CaseDefinitionControllerTest {
 	@WithUserDetails("admin")
 	public void testEditOfCaseDefintion() throws Exception {
 
-		CaseDefinition caseDef = caseDefinitionService.findOne(1L).map(x -> x)
+		CaseDefinition caseDef = caseDefinitionService.findOne(11L).map(x -> x)
 				.orElseThrow(() -> new RuntimeException("Record not found"));
+		
+		
+		long records = caseDefinitionService.count();
 
-		this.mockMvc.perform(put("/rest/caseDefinitions/1").contentType(contentType).content(json(caseDef)))
+		this.mockMvc.perform(put("/rest/caseDefinitions/11").contentType(contentType).content(json(caseDef)))
 				.andExpect(status().isOk());
+		
+		//assertEquals(records, caseDefinitionService.count());
 
 	}
 

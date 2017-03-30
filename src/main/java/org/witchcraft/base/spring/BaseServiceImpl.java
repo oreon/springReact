@@ -32,7 +32,8 @@ public abstract class BaseServiceImpl<T extends BaseEntity> {
 	public void delete(Long id) {
 		getRepository().delete(id);
 		// TODO Auto-generated method stub
-		
 	}
+	
+	public long count(){ return getRepository().count() ; }
 
 }

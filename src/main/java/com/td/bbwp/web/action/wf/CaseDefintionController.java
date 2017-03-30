@@ -1,9 +1,12 @@
 package com.td.bbwp.web.action.wf;
 
+import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
+import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.witchcraft.base.spring.BaseService;
 
 import com.td.bbwp.wf.CaseDefinition;
+import com.td.bbwp.wf.TaskDefinition;
 
 @RestController
 @RequestMapping("/rest/caseDefinitions")
@@ -58,7 +62,7 @@ public class CaseDefintionController extends BaseController<CaseDefinition> {
 	}
 
 	@RequestMapping(value ="/{id}", method = RequestMethod.DELETE)
-	public ResponseEntity deleteCaseDefinition(@PathVariable Long id) {
+	public ResponseEntity<?> deleteCaseDefinition(@PathVariable Long id) {
 
 		// if (null == caseDefinitionService.delete(id)) {
 		// return new ResponseEntity("No CaseDefinition found for ID " + id,
@@ -69,18 +73,32 @@ public class CaseDefintionController extends BaseController<CaseDefinition> {
 
 	}
 
-	@RequestMapping(value ="/rest/caseDefinitions/{id}",  method = RequestMethod.PUT)
-	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public ResponseEntity updateCaseDefinition(@PathVariable Long id, @RequestBody CaseDefinition caseDefinition) {
+	@RequestMapping(value ="/{id}",  method = RequestMethod.PUT)
+	//@SuppressWarnings({ "unchecked", "rawtypes" })
+	public ResponseEntity<?> updateCaseDefinition(@PathVariable Long id, @RequestBody CaseDefinition caseDefinition) {
+		
+		return caseDefinitionService.findOne(id)
+				.map(x -> { 
+					try {
+						caseDefinition.setTaskDefinitions(new ArrayList<TaskDefinition>());
+						BeanUtils.copyProperties(x, caseDefinition);
+					} catch (Exception e) {
+						//h block
+						throw new RuntimeException("error copying to destination");
+					}
+					x = caseDefinitionService.save(x);
+					return new ResponseEntity(x, HttpStatus.OK);
+				})
+				.orElse(new ResponseEntity("No CaseDefinition found for ID " + id, HttpStatus.NOT_FOUND));
 
-		// caseDefinition = caseDefinitionDAO.update(id, caseDefinition);
+		 //caseDefinition = caseDefinitionService.save(caseDefinition);//caseDefinitionDAO.update(id, caseDefinition);
 		//
 		// if (null == caseDefinition) {
 		// return new ResponseEntity("No CaseDefinition found for ID " + id,
 		// HttpStatus.NOT_FOUND);
 		// }
 
-		return new ResponseEntity(caseDefinitionService.save(caseDefinition), HttpStatus.OK);
+		//return new ResponseEntity(caseDefinition, HttpStatus.OK);
 	}
 
 }

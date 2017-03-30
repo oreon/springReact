@@ -13,6 +13,7 @@ public interface BaseService<T extends BaseEntity> {
 	
 	@PreAuthorize("hasRole('ADMIN')")
 	public void delete(Long id);
+	public long count();
 	
 
 }

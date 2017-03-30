@@ -6,24 +6,13 @@
 
 package com.td.bbwp.wf;
 
-import javax.persistence.*;
-import org.witchcraft.base.entity.FileAttachment;
-import org.witchcraft.base.entity.BaseEntity;
-import org.hibernate.annotations.Filter;
-import org.hibernate.annotations.Filters;
-import org.hibernate.annotations.Formula;
-import org.hibernate.annotations.IndexColumn;
+import java.util.stream.Collectors;
 
-import javax.validation.constraints.*;
-
-import java.math.BigDecimal;
-
-import java.util.Optional;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Date;
-import org.witchcraft.base.entity.BaseEntity;
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "TASK_DEFINITION")
@@ -32,4 +21,17 @@ import org.witchcraft.base.entity.BaseEntity;
 
 public class TaskDefinition extends TaskDefinitionBase implements java.io.Serializable {
 	private static final long serialVersionUID = -1594214427L;
+	
+	@Transient
+	public String getForm(){
+		
+		String result = "{title: ''Todo',type: 'object',properties: {";
+		
+		String fields = getFields().stream().map(x ->  
+		 String.format( "%s: {  title: '%s',type: '%s',  required:true}", x.getName(), x.getName(), x.getType()))
+		.collect(Collectors.joining(", "));
+		
+		System.out.println(fields);
+		return result + fields + "}}";
+	}
 }

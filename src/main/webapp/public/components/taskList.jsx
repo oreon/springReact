@@ -189,16 +189,21 @@ class Task extends React.Component {
 
 const log = ( type ) => console.log.bind( console, type );
 
-const taskSchema = {
-    title: "Todo",
-    type: "object",
-    required: ["firstname", "lastname"],
-    properties: {
-        firstname: { type: "string", title: "First Name", default: "xxx" },
-        lastname: { type: "string", title: "Last", default: "yyy" },
-        email: { type: "string", title: "Email" }
-    }
-};
+//const taskSchema = {
+//    title: "Todo",
+//    type: "object",
+//    required: ["firstname", "lastname"],
+//    properties: {
+//        firstname: { type: "string", title: "First Name", default: "xxx" },
+//        lastname: { type: "string", title: "Last", default: "yyy" },
+//        email: { type: "string", title: "Email" }
+//    }
+//};
+
+
+const taskSchema = {title: 'Todo',type: 'object',properties: {
+    color: {  title: 'color',type: 'string',  required:true}, riskrating: {  title: 'riskrating',type: 'string',  required:true}}}
+
 
 export class TaskView extends React.Component {
 
