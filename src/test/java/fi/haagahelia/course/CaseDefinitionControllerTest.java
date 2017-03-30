@@ -1,9 +1,16 @@
 package fi.haagahelia.course;
 
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.td.bbwp.MainApp;
-import com.td.bbwp.wf.CaseDefinition;
+import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
+
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.util.Arrays;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -11,6 +18,9 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.http.MediaType;
+import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.mock.http.MockHttpOutputMessage;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -18,16 +28,16 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 
-import java.nio.charset.Charset;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.td.bbwp.MainApp;
+import com.td.bbwp.wf.CaseDefinition;
 
-import static org.hamcrest.Matchers.is;
-import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
+
+import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.setup.MockMvcBuilders.*;
 
 
 /**
@@ -41,6 +51,28 @@ public class CaseDefinitionControllerTest {
 
     private MockMvc mockMvc;
     ObjectMapper ojbectMapper = new ObjectMapper();
+    private HttpMessageConverter mappingJackson2HttpMessageConverter;
+
+    
+    @Autowired
+    void setConverters(HttpMessageConverter<?>[] converters) {
+
+        this.mappingJackson2HttpMessageConverter = Arrays.asList(converters).stream()
+            .filter(hmc -> hmc instanceof MappingJackson2HttpMessageConverter)
+            .findAny()
+            .orElse(null);
+
+        assertNotNull("the JSON message converter must not be null",
+                this.mappingJackson2HttpMessageConverter);
+    }
+
+    
+    protected String json(Object o) throws IOException {
+        MockHttpOutputMessage mockHttpOutputMessage = new MockHttpOutputMessage();
+        this.mappingJackson2HttpMessageConverter.write(
+                o, MediaType.APPLICATION_JSON, mockHttpOutputMessage);
+        return mockHttpOutputMessage.getBodyAsString();
+    }
 
 
     @Autowired
@@ -80,16 +112,30 @@ public class CaseDefinitionControllerTest {
     }
     
     @Test
+    @WithUserDetails("admin")
     public void testCreationOfANewProjectSucceeds() throws Exception {
+        CaseDefinition caseDefinition = new CaseDefinition();
+        caseDefinition.setName("MyName");
+        
+        this.mockMvc.perform(post("/rest/caseDefinitions")
+                .contentType(contentType)
+                .content(json(caseDefinition)))
+                .andExpect(status().isCreated());
+       
+    }
+    
+    //@Test
+    //@WithUserDetails("admin")
+    public void testCreationOfANewProjectNA() throws Exception {
         CaseDefinition caseDefinition = new CaseDefinition();
         caseDefinition.setName("MyName");
   
         mockMvc.perform(
-                post("/rest/caseDefintions")
+        		post("/rest/caseDefinitions/")
                         .accept(MediaType.APPLICATION_JSON)
                      //   .contentType(MediaType.APPLICATION_JSON)
                         .content(ojbectMapper.writeValueAsString(caseDefinition)))
-                .andExpect(status().isCreated());
+                .andExpect(status().isMethodNotAllowed());
     }
 
     

@@ -51,13 +51,13 @@ public class CaseDefintionController extends BaseController<CaseDefinition> {
 	}
 	
 
-	@RequestMapping(value = "/rest/caseDefinitions", method = RequestMethod.POST)
+	@RequestMapping( method = RequestMethod.POST)
 	public ResponseEntity createCaseDefinition(@RequestBody CaseDefinition caseDefinition) {
 		caseDefinitionService.save(caseDefinition);
-		return new ResponseEntity(caseDefinition, HttpStatus.OK);
+		return new ResponseEntity(caseDefinition, HttpStatus.CREATED);
 	}
 
-	@RequestMapping(value ="/rest/caseDefinitions/{id}", method = RequestMethod.DELETE)
+	@RequestMapping(value ="/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity deleteCaseDefinition(@PathVariable Long id) {
 
 		// if (null == caseDefinitionService.delete(id)) {
