@@ -21,9 +21,9 @@ import org.witchcraft.base.spring.BaseService;
 import com.td.bbwp.wf.CaseDefinition;
 
 @RestController
-@RequestMapping("/rest/caseDefintions")
-public class CaseDefintionController extends BaseController<CaseDefinition>{
-	
+@RequestMapping("/rest/caseDefinitions")
+public class CaseDefintionController extends BaseController<CaseDefinition> {
+
 	@Autowired
 	CaseDefinitionService caseDefintionService;
 
@@ -32,59 +32,55 @@ public class CaseDefintionController extends BaseController<CaseDefinition>{
 		// TODO Auto-generated method stub
 		return caseDefintionService;
 	}
-	
-	
+
 	@Autowired
 	private CaseDefinitionService caseDefinitionService;
 
-	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public List<CaseDefinition> getCaseDefinitions() {
 		return StreamSupport.stream(caseDefinitionService.findAll().spliterator(), false).collect(Collectors.toList());
-		
+
 	}
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity getCaseDefinition(@PathVariable("id") Long id) {
+		return caseDefinitionService.findOne(id)
+				.map(x -> new ResponseEntity(x, HttpStatus.OK))
+				.orElse(new ResponseEntity("No CaseDefinition found for ID " + id, HttpStatus.NOT_FOUND));
+	}
+	
 
-		CaseDefinition caseDefinition = caseDefinitionService.findOne(id);
-		if (caseDefinition == null) {
-			return new ResponseEntity("No CaseDefinition found for ID " + id, HttpStatus.NOT_FOUND);
-		}
-
+	@RequestMapping(value = "/rest/caseDefinitions", method = RequestMethod.POST)
+	public ResponseEntity createCaseDefinition(@RequestBody CaseDefinition caseDefinition) {
+		caseDefinitionService.save(caseDefinition);
 		return new ResponseEntity(caseDefinition, HttpStatus.OK);
 	}
 
-//	@PostMapping("/rest/caseDefintions")
-//	public ResponseEntity createCaseDefinition(@RequestBody CaseDefinition caseDefinition) {
-//		caseDefinitionService.save(caseDefinition);
-//		return new ResponseEntity(caseDefinition, HttpStatus.OK);
-//	}
-//
-//	@DeleteMapping("/rest/caseDefintions/{id}")
-//	public ResponseEntity deleteCaseDefinition(@PathVariable Long id) {
-//
-////		if (null == caseDefinitionService.delete(id)) {
-////			return new ResponseEntity("No CaseDefinition found for ID " + id, HttpStatus.NOT_FOUND);
-////		}
-//		caseDefinitionService.delete(id);
-//		return new ResponseEntity(id, HttpStatus.OK);
-//
-//	}
-//
-//	@PutMapping("/rest/caseDefintions/{id}")
-//	public ResponseEntity updateCaseDefinition(@PathVariable Long id, @RequestBody CaseDefinition caseDefinition) {
-//		
-//
-////		caseDefinition = caseDefinitionDAO.update(id, caseDefinition);
-////
-////		if (null == caseDefinition) {
-////			return new ResponseEntity("No CaseDefinition found for ID " + id, HttpStatus.NOT_FOUND);
-////		}
-//
-//		return new ResponseEntity(caseDefinitionService.save(caseDefinition), HttpStatus.OK);
-//	}
+	@RequestMapping(value ="/rest/caseDefinitions/{id}", method = RequestMethod.DELETE)
+	public ResponseEntity deleteCaseDefinition(@PathVariable Long id) {
 
-	
+		// if (null == caseDefinitionService.delete(id)) {
+		// return new ResponseEntity("No CaseDefinition found for ID " + id,
+		// HttpStatus.NOT_FOUND);
+		// }
+		caseDefinitionService.delete(id);
+		return new ResponseEntity(id, HttpStatus.OK);
+
+	}
+
+	@RequestMapping(value ="/rest/caseDefinitions/{id}",  method = RequestMethod.PUT)
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	public ResponseEntity updateCaseDefinition(@PathVariable Long id, @RequestBody CaseDefinition caseDefinition) {
+
+		// caseDefinition = caseDefinitionDAO.update(id, caseDefinition);
+		//
+		// if (null == caseDefinition) {
+		// return new ResponseEntity("No CaseDefinition found for ID " + id,
+		// HttpStatus.NOT_FOUND);
+		// }
+
+		return new ResponseEntity(caseDefinitionService.save(caseDefinition), HttpStatus.OK);
+	}
 
 }

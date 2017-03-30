@@ -47,6 +47,7 @@ public abstract class OrderItemBase extends BaseEntity {
 
 	@ManyToOne(optional = false, fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
 	@JoinColumn(name = "CUSTOMER_ORDER_ID", nullable = false, updatable = true, insertable = true)
+	@com.fasterxml.jackson.annotation.JsonBackReference
 
 	protected CustomerOrder customerOrder
 

@@ -83,6 +83,16 @@ public class TestDataFactoryManager {
 		return new com.td.bbwp.wf.testdata.FieldTestDataFactory();
 	}
 
+	//@Bean
+	public com.td.bbwp.wf.testdata.CaseInstanceTestDataFactory createCaseInstanceTestDataFactory() {
+		return new com.td.bbwp.wf.testdata.CaseInstanceTestDataFactory();
+	}
+
+	//@Bean
+	public com.td.bbwp.wf.testdata.TaskInstanceTestDataFactory createTaskInstanceTestDataFactory() {
+		return new com.td.bbwp.wf.testdata.TaskInstanceTestDataFactory();
+	}
+
 	static {
 
 		listDataFactory.add(new com.td.bbwp.commerce.testdata.EmployeeTestDataFactory());
@@ -112,6 +122,10 @@ public class TestDataFactoryManager {
 		listDataFactory.add(new com.td.bbwp.wf.testdata.TaskDefinitionTestDataFactory());
 
 		listDataFactory.add(new com.td.bbwp.wf.testdata.FieldTestDataFactory());
+
+		listDataFactory.add(new com.td.bbwp.wf.testdata.CaseInstanceTestDataFactory());
+
+		listDataFactory.add(new com.td.bbwp.wf.testdata.TaskInstanceTestDataFactory());
 
 	}
 

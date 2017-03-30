@@ -17,10 +17,10 @@ import com.td.bbwp.web.action.commerce.CustomerRepository;
 
 @SpringBootApplication
 ///@EntityScan("com.delivery.domain")
-public class SpringReactApplication {
+public class MainApp {
 
 	public static void main(String[] args) {
-		SpringApplication.run(SpringReactApplication.class, args);
+		SpringApplication.run(MainApp.class, args);
 	}
 	
 	@Bean

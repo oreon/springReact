@@ -16,51 +16,16 @@ export class TaskList extends React.Component {
         if ( props.mine ) {
             this.url = this.url + "/myTasks"
         }
-        
-        this.doPost = this.doPost.bind( this );
-        this.claimTask = this.claimTask.bind( this )
-        
-        this.releaseTask = this.releaseTask.bind( this )
-        this.startTask = this.startTask.bind( this )
 
+        //this.doPost = this.doPost.bind( this );
         // this.name = 'students'
         this.state = {
             records: [],
         };
     }
 
-    doPost( url, body ) {
-        fetch( url,
-            {
-                method: 'POST',
-                credentials: 'same-origin',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                //               body: body
-            })
-            .then(
-                res => console.log( res )
-                //res => this.loadRecordsFromServer()
-            )
-            .catch( err => console.error( err ) )
-    }
-
-    claimTask() {
-        this.doPost( URL + 'claim?id=' + this.props.task.id, this.props.task.id )
-    }
-
-    releaseTask() {
-        this.doPost( URL + 'release?id=' + this.props.task.id, this.props.task.id )
-    }
-
-    startTask() {
-        this.doPost( URL + 'start?id=' + this.props.task.id, this.props.task.id )
-    }
-
 
     componentDidMount() {
-
         console.log( "called component" )
         this.loadRecordsFromServer();
     }
@@ -75,6 +40,10 @@ export class TaskList extends React.Component {
                 });
             });
     }
+    
+    refresh(){
+        this.loadRecordsFromServer()
+    }
 
     // Create new student
     render() {
@@ -82,10 +51,8 @@ export class TaskList extends React.Component {
         return (
             <div>
                 <TaskTable records={this.state.records} mine={this.props.mine}
-                claimTask = {this.claimTask}
-                releaseTask = {this.releaseTask}
-                startTask = {this.startTask}
-                />
+                    refresh={this.refresh}
+                    />
 
             </div>
         );
@@ -99,22 +66,23 @@ class TaskTable extends React.Component {
         this.toLink = "/entities/students/edit/"
     }
 
+
+
     render() {
 
         if ( !this.props.records ) return;
 
         let records = this.props.records.map( task =>
-            <Task key={task.id} task={task} mine={this.props.mine} 
-        claimTask = {this.props.claimTask}
-        releaseTask = {this.props.releaseTask}
-        startTask = {this.props.startTask}
-        
-        />
+            <Task key={task.id} task={task} mine={this.props.mine}
+                refresh={this.props.loadRecordsFromServer}
+                />
         );
 
         return (
 
             <div>
+                <button className="btn btn-danger btn-xs" onClick={this.props.refresh}>Press</button>
+               
                 <table className="table table-striped">
                     <thead>
                         <tr>
@@ -136,15 +104,59 @@ class TaskTable extends React.Component {
 class Task extends React.Component {
     constructor( props ) {
         super( props );
-       // this.deleteRecord = this.deleteRecord.bind( this );
-       // this.editRecord = this.editRecord.bind( this );
+        //        this.doPost = this.doPost.bind( this );
+        this.claimTask = this.claimTask.bind( this )
+        this.releaseTask = this.releaseTask.bind( this )
+        this.startTask = this.startTask.bind( this )
+        this.id = this.props.task.id;
+
+        // this.deleteRecord = this.deleteRecord.bind( this );
+        // this.editRecord = this.editRecord.bind( this );
 
         this.toLink = "/entities/task/" + this.props.task.id
     }
 
+    claimTask( id ) {
+        this.doPost( URL + 'claim?id=' + this.id, this.id )
+        this.refresh()
+    }
+    
+    refresh(){ 
+        window.location.reload(); 
+    }
+
+    releaseTask( id ) {
+        this.doPost( URL + 'release?id=' + this.id, this.id )
+        this.refresh()
+    }
+
+    startTask( id ) {
+        this.doPost( URL + 'start?id=' + this.id, this.id )
+        this.refresh()
+    }
+
+    doPost( url, body ) {
+        fetch( url,
+            {
+                method: 'POST',
+                credentials: 'same-origin',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                //               body: body
+            })
+            .then(
+            res => console.log( res )
+            //res => this.loadRecordsFromServer()
+            )
+            .catch( err => console.error( err ) )
+    }
+
+
 
     render() {
-        console.log( this.props.student )
+        //console.log( this.props.student )
+        let id = this.props.task.id;
         return (
             <tr>
                 <td>{this.props.task.name}</td>
@@ -153,14 +165,15 @@ class Task extends React.Component {
                 <td>{this.props.task.id}</td>
                 <td>{this.props.task.statusId}</td>
                 <td>
+                    {JSON.toString( this.props.refresh )}
                     {!this.props.mine &&
-                        <button className="btn btn-danger btn-xs" onClick={this.props.claimTask}>Claim</button>
+                        <button className="btn btn-danger btn-xs" onClick={this.claimTask}>Claim</button>
                     }
                     {this.props.mine &&
                         <p>
-                        <button className="btn btn-danger btn-xs" onClick={this.props.releaseTask}>Release</button>
-                            {this.props.statusId === "Reserved" &&
-                            < button className="btn btn-primary btn-xs" onClick={this.props.rstartTask}>Start</button>
+                            <button className="btn btn-danger btn-xs" onClick={this.releaseTask}>Release</button>
+                            {this.props.task.statusId === "Reserved" &&
+                                < button className="btn btn-primary btn-xs" onClick={this.startTask}>Start</button>
                             }
                         </p>
                     }
@@ -174,16 +187,16 @@ class Task extends React.Component {
     }
 }
 
-const log = (type) => console.log.bind(console, type);
+const log = ( type ) => console.log.bind( console, type );
 
 const taskSchema = {
     title: "Todo",
     type: "object",
     required: ["firstname", "lastname"],
     properties: {
-        firstname: {type: "string", title: "First Name", default: "xxx"},
-        lastname: {type: "string", title: "Last", default: "yyy"},
-        email: {type: "string", title: "Email"}
+        firstname: { type: "string", title: "First Name", default: "xxx" },
+        lastname: { type: "string", title: "Last", default: "yyy" },
+        email: { type: "string", title: "Email" }
     }
 };
 
@@ -194,10 +207,7 @@ export class TaskView extends React.Component {
         // this.deleteRecord = this.deleteRecord.bind( this );
         // this.editRecord = this.editRecord.bind( this );
         //
-        // this.doPost = this.doPost.bind( this );
-        // this.claimTask = this.claimTask.bind( this )
-        //
-        // this.releaseTask = this.releaseTask.bind( this )
+
 
         this.url = URL + "show?id=" + this.props.match.params.id
 
@@ -206,32 +216,35 @@ export class TaskView extends React.Component {
         };
     }
 
-    editRecord(record) {
-        let myurl = URL  + 'complete?id=' + this.props.match.params.id
-        console.log(myurl)
-        fetch(myurl,
+
+
+    editRecord( record ) {
+        let myurl = URL + 'complete?id=' + this.props.match.params.id
+        console.log( myurl )
+        fetch( myurl,
             {
                 method: 'POST',
                 credentials: 'same-origin',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(record)
+                body: JSON.stringify( record )
             })
             .then(
-                //res => this.loadRecordsFromServer()
+            //res => this.loadRecordsFromServer()
 
             )
-            .catch(err => console.error(err))
+            .catch( err => console.error( err ) )
     }
 
-    onSubmit(formData) {
-        this.editRecord(formData)
-        this.props.history.push('/entities/customers')
+    onSubmit( formData ) {
+        this.editRecord( formData )
+        this.props.history.push( '/' )
+        window.location.reload(); 
     }
 
     componentDidMount() {
-      this.loadTask();
+        this.loadTask();
     }
 
     loadTask() {
@@ -252,8 +265,8 @@ export class TaskView extends React.Component {
             <div>
                 <h3> {this.state.task.name}</h3>
                 <Form schema={taskSchema}
-                      onSubmit={({formData}) => this.onSubmit(formData) }
-                      onError={log("errors")}/>
+                    onSubmit={( {formData}) => this.onSubmit( formData )}
+                    onError={log( "errors" )} />
             </div>
         )
     }
@@ -262,37 +275,3 @@ export class TaskView extends React.Component {
 }
 
 
-//export class EditCustomer extends BaseEditComponent {
-//
-//    componentDidMount() {
-//        if (this.props.match.params.id)
-//            this.fetchSingleRecord(this.props.match.params.id);
-//    }
-//
-//    constructor(props) {
-//        super(props);
-//        this.state = {entity: {}};
-//        this.entityName = 'customers'
-//        this.onSubmit = this.onSubmit.bind(this);
-//        //this.handleChange = this.handleChange.bind(this);
-//    }
-//
-//    onSubmit(formData) {
-//        this.editRecord(formData)
-//        this.props.history.push('/entities/customers')
-//    }
-//
-//    render() {
-//        return (
-//            <div>
-//                <h3> Edit Customer </h3>
-//                <Form schema={customerSchema}
-//                    uiSchema={customerUISchema}
-//                      formData={this.state.entity }
-//                    //onChange={log("changed")}
-//                      onSubmit={({formData}) => this.onSubmit(formData) }
-//                      onError={log("errors")}/>
-//            </div>
-//        )
-//    }
-//}

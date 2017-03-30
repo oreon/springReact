@@ -12,7 +12,6 @@ import Form from "react-jsonschema-form";
 import {BaseComponent, BaseEditComponent} from '../commons/BaseComponent.jsx'
 import Griddle, {plugins} from 'griddle-react';
 import {SimpleList} from '../commons/SimpleList.jsx'
-import {CaseDefinitionList,EditCaseDefinition} from './CaseDefinition';
 
 
 export function createSchema(){ 

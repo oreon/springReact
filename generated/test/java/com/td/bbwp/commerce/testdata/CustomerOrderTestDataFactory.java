@@ -39,9 +39,9 @@ public class CustomerOrderTestDataFactory extends AbstractTestDataFactory<com.td
 
 			register(customerOrder);
 
-			customerOrder.setNotes("notes-1490386455076-One");
+			customerOrder.setNotes("notes-1490822647043-One");
 
-			customerOrder.setShipDate(dateFormat.parse("2017.03.24 21:30:22 EDT"));
+			customerOrder.setShipDate(dateFormat.parse("2017.04.22 07:51:56 EDT"));
 
 			customerOrder.setCustomer(customerTestDataFactory.createCustomerOne());
 
@@ -61,9 +61,9 @@ public class CustomerOrderTestDataFactory extends AbstractTestDataFactory<com.td
 
 			register(customerOrder);
 
-			customerOrder.setNotes("notes-1490386455077-Two");
+			customerOrder.setNotes("notes-1490822647044-Two");
 
-			customerOrder.setShipDate(dateFormat.parse("2017.04.16 05:05:56 EDT"));
+			customerOrder.setShipDate(dateFormat.parse("2017.04.06 21:49:08 EDT"));
 
 			customerOrder.setCustomer(customerTestDataFactory.createCustomerTwo());
 
@@ -83,9 +83,9 @@ public class CustomerOrderTestDataFactory extends AbstractTestDataFactory<com.td
 
 			register(customerOrder);
 
-			customerOrder.setNotes("notes-1490386455078-Three");
+			customerOrder.setNotes("notes-1490822647045-Three");
 
-			customerOrder.setShipDate(dateFormat.parse("2017.04.10 05:06:29 EDT"));
+			customerOrder.setShipDate(dateFormat.parse("2017.04.18 11:49:41 EDT"));
 
 			customerOrder.setCustomer(customerTestDataFactory.createCustomerThree());
 
@@ -105,9 +105,9 @@ public class CustomerOrderTestDataFactory extends AbstractTestDataFactory<com.td
 
 			register(customerOrder);
 
-			customerOrder.setNotes("notes-1490386455079-Four");
+			customerOrder.setNotes("notes-1490822647046-Four");
 
-			customerOrder.setShipDate(dateFormat.parse("2017.03.30 19:53:09 EDT"));
+			customerOrder.setShipDate(dateFormat.parse("2017.03.18 23:11:56 EDT"));
 
 			customerOrder.setCustomer(customerTestDataFactory.createCustomerFour());
 
@@ -127,9 +127,9 @@ public class CustomerOrderTestDataFactory extends AbstractTestDataFactory<com.td
 
 			register(customerOrder);
 
-			customerOrder.setNotes("notes-1490386455080-Five");
+			customerOrder.setNotes("notes-1490822647047-Five");
 
-			customerOrder.setShipDate(dateFormat.parse("2017.04.03 23:02:36 EDT"));
+			customerOrder.setShipDate(dateFormat.parse("2017.04.18 19:36:21 EDT"));
 
 			customerOrder.setCustomer(customerTestDataFactory.createCustomerFive());
 

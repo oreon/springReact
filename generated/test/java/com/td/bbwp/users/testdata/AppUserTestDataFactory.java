@@ -35,9 +35,9 @@ public class AppUserTestDataFactory extends AbstractTestDataFactory<com.td.bbwp.
 
 			register(appUser);
 
-			appUser.setUserName("userName-1490386455146-One");
+			appUser.setUserName("userName-1490822647105-One");
 
-			appUser.setPassword("password-1490386455150-One");
+			appUser.setPassword("password-1490822647106-One");
 
 			appUser.setEnabled(true);
 
@@ -55,9 +55,9 @@ public class AppUserTestDataFactory extends AbstractTestDataFactory<com.td.bbwp.
 
 			register(appUser);
 
-			appUser.setUserName("userName-1490386455151-Two");
+			appUser.setUserName("userName-1490822647106-Two");
 
-			appUser.setPassword("password-1490386455151-Two");
+			appUser.setPassword("password-1490822647106-Two");
 
 			appUser.setEnabled(true);
 
@@ -75,9 +75,9 @@ public class AppUserTestDataFactory extends AbstractTestDataFactory<com.td.bbwp.
 
 			register(appUser);
 
-			appUser.setUserName("userName-1490386455151-Three");
+			appUser.setUserName("userName-1490822647107-Three");
 
-			appUser.setPassword("password-1490386455151-Three");
+			appUser.setPassword("password-1490822647107-Three");
 
 			appUser.setEnabled(true);
 
@@ -95,9 +95,9 @@ public class AppUserTestDataFactory extends AbstractTestDataFactory<com.td.bbwp.
 
 			register(appUser);
 
-			appUser.setUserName("userName-1490386455152-Four");
+			appUser.setUserName("userName-1490822647107-Four");
 
-			appUser.setPassword("password-1490386455152-Four");
+			appUser.setPassword("password-1490822647107-Four");
 
 			appUser.setEnabled(true);
 
@@ -115,9 +115,9 @@ public class AppUserTestDataFactory extends AbstractTestDataFactory<com.td.bbwp.
 
 			register(appUser);
 
-			appUser.setUserName("userName-1490386455153-Five");
+			appUser.setUserName("userName-1490822647108-Five");
 
-			appUser.setPassword("password-1490386455153-Five");
+			appUser.setPassword("password-1490822647108-Five");
 
 			appUser.setEnabled(true);
 

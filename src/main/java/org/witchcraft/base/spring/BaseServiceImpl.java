@@ -1,11 +1,9 @@
 package org.witchcraft.base.spring;
 
-import java.util.List;
+import java.util.Optional;
 
 import org.witchcraft.base.entity.BaseEntity;
 import org.witchcraft.base.entity.BaseRepository;
-
-import com.td.bbwp.wf.CaseDefinition;
 
 public abstract class BaseServiceImpl<T extends BaseEntity> {
 	
@@ -19,9 +17,9 @@ public abstract class BaseServiceImpl<T extends BaseEntity> {
 	}
 
 	//@Override
-	public T findOne(Long id) {
+	public Optional<T> findOne(Long id) {
 		// TODO Auto-generated method stub
-		return  getRepository().findOne(id);
+		return  getRepository().findById(id);
 	}
 
 	//@Override

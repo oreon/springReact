@@ -34,6 +34,7 @@ public abstract class EmployeeBase extends com.td.bbwp.commerce.Person {
 
 	@ManyToOne(optional = false, fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
 	@JoinColumn(name = "DEPARTMENT_ID", nullable = false, updatable = true, insertable = true)
+	@com.fasterxml.jackson.annotation.JsonBackReference
 
 	protected Department department
 

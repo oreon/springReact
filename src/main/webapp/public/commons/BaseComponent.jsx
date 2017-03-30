@@ -1,6 +1,6 @@
 import React from 'react'
 
-export const URL = "http://localhost:9033/api/";
+export const URL = "http://localhost:9033/rest/";
 
 export  class BaseComponent extends React.Component {
 
@@ -12,7 +12,7 @@ export  class BaseComponent extends React.Component {
         super(props);
         this.deleteRecord = this.deleteRecord.bind(this);
         this.createRecord = this.createRecord.bind(this);
-        this.url = URL + this.getEntityName()
+        this.url = URL + this.getEntityName() + "/"
 
         this.state = {
             records: [],
@@ -42,7 +42,7 @@ export  class BaseComponent extends React.Component {
             .then((response) => response.json())
             .then((responseData) => {
                 this.setState({
-                    records: responseData._embedded[this.name],
+                    records: responseData,
                 });
             });
     }

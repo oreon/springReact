@@ -296,6 +296,48 @@
 
 	</entity>
 
+	<!--  CaseInstance  JPA Configurations -->
+	<entity class="com.td.bbwp.wf.CaseInstance" name="CaseInstance">
+		<table name="CASE_INSTANCE"  >
+				
+		
+		  
+		
+		
+		
+		</table>
+ 	
+ 	
+	
+
+	
+
+	
+
+	</entity>
+
+	<!--  TaskInstance  JPA Configurations -->
+	<entity class="com.td.bbwp.wf.TaskInstance" name="TaskInstance">
+		<table name="TASK_INSTANCE"  >
+				
+		
+		  
+		
+		
+		
+		</table>
+ 	
+ 	
+	
+
+	
+
+	
+
+	
+
+	</entity>
+
 	
 	
 </entity-mappings>

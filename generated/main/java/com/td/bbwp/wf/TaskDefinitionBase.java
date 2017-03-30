@@ -8,9 +8,6 @@ package com.td.bbwp.wf;
 
 import javax.persistence.*;
 import org.witchcraft.base.entity.FileAttachment;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
-
 import org.witchcraft.base.entity.BaseEntity;
 import org.hibernate.annotations.Filter;
 import org.hibernate.annotations.Filters;
@@ -30,8 +27,8 @@ import org.witchcraft.base.entity.BaseEntity;
 
 @MappedSuperclass
 
-// @Indexed
-// @Analyzer(definition = "entityAnalyzer")
+//@Indexed
+//@Analyzer(definition = "entityAnalyzer")
 
 public abstract class TaskDefinitionBase extends BaseEntity {
 
@@ -43,9 +40,10 @@ public abstract class TaskDefinitionBase extends BaseEntity {
 
 	;
 
-	@ManyToOne(optional = false, fetch = FetchType.LAZY, cascade = { CascadeType.MERGE, CascadeType.PERSIST })
+	@ManyToOne(optional = false, fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
 	@JoinColumn(name = "CASE_DEFINITION_ID", nullable = false, updatable = true, insertable = true)
-	@JsonBackReference
+	@com.fasterxml.jackson.annotation.JsonBackReference
+
 	protected CaseDefinition caseDefinition
 
 	;
@@ -109,7 +107,7 @@ public abstract class TaskDefinitionBase extends BaseEntity {
 	}
 
 	@Transient
-	// Display name
+	//Display name
 	public String getDisplayName() {
 		try {
 			return name;
@@ -119,10 +117,12 @@ public abstract class TaskDefinitionBase extends BaseEntity {
 	}
 
 	/*
-	 * public List<List<? extends BaseEntity>> getComposites(){ List lst = new
-	 * ArrayList(); lst.addAll(fields);
-	 * 
-	 * return lst; }
-	 */
+	public List<List<? extends BaseEntity>> getComposites(){
+		List lst = new ArrayList();
+		lst.addAll(fields);
+		
+		return lst;
+	}
+	*/
 
 }

@@ -8,9 +8,6 @@ package com.td.bbwp.wf;
 
 import javax.persistence.*;
 import org.witchcraft.base.entity.FileAttachment;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
-
 import org.witchcraft.base.entity.BaseEntity;
 import org.hibernate.annotations.Filter;
 import org.hibernate.annotations.Filters;
@@ -51,7 +48,8 @@ public abstract class FieldBase extends BaseEntity {
 
 	@ManyToOne(optional = false, fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
 	@JoinColumn(name = "TASK_DEFINITION_ID", nullable = false, updatable = true, insertable = true)
-	@JsonBackReference
+	@com.fasterxml.jackson.annotation.JsonBackReference
+
 	protected TaskDefinition taskDefinition
 
 	;

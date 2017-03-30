@@ -1,5 +1,6 @@
 package com.td.bbwp.course.web;
 
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.net.URL;
@@ -27,6 +28,8 @@ public class JbpmTaskService {
     private TaskService taskService;
 
     public TaskService getTaskService() {
+    	if(taskService == null)
+    		init();
         return taskService;
     }
 
@@ -34,10 +37,13 @@ public class JbpmTaskService {
         this.taskService = taskService;
     }
 
-    JbpmTaskService(){
+    
+    public void init(){
+    	String auth = SecurityContextHolder.getContext().getAuthentication().getName();
 
-        String user = "krisv";
-        String password = "krisv";
+        String user = auth;
+        String password = auth;
+        
         URL serverRestUrl = null;
 
         try {
@@ -45,12 +51,12 @@ public class JbpmTaskService {
         }catch (Exception ex){
 
         }
-        // String user = "krisv";
+        
         String deploymentId = "demo:oneprocess:1.1";
 
         RuntimeEngine engine = RemoteRuntimeEngineFactory.newRestBuilder().addUrl(serverRestUrl)
                 .addTimeout(5)
-                .addDeploymentId(deploymentId).addUserName("krisv").addPassword(password)
+                .addDeploymentId(deploymentId).addUserName(user).addPassword(password)
 
 
                 // if you're sending custom class parameters, make sure that
@@ -61,6 +67,7 @@ public class JbpmTaskService {
         // Create KieSession and TaskService instances and use them
         KieSession ksession = engine.getKieSession();
         taskService = engine.getTaskService();
+    	
     }
 
 

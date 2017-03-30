@@ -1,5 +1,7 @@
 package com.td.bbwp.web.action.wf;
 
+import java.util.Optional;
+
 import org.witchcraft.base.entity.BaseEntity;
 import org.witchcraft.base.spring.BaseService;
 
@@ -14,7 +16,7 @@ public abstract class BaseController<T extends BaseEntity> {
 	}
 
 	// @Override
-	public T findOne(Long id) {
+	public Optional<T> findOne(Long id) {
 		// TODO Auto-generated method stub
 		return getBaseService().findOne(id);
 	}
