@@ -40,19 +40,25 @@ public class MainApp {
 				urerRepository.save(user2);
 			}
 			// repository.save(new Student("John", "Johnson", "john@john.com"));
-			// repository.save(new Student("Mary", "Poppins", "pop@mary.com"));
+			// repository.save(new Student("Mary", "Pons", "pop@mary.com"));
 			// repository.save(new Student("Rob", "Robber", "rob@bery.com"));
 			// repository.save(new Student("Kate", "Robinson",
 			// "kate@robinson.com"));
 			
 			if(caseDefinitionRepository.count() == 0){
-				CaseDefinition caseDefinition = new CaseDefinition("aam_lending");
+				CaseDefinition caseDefinition = new CaseDefinition("aan_annual");
 				
-				TaskDefinition td = new TaskDefinition("lender_task");
+				TaskDefinition td = new TaskDefinition("lender_assesment");
 				td.addField(new Field("color", FieldType.string, true));
 				td.addField(new Field("risk-rating", FieldType.number, true));
 				
+				TaskDefinition td2 = new TaskDefinition("adjudicate");
+				//td.addField(new Field("color", FieldType.string, true));
+				td.addField(new Field("recommended_risk-rating", FieldType.number, true));
+				
+				
 				caseDefinition.addTaskDefinition(td);
+				caseDefinition.addTaskDefinition(td2);
 				
 				caseDefinitionRepository.save(caseDefinition);
 			}

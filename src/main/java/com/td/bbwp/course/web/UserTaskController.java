@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 //import org.jbpm.services.api.model.UserTaskInstanceDesc;
@@ -35,108 +36,124 @@ import com.td.bbwp.wf.TaskInstance;
 @RequestMapping("/api/task")
 public class UserTaskController {
 
-//	@Autowired
-//	private RuntimeDataService runtimeDataService;
-//
-//	@Autowired
-//	private DefinitionService definitionService;
+	// @Autowired
+	// private RuntimeDataService runtimeDataService;
+	//
+	// @Autowired
+	// private DefinitionService definitionService;
 
 	@Autowired
 	private JbpmTaskService jbpmTaskService;
-	
+
 	@Autowired
 	CaseInstanceRepository caseInstanceRepository;
-	
+
 	@Autowired
 	TaskInstanceRepository taskInstanceRepository;
-	
+
 	@Autowired
 	TaskDefinitionRepository taskDefinitionRepository;
-	
+
 	@Autowired
 	CaseDefinitionRepository caseDefinitionRepository;
-	
 
-	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public Collection<TaskSummary> getTasks() {		
-	    String userId = getAuthUser();
-	      
-		//List<TaskSummary> tasks = jbpmTaskService.getTaskService()
-		//		.getTasksAssignedAsPotentialOwner(userId, "en-uk");
-	    List<String> groups = Arrays.asList(new String[] {"lenders"});
-	    
-	    List<TaskSummary> tasks = jbpmTaskService.getTaskService().getTasksByGroup(groups);
-	    
-	    populateTasks(tasks);
+	public Collection<TaskSummary> getTasks() {
+		String userId = getAuthUser();
 
-		return tasks.stream()
-				.filter(task -> task.getStatusId().equalsIgnoreCase("Ready"))
-				.collect(Collectors.toList());
+		// List<TaskSummary> tasks = jbpmTaskService.getTaskService()
+		// .getTasksAssignedAsPotentialOwner(userId, "en-uk");
+		List<String> groups = Arrays.asList(new String[] { "lenders" });
+
+		List<TaskSummary> tasks = jbpmTaskService.getTaskService().getTasksByGroup(groups);
+
+		populateTasks(tasks);
+
+		return tasks.stream().filter(task -> task.getStatusId().equalsIgnoreCase("Ready")).collect(Collectors.toList());
 	}
 
 	private void populateTasks(List<TaskSummary> tasks) {
-		tasks.stream().map(x -> 
-	    	caseInstanceRepository.findByProcessInstanceId(x.getProcessInstanceId())
-	    	.orElseGet( () -> {
-	    		CaseInstance caseInstance = new CaseInstance();
-	    		caseInstance.setProcessInstanceId(x.getProcessInstanceId());
-	    		caseInstanceRepository.save(caseInstance);
-	    		return caseInstance;})
-	    );
-	    
-	    tasks.stream().map(x -> 
-	    	taskInstanceRepository.findByTaskId(x.getId())
-	    	.orElseGet( () -> {
-	    		
-	    		CaseDefinition caseDef = OptionsHelper.getOrThrow( caseDefinitionRepository.findByName(x.getProcessId()),
-	    				new RuntimeException("No process configured " + x.getProcessId()));
-	    		
-	    		TaskDefinition taskDefinition  = taskDefinitionRepository.findByNameAndCaseDefinition(x.getName(),
-	    				caseDef).get();
-	    		
-	    		TaskInstance taskInstance = new TaskInstance();
-	    		taskInstance.setTaskId(x.getId());
-	    		taskInstance.setTaskDefinition(taskDefinition);
-	    		taskInstance.setName(x.getName());
-	    		taskInstance.setCaseInstance(caseInstanceRepository.findByProcessInstanceId(x.getProcessInstanceId()).get());
-	    		taskInstanceRepository.save(taskInstance);
-	    		return taskInstance;
-	    	})
-	    );
+		tasks.stream().map(x -> getCaseInstance(x)).collect(Collectors.toList());
+		tasks.stream().map(x -> getTaskInstance(x)).collect(Collectors.toList());
+
+		// tasks.stream().flatMap(x ->
+		// taskInstanceRepository.findByTaskId(x.getId())
+		// .map(y -> y)
+		// .orElseGet(() -> createTaskInstance(x)));
 	}
-	
+
+	public CaseInstance getCaseInstance(TaskSummary ts) {
+		// System.out.println(caseInstanceRepository.findByProcessInstanceId(ts.getProcessInstanceId()).get());
+		return caseInstanceRepository.findByProcessInstanceId(ts.getProcessInstanceId())
+				.orElseGet(() -> createCaseInstance(ts));
+	}
+
+	public TaskInstance getTaskInstance(TaskSummary ts) {
+		// System.out.println(caseInstanceRepository.findByProcessInstanceId(ts.getProcessInstanceId()).get());
+		return taskInstanceRepository.findByTaskId(ts.getId()).orElseGet(() -> createTaskInstance(ts));
+	}
+
+	public CaseInstance createCaseInstance(TaskSummary ts) {
+		CaseInstance caseInstance = new CaseInstance();
+
+		CaseDefinition caseDef = OptionsHelper.getOrThrow(caseDefinitionRepository.findByName(ts.getProcessId()),
+				new RuntimeException("No process configured " + ts.getProcessId()));
+
+		caseInstance.setProcessInstanceId(ts.getProcessInstanceId());
+		caseInstance.setCaseDefinition(caseDef);
+
+		caseInstanceRepository.save(caseInstance);
+		return caseInstance;
+	}
+
+	public TaskInstance createTaskInstance(TaskSummary x) {
+
+		CaseDefinition caseDef = OptionsHelper.getOrThrow(caseDefinitionRepository.findByName(x.getProcessId()),
+				new RuntimeException("No process configured " + x.getProcessId()));
+
+		TaskDefinition taskDefinition = taskDefinitionRepository.findByNameAndCaseDefinition(x.getName(), caseDef)
+				.get();
+
+		TaskInstance taskInstance = new TaskInstance();
+		taskInstance.setTaskId(x.getId());
+		taskInstance.setTaskDefinition(taskDefinition);
+		taskInstance.setName(x.getName());
+		taskInstance.setCaseInstance(caseInstanceRepository.findByProcessInstanceId(x.getProcessInstanceId()).get());
+		taskInstanceRepository.save(taskInstance);
+		return taskInstance;
+
+	}
+
 	@RequestMapping(value = "/myTasks", method = RequestMethod.GET)
-	public Collection<TaskSummary> getMyTasks() {		
-	    String userId = getAuthUser();
-	      
-		List<TaskSummary> tasks = jbpmTaskService.getTaskService()
-				.getTasksOwned(userId, "en-uk");
+	public Collection<TaskSummary> getMyTasks() {
+		String userId = getAuthUser();
+
+		List<TaskSummary> tasks = jbpmTaskService.getTaskService().getTasksOwned(userId, "en-uk");
 
 		return tasks;
 	}
-	
+
 	@RequestMapping(value = "/show", method = RequestMethod.GET)
 	public CustomTask getTask(@RequestParam String id) {
-		
+
 		Long taskId = Long.parseLong(id);
 
 		Task task = jbpmTaskService.getTaskService().getTaskById(taskId);
-		
+
 		CustomTask customTask = new CustomTask();
-		
+
 		BeanUtils.copyProperties(task, customTask);
 
 		return customTask;
- 
+
 	}
-	
+
 	@RequestMapping(value = "/complete", method = RequestMethod.POST)
-	public String completeTask(@RequestParam String id, @RequestBody Map<String,String> allRequestParams) {		
+	public String completeTask(@RequestParam String id, @RequestBody Map<String, String> allRequestParams) {
 		String userId = getAuthUser();
-		
+
 		Map<String, Object> data = new HashMap<String, Object>();
-		
+
 		for (Entry<String, String> entry : allRequestParams.entrySet()) {
 			Object value = entry.getValue();
 			// just a simple type conversion
@@ -152,7 +169,7 @@ public class UserTaskController {
 			}
 			data.put(entry.getKey(), value);
 		}
-		
+
 		try {
 			jbpmTaskService.getTaskService().complete(Long.parseLong(id), userId, data);
 			return "Task " + id + " completed successfully";
@@ -160,9 +177,8 @@ public class UserTaskController {
 			return "Task " + id + " complete failed due to " + e.getMessage();
 		}
 
- 
 	}
-	
+
 	@RequestMapping(value = "/claim", method = RequestMethod.POST)
 	public String claimTask(@RequestParam String id) {
 		String userId = getAuthUser();
@@ -173,11 +189,7 @@ public class UserTaskController {
 			return "Task " + id + " claim failed due to " + e.getMessage();
 		}
 	}
-	
-	
-	
-	
-	
+
 	@RequestMapping(value = "/release", method = RequestMethod.POST)
 	public String releaseTask(@RequestParam String id) {
 		String userId = getAuthUser();
@@ -187,9 +199,9 @@ public class UserTaskController {
 		} catch (Exception e) {
 			return "Task " + id + " release failed due to " + e.getMessage();
 		}
- 
+
 	}
-	
+
 	@RequestMapping(value = "/start", method = RequestMethod.POST)
 	public String startTask(@RequestParam String id) {
 		String userId = getAuthUser();
@@ -199,12 +211,12 @@ public class UserTaskController {
 		} catch (Exception e) {
 			return "Task " + id + " start failed due to " + e.getMessage();
 		}
- 
+
 	}
-	
+
 	protected String getAuthUser() {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-	    String userId = auth.getName();
-	    return userId;
+		String userId = auth.getName();
+		return userId;
 	}
 }
