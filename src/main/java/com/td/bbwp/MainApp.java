@@ -7,13 +7,14 @@ import org.springframework.context.annotation.Bean;
 
 import com.td.bbwp.commerce.Customer;
 import com.td.bbwp.commerce.Gender;
-import com.td.bbwp.course.domain.Student;
-import com.td.bbwp.course.domain.StudentRepository;
 import com.td.bbwp.course.domain.User;
 import com.td.bbwp.course.domain.UserRepository;
 import com.td.bbwp.web.action.commerce.CustomerRepository;
 import com.td.bbwp.web.action.wf.CaseDefinitionRepository;
 import com.td.bbwp.wf.CaseDefinition;
+import com.td.bbwp.wf.Field;
+import com.td.bbwp.wf.TaskDefinition;
+import com.td.bbwp.wf.FieldType;
 
 @SpringBootApplication
 /// @EntityScan("com.delivery.domain")
@@ -45,8 +46,13 @@ public class MainApp {
 			// "kate@robinson.com"));
 			
 			if(caseDefinitionRepository.count() == 0){
-				CaseDefinition caseDefinition = new CaseDefinition();
-				caseDefinition.setName("aam_lending");
+				CaseDefinition caseDefinition = new CaseDefinition("aam_lending");
+				
+				TaskDefinition td = new TaskDefinition("lender_task");
+				td.addField(new Field("color", FieldType.string, true));
+				td.addField(new Field("risk-rating", FieldType.number, true));
+				
+				caseDefinition.addTaskDefinition(td);
 				
 				caseDefinitionRepository.save(caseDefinition);
 			}

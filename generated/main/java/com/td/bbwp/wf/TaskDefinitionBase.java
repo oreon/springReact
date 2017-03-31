@@ -42,7 +42,7 @@ public abstract class TaskDefinitionBase extends BaseEntity {
 
 	@ManyToOne(optional = false, fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
 	@JoinColumn(name = "CASE_DEFINITION_ID", nullable = false, updatable = true, insertable = true)
-	@com.fasterxml.jackson.annotation.JsonBackReference
+	@com.fasterxml.jackson.annotation.JsonIgnore
 
 	protected CaseDefinition caseDefinition
 

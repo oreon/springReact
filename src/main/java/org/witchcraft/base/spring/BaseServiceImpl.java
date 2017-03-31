@@ -2,9 +2,11 @@ package org.witchcraft.base.spring;
 
 import java.util.Optional;
 
+import org.springframework.transaction.annotation.Transactional;
 import org.witchcraft.base.entity.BaseEntity;
 import org.witchcraft.base.entity.BaseRepository;
 
+@Transactional
 public abstract class BaseServiceImpl<T extends BaseEntity> {
 	
 	public abstract BaseRepository<T> getRepository();

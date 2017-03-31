@@ -120,13 +120,13 @@ public class CaseDefinitionControllerTest {
 	@WithUserDetails("admin")
 	public void testEditOfCaseDefintion() throws Exception {
 
-		CaseDefinition caseDef = caseDefinitionService.findOne(11L).map(x -> x)
+		CaseDefinition caseDef = caseDefinitionService.findOne(1L).map(x -> x)
 				.orElseThrow(() -> new RuntimeException("Record not found"));
 		
 		
 		long records = caseDefinitionService.count();
 
-		this.mockMvc.perform(put("/rest/caseDefinitions/11").contentType(contentType).content(json(caseDef)))
+		this.mockMvc.perform(put("/rest/caseDefinitions/1").contentType(contentType).content(json(caseDef)))
 				.andExpect(status().isOk());
 		
 		//assertEquals(records, caseDefinitionService.count());

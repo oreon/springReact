@@ -31,6 +31,9 @@ public class CaseDefintionController extends BaseController<CaseDefinition> {
 	@Autowired
 	CaseDefinitionService caseDefintionService;
 
+	@Autowired
+	CaseDefinitionRepository caseDefinitionRepository;
+
 	@Override
 	public BaseService<CaseDefinition> getBaseService() {
 		// TODO Auto-generated method stub
@@ -49,19 +52,17 @@ public class CaseDefintionController extends BaseController<CaseDefinition> {
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity getCaseDefinition(@PathVariable("id") Long id) {
-		return caseDefinitionService.findOne(id)
-				.map(x -> new ResponseEntity(x, HttpStatus.OK))
+		return caseDefinitionService.findOne(id).map(x -> new ResponseEntity(x, HttpStatus.OK))
 				.orElse(new ResponseEntity("No CaseDefinition found for ID " + id, HttpStatus.NOT_FOUND));
 	}
-	
 
-	@RequestMapping( method = RequestMethod.POST)
+	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity createCaseDefinition(@RequestBody CaseDefinition caseDefinition) {
-		caseDefinitionService.save(caseDefinition);
+		caseDefinitionRepository.save(caseDefinition);
 		return new ResponseEntity(caseDefinition, HttpStatus.CREATED);
 	}
 
-	@RequestMapping(value ="/{id}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<?> deleteCaseDefinition(@PathVariable Long id) {
 
 		// if (null == caseDefinitionService.delete(id)) {
@@ -73,32 +74,40 @@ public class CaseDefintionController extends BaseController<CaseDefinition> {
 
 	}
 
-	@RequestMapping(value ="/{id}",  method = RequestMethod.PUT)
-	//@SuppressWarnings({ "unchecked", "rawtypes" })
+	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+	// @SuppressWarnings({ "unchecked", "rawtypes" })
 	public ResponseEntity<?> updateCaseDefinition(@PathVariable Long id, @RequestBody CaseDefinition caseDefinition) {
-		
-		return caseDefinitionService.findOne(id)
-				.map(x -> { 
-					try {
-						caseDefinition.setTaskDefinitions(new ArrayList<TaskDefinition>());
-						BeanUtils.copyProperties(x, caseDefinition);
-					} catch (Exception e) {
-						//h block
-						throw new RuntimeException("error copying to destination");
-					}
-					x = caseDefinitionService.save(x);
-					return new ResponseEntity(x, HttpStatus.OK);
-				})
-				.orElse(new ResponseEntity("No CaseDefinition found for ID " + id, HttpStatus.NOT_FOUND));
 
-		 //caseDefinition = caseDefinitionService.save(caseDefinition);//caseDefinitionDAO.update(id, caseDefinition);
+		return caseDefinitionService.findOne(id).map(x -> {
+			try {
+				// caseDefinition.setTaskDefinitions(new
+				// ArrayList<TaskDefinition>());
+//				caseDefinition.getTaskDefinitions().stream().forEach(y -> {
+//					y.setCaseDefinition(caseDefinition);
+//					y.getFields().forEach(z -> z.setTaskDefinition(y));
+//				});
+
+				BeanUtils.copyProperties(x, caseDefinition);
+				x.getTaskDefinitions().clear();
+				x.getTaskDefinitions().addAll(caseDefinition.getTaskDefinitions());
+			} catch (Exception e) {
+				// h block
+				throw new RuntimeException("error copying to destination");
+			}
+			x = caseDefinitionRepository.save(x);
+			return new ResponseEntity(x, HttpStatus.OK);
+		}).orElse(new ResponseEntity("No CaseDefinition found for ID " + id, HttpStatus.NOT_FOUND));
+
+		// caseDefinition =
+		// caseDefinitionService.save(caseDefinition);//caseDefinitionDAO.update(id,
+		// caseDefinition);
 		//
 		// if (null == caseDefinition) {
 		// return new ResponseEntity("No CaseDefinition found for ID " + id,
 		// HttpStatus.NOT_FOUND);
 		// }
 
-		//return new ResponseEntity(caseDefinition, HttpStatus.OK);
+		// return new ResponseEntity(caseDefinition, HttpStatus.OK);
 	}
 
 }

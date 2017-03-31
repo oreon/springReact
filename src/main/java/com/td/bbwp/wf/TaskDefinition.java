@@ -22,6 +22,12 @@ import javax.persistence.Transient;
 public class TaskDefinition extends TaskDefinitionBase implements java.io.Serializable {
 	private static final long serialVersionUID = -1594214427L;
 	
+	public TaskDefinition(){}
+	
+	public TaskDefinition(String name) {
+		this.name = name;
+	}
+
 	@Transient
 	public String getForm(){
 		

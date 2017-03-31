@@ -31,5 +31,12 @@ import org.witchcraft.base.entity.BaseEntity;
 @Inheritance(strategy = InheritanceType.JOINED) //inherit
 
 public class CaseDefinition extends CaseDefinitionBase implements java.io.Serializable {
+	
+	public CaseDefinition(){}
+	
+	public CaseDefinition(String name) {
+		this.name = name;
+	}
+
 	private static final long serialVersionUID = -92291048L;
 }
