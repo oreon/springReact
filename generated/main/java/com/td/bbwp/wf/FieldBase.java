@@ -48,7 +48,7 @@ public abstract class FieldBase extends BaseEntity {
 
 	@ManyToOne(optional = false, fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
 	@JoinColumn(name = "TASK_DEFINITION_ID", nullable = false, updatable = true, insertable = true)
-	@com.fasterxml.jackson.annotation.JsonIgnore
+	@com.fasterxml.jackson.annotation.JsonBackReference
 
 	protected TaskDefinition taskDefinition
 

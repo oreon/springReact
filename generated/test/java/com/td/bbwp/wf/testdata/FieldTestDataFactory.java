@@ -37,9 +37,9 @@ public class FieldTestDataFactory extends AbstractTestDataFactory<com.td.bbwp.wf
 
 			register(field);
 
-			field.setName("name-1490903698455-One");
+			field.setName("name-1491423494205-One");
 
-			field.setRequired(true);
+			field.setRequired(false);
 
 			field.setTaskDefinition(taskDefinitionTestDataFactory.createTaskDefinitionOne());
 
@@ -57,9 +57,9 @@ public class FieldTestDataFactory extends AbstractTestDataFactory<com.td.bbwp.wf
 
 			register(field);
 
-			field.setName("name-1490903698456-Two");
+			field.setName("name-1491423494206-Two");
 
-			field.setRequired(false);
+			field.setRequired(true);
 
 			field.setTaskDefinition(taskDefinitionTestDataFactory.createTaskDefinitionTwo());
 
@@ -77,7 +77,7 @@ public class FieldTestDataFactory extends AbstractTestDataFactory<com.td.bbwp.wf
 
 			register(field);
 
-			field.setName("name-1490903698456-Three");
+			field.setName("name-1491423494206-Three");
 
 			field.setRequired(true);
 
@@ -97,9 +97,9 @@ public class FieldTestDataFactory extends AbstractTestDataFactory<com.td.bbwp.wf
 
 			register(field);
 
-			field.setName("name-1490903698457-Four");
+			field.setName("name-1491423494207-Four");
 
-			field.setRequired(false);
+			field.setRequired(true);
 
 			field.setTaskDefinition(taskDefinitionTestDataFactory.createTaskDefinitionFour());
 
@@ -117,7 +117,7 @@ public class FieldTestDataFactory extends AbstractTestDataFactory<com.td.bbwp.wf
 
 			register(field);
 
-			field.setName("name-1490903698458-Five");
+			field.setName("name-1491423494208-Five");
 
 			field.setRequired(false);
 

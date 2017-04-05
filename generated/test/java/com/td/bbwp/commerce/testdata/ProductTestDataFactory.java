@@ -35,7 +35,7 @@ public class ProductTestDataFactory extends AbstractTestDataFactory<com.td.bbwp.
 
 			register(product);
 
-			product.setName("name-1490903698350-One");
+			product.setName("name-1491423494119-One");
 
 		} catch (Exception ex) {
 			handleCreationException(ex);
@@ -51,7 +51,7 @@ public class ProductTestDataFactory extends AbstractTestDataFactory<com.td.bbwp.
 
 			register(product);
 
-			product.setName("name-1490903698350-Two");
+			product.setName("name-1491423494119-Two");
 
 		} catch (Exception ex) {
 			handleCreationException(ex);
@@ -67,7 +67,7 @@ public class ProductTestDataFactory extends AbstractTestDataFactory<com.td.bbwp.
 
 			register(product);
 
-			product.setName("name-1490903698357-Three");
+			product.setName("name-1491423494120-Three");
 
 		} catch (Exception ex) {
 			handleCreationException(ex);
@@ -83,7 +83,7 @@ public class ProductTestDataFactory extends AbstractTestDataFactory<com.td.bbwp.
 
 			register(product);
 
-			product.setName("name-1490903698357-Four");
+			product.setName("name-1491423494120-Four");
 
 		} catch (Exception ex) {
 			handleCreationException(ex);
@@ -99,7 +99,7 @@ public class ProductTestDataFactory extends AbstractTestDataFactory<com.td.bbwp.
 
 			register(product);
 
-			product.setName("name-1490903698358-Five");
+			product.setName("name-1491423494120-Five");
 
 		} catch (Exception ex) {
 			handleCreationException(ex);

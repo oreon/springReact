@@ -62,6 +62,12 @@ public abstract class CaseInstanceBase extends BaseEntity {
 
 	;
 
+	@Column(name = "STRING", unique = false)
+
+	protected status string
+
+	;
+
 	public void setCaseDefinition(CaseDefinition caseDefinition) {
 		this.caseDefinition = caseDefinition;
 	}
@@ -118,6 +124,15 @@ public abstract class CaseInstanceBase extends BaseEntity {
 	public String getName() {
 
 		return name;
+	}
+
+	public void setString(status string) {
+		this.string = string;
+	}
+
+	public status getString() {
+
+		return string;
 	}
 
 	@Transient

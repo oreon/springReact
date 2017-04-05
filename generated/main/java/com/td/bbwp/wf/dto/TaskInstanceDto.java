@@ -26,6 +26,10 @@ public class TaskInstanceDto
 
 	protected CaseInstanceDto caseInstanceDto;
 
+	protected String taskData;
+
+	protected status string;
+
 	public void setTaskId(Long taskId) {
 		this.taskId = taskId;
 	}
@@ -56,6 +60,22 @@ public class TaskInstanceDto
 
 	public CaseInstanceDto getCaseInstance() {
 		return caseInstanceDto;
+	}
+
+	public void setTaskData(String taskData) {
+		this.taskData = taskData;
+	}
+
+	public String getTaskData() {
+		return taskData;
+	}
+
+	public void setString(status string) {
+		this.string = string;
+	}
+
+	public status getString() {
+		return string;
 	}
 
 }

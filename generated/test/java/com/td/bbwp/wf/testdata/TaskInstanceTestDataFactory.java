@@ -41,7 +41,11 @@ public class TaskInstanceTestDataFactory extends AbstractTestDataFactory<com.td.
 
 			taskInstance.setTaskId(null/*unknown attrib type:long*/);
 
-			taskInstance.setName("name-1490903698489-One");
+			taskInstance.setName("name-1491423494228-One");
+
+			taskInstance.setTaskData("taskData-1491423494228-One");
+
+			taskInstance.setString(null/*unknown attrib type:status*/);
 
 			taskInstance.setTaskDefinition(taskDefinitionTestDataFactory.createTaskDefinitionOne());
 
@@ -63,7 +67,11 @@ public class TaskInstanceTestDataFactory extends AbstractTestDataFactory<com.td.
 
 			taskInstance.setTaskId(null/*unknown attrib type:long*/);
 
-			taskInstance.setName("name-1490903698490-Two");
+			taskInstance.setName("name-1491423494229-Two");
+
+			taskInstance.setTaskData("taskData-1491423494229-Two");
+
+			taskInstance.setString(null/*unknown attrib type:status*/);
 
 			taskInstance.setTaskDefinition(taskDefinitionTestDataFactory.createTaskDefinitionTwo());
 
@@ -85,7 +93,11 @@ public class TaskInstanceTestDataFactory extends AbstractTestDataFactory<com.td.
 
 			taskInstance.setTaskId(null/*unknown attrib type:long*/);
 
-			taskInstance.setName("name-1490903698490-Three");
+			taskInstance.setName("name-1491423494230-Three");
+
+			taskInstance.setTaskData("taskData-1491423494230-Three");
+
+			taskInstance.setString(null/*unknown attrib type:status*/);
 
 			taskInstance.setTaskDefinition(taskDefinitionTestDataFactory.createTaskDefinitionThree());
 
@@ -107,7 +119,11 @@ public class TaskInstanceTestDataFactory extends AbstractTestDataFactory<com.td.
 
 			taskInstance.setTaskId(null/*unknown attrib type:long*/);
 
-			taskInstance.setName("name-1490903698491-Four");
+			taskInstance.setName("name-1491423494231-Four");
+
+			taskInstance.setTaskData("taskData-1491423494231-Four");
+
+			taskInstance.setString(null/*unknown attrib type:status*/);
 
 			taskInstance.setTaskDefinition(taskDefinitionTestDataFactory.createTaskDefinitionFour());
 
@@ -129,7 +145,11 @@ public class TaskInstanceTestDataFactory extends AbstractTestDataFactory<com.td.
 
 			taskInstance.setTaskId(null/*unknown attrib type:long*/);
 
-			taskInstance.setName("name-1490903698492-Five");
+			taskInstance.setName("name-1491423494232-Five");
+
+			taskInstance.setTaskData("taskData-1491423494232-Five");
+
+			taskInstance.setString(null/*unknown attrib type:status*/);
 
 			taskInstance.setTaskDefinition(taskDefinitionTestDataFactory.createTaskDefinitionFive());
 

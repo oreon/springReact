@@ -34,6 +34,11 @@ caseDefinition: {
     },
 
 
+
+formSchema:{ type: "string", title: "Form Schema",  	
+},
+
+
     
 fields: {
             title: "Fields",
@@ -52,10 +57,10 @@ name:{ type: "string", title: "Name",
 
 type:{ type: "string", title: "Type",   
 'enum' : [
-'','0' ,'1' ,'2'   
+'','0' ,'1' ,'2' ,'3'   
 ],
 'enumNames' : [
-'Select','string' ,'number' ,'date'   
+'Select','string' ,'number' ,'date' ,'boolean'   
 ]
 	
 },
@@ -94,6 +99,10 @@ caseDefinition: {
     },
 
 
+
+formSchema: {  'ui:placeholder': "Form Schema" },
+
+
     
 fields: {
  	items:{
@@ -130,6 +139,9 @@ required: {  'ui:placeholder': "Required" },
 	 ,
 	 
 	 {property:"caseDefinition_displayName",title:"Case Definition" }
+	 ,
+	 
+	 {property:"formSchema",title:"Form Schema" }
 	      
 	 ]
 

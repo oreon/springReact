@@ -36,6 +36,8 @@ import {BrowserRouter as Router, Route, NavLink, Switch, Redirect} from 'react-r
 
 	import {TaskInstanceList,EditTaskInstance} from './TaskInstance';
 
+	import {statusList,Editstatus} from './status';
+
 
 const CommerceEntitiyLinks = () => (
     <div>
@@ -91,6 +93,8 @@ const WfEntitiyLinks = () => (
             <NavLink to="/entities/CaseInstances" activeClassName="active">CaseInstances </NavLink>
         	
             <NavLink to="/entities/TaskInstances" activeClassName="active">TaskInstances </NavLink>
+        	
+            <NavLink to="/entities/statuss" activeClassName="active">statuss </NavLink>
         	
         </nav>
     </div>
@@ -158,6 +162,9 @@ const WfEntitiyLinks = () => (
            
            		<Route path="/entities/TaskInstances/edit/:id(\d+)?" component={EditTaskInstance}/>
         		<Route path="/entities/TaskInstances" component={TaskInstanceList}/>
+           
+           		<Route path="/entities/statuss/edit/:id(\d+)?" component={Editstatus}/>
+        		<Route path="/entities/statuss" component={statusList}/>
            
             </Switch>
         </div>

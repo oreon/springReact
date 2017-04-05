@@ -31,10 +31,10 @@ name:{ type: "string", title: "Name",
 
 type:{ type: "string", title: "Type",   
 'enum' : [
-'','0' ,'1' ,'2'   
+'','0' ,'1' ,'2' ,'3'   
 ],
 'enumNames' : [
-'Select','string' ,'number' ,'date'   
+'Select','string' ,'number' ,'date' ,'boolean'   
 ]
 	
 },

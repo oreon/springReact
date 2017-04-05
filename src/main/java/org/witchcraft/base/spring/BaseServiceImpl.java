@@ -1,6 +1,7 @@
 package org.witchcraft.base.spring;
 
 import java.util.Optional;
+import java.util.stream.Stream;
 
 import org.springframework.transaction.annotation.Transactional;
 import org.witchcraft.base.entity.BaseEntity;
@@ -25,9 +26,9 @@ public abstract class BaseServiceImpl<T extends BaseEntity> {
 	}
 
 	//@Override
-	public Iterable<T> findAll() {
+	public Stream<T> findAll() {
 		// TODO Auto-generated method stub
-		return getRepository().findAll();
+		return getRepository().allEntities();
 	}
 
 	//@Override

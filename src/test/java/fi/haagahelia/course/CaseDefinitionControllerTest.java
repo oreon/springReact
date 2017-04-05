@@ -1,7 +1,6 @@
 package fi.haagahelia.course;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -13,7 +12,6 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppC
 
 import java.io.IOException;
 import java.nio.charset.Charset;
-import java.util.ArrayList;
 import java.util.Arrays;
 
 import org.junit.Before;
@@ -34,7 +32,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.td.bbwp.MainApp;
-import com.td.bbwp.web.action.wf.CaseDefinitionService;
+import com.td.bbwp.service.wf.CaseDefinitionService;
 import com.td.bbwp.wf.CaseDefinition;
 import com.td.bbwp.wf.TaskDefinition;
 
@@ -85,7 +83,15 @@ public class CaseDefinitionControllerTest {
 	public void testReadCaseDefintionById() throws Exception {
 		mockMvc.perform(get("/rest/caseDefinitions/1")).andExpect(status().isOk())
 				// .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-				.andExpect(jsonPath("$.name").value("aam_lending"));
+				.andExpect(jsonPath("$.name").value("bb_aam.aam_lending"));
+	}
+	
+	@Test
+	@WithUserDetails("admin")
+	public void testReadCaseDefintions() throws Exception {
+		mockMvc.perform(get("/rest/caseDefinitions/")).andExpect(status().isOk())
+				// .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+				.andExpect(jsonPath("$.[0].name").value("bb_aam.aam_lending"));
 	}
 
 	@Test
@@ -99,6 +105,8 @@ public class CaseDefinitionControllerTest {
 	public void testReadCaseDefintionByIdNF() throws Exception {
 		mockMvc.perform(get("/rest/caseDefinitions/6889")).andExpect(status().isNotFound());
 	}
+	
+	
 
 	@Test
 	@WithUserDetails("admin")
@@ -123,14 +131,12 @@ public class CaseDefinitionControllerTest {
 		CaseDefinition caseDef = caseDefinitionService.findOne(1L).map(x -> x)
 				.orElseThrow(() -> new RuntimeException("Record not found"));
 		
-		
 		long records = caseDefinitionService.count();
 
 		this.mockMvc.perform(put("/rest/caseDefinitions/1").contentType(contentType).content(json(caseDef)))
 				.andExpect(status().isOk());
 		
-		//assertEquals(records, caseDefinitionService.count());
-
+		assertEquals(records, caseDefinitionService.count());
 	}
 
 	// @Test

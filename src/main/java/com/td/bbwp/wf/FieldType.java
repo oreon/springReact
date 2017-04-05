@@ -8,5 +8,7 @@ public enum FieldType {
 	number,
 
 	date,
+	
+	bool,
 
 }

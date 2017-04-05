@@ -19,6 +19,7 @@ import javax.persistence.Version;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.domain.Persistable;
 
 import com.td.bbwp.users.AppUser;
 
@@ -28,7 +29,7 @@ import com.td.bbwp.users.AppUser;
 
 @MappedSuperclass
 @EntityListeners({EntityListener.class})
-public class BaseEntity implements Serializable{
+public class BaseEntity implements Serializable, Persistable<Long>{
 	private static final long serialVersionUID = -2225862673125944610L;
 
     @Id @GeneratedValue(strategy=GenerationType.AUTO)
@@ -71,6 +72,14 @@ public class BaseEntity implements Serializable{
     
     public AppUser getCreatedByUser() {
 		return createdByUser;
+	}
+
+	public Integer getVersion() {
+		return version;
+	}
+
+	public void setVersion(Integer version) {
+		this.version = version;
 	}
 
 	public void setCreatedByUser(AppUser createdByUser) {
@@ -141,6 +150,11 @@ public class BaseEntity implements Serializable{
 	public String toString() 
 	{ 
 	    return ToStringBuilder.reflectionToString(this); 
+	}
+
+	@Override
+	public boolean isNew() {
+		return id == null || id == 0 ;
 	}
     
     /*

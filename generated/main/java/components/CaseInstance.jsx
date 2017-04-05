@@ -44,6 +44,17 @@ name:{ type: "string", title: "Name",
 },
 
 
+
+string:{ type: "string", title: "String",   
+
+ 'enum': LookupService.getLookup('statuses').map(x => x.id   ),
+ 'enumNames': LookupService.getLookup('statuses').map(x => x.displayName)
+
+
+	
+},
+
+
     
 taskInstances: {
             title: "Task Instances",
@@ -80,6 +91,22 @@ caseInstance: {
       "type": "number",
     },
 
+
+
+taskData:{ type: "string", title: "Task Data",  	
+},
+
+
+
+string:{ type: "string", title: "String",   
+
+ 'enum': LookupService.getLookup('statuses').map(x => x.id   ),
+ 'enumNames': LookupService.getLookup('statuses').map(x => x.displayName)
+
+
+	
+},
+
  
                  
                 }
@@ -105,6 +132,10 @@ processInstanceId: { 'ui:widget': "updown" , 'ui:placeholder': "Process Instance
 name: {  'ui:placeholder': "Name" },
 
 
+
+string: {  'ui:placeholder': "String" },
+
+
     
 taskInstances: {
  	items:{
@@ -126,6 +157,14 @@ caseInstance: {
       "ui:widget": "hidden"
     },
 
+
+
+taskData: {  'ui:placeholder': "Task Data" },
+
+
+
+string: {  'ui:placeholder': "String" },
+
  
          
      }
@@ -144,6 +183,9 @@ caseInstance: {
 	 ,
 	 
 	 {property:"name",title:"Name" }
+	 ,
+	 
+	 {property:"string",title:"String" }
 	      
 	 ]
 

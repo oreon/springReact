@@ -13,6 +13,18 @@ public class CustomTask {
 	String description;
 
 	String taskType;
+	
+	private Long processInstanceId;
+	
+	public String getSchema() {
+		return schema;
+	}
+
+	public void setSchema(String schema) {
+		this.schema = schema;
+	}
+
+	String schema;
 
 	public Long getId() {
 		return id;
@@ -60,6 +72,14 @@ public class CustomTask {
 
 	public void setTaskType(String taskType) {
 		this.taskType = taskType;
+	}
+
+	public Long getProcessInstanceId() {
+		return processInstanceId;
+	}
+
+	public void setProcessInstanceId(Long processInstanceId) {
+		this.processInstanceId = processInstanceId;
 	}
 
 }

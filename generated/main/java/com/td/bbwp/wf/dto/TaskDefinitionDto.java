@@ -24,6 +24,8 @@ public class TaskDefinitionDto
 
 	private List<FieldDto> fieldsDto = new ArrayList<FieldDto>();
 
+	protected String formSchema;
+
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -56,6 +58,14 @@ public class TaskDefinitionDto
 		}
 
 		this.fieldsDto.add(fieldDto);
+	}
+
+	public void setFormSchema(String formSchema) {
+		this.formSchema = formSchema;
+	}
+
+	public String getFormSchema() {
+		return formSchema;
 	}
 
 }

@@ -11,7 +11,7 @@ import { TaskList, TaskView } from './taskList.jsx';
 const EntitiyLinks = () => (
     <div>
         <nav>
-            <NavLink to="/entities/students" activeClassName="active">Studentsyyy </NavLink>
+            <NavLink to="/entities/students" activeClassName="active">CaseIsntances </NavLink>
             <NavLink to="/entities/customers" activeClassName="active">Customers </NavLink>
             <NavLink to="/entities/tasks" activeClassName="active">Tasks </NavLink>
             <NavLink to="/entities/CaseDefinitions" activeClassName="active">CaseDefinitions </NavLink>

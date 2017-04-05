@@ -35,17 +35,17 @@ public class CustomerTestDataFactory extends AbstractTestDataFactory<com.td.bbwp
 
 			register(customer);
 
-			customer.setDob(dateFormat.parse("2017.04.06 10:42:47 EDT"));
+			customer.setDob(dateFormat.parse("2017.04.26 01:05:30 EDT"));
 
-			customer.getAddress().setStreet("street-1490903698304-One");
+			customer.getAddress().setStreet("street-1491423494091-One");
 
-			customer.getAddress().setCity("city-1490903698304-One");
+			customer.getAddress().setCity("city-1491423494091-One");
 
-			customer.getAddress().setProvince("province-1490903698304-One");
+			customer.getAddress().setProvince("province-1491423494091-One");
 
-			customer.setFirstName("firstName-1490903698304-One");
+			customer.setFirstName("firstName-1491423494091-One");
 
-			customer.setLastName("lastName-1490903698304-One");
+			customer.setLastName("lastName-1491423494091-One");
 
 		} catch (Exception ex) {
 			handleCreationException(ex);
@@ -61,17 +61,17 @@ public class CustomerTestDataFactory extends AbstractTestDataFactory<com.td.bbwp
 
 			register(customer);
 
-			customer.setDob(dateFormat.parse("2017.03.17 12:17:12 EDT"));
+			customer.setDob(dateFormat.parse("2017.04.29 21:43:15 EDT"));
 
-			customer.getAddress().setStreet("street-1490903698305-Two");
+			customer.getAddress().setStreet("street-1491423494091-Two");
 
-			customer.getAddress().setCity("city-1490903698305-Two");
+			customer.getAddress().setCity("city-1491423494092-Two");
 
-			customer.getAddress().setProvince("province-1490903698305-Two");
+			customer.getAddress().setProvince("province-1491423494092-Two");
 
-			customer.setFirstName("firstName-1490903698306-Two");
+			customer.setFirstName("firstName-1491423494092-Two");
 
-			customer.setLastName("lastName-1490903698306-Two");
+			customer.setLastName("lastName-1491423494092-Two");
 
 		} catch (Exception ex) {
 			handleCreationException(ex);
@@ -87,17 +87,17 @@ public class CustomerTestDataFactory extends AbstractTestDataFactory<com.td.bbwp
 
 			register(customer);
 
-			customer.setDob(dateFormat.parse("2017.04.06 15:53:52 EDT"));
+			customer.setDob(dateFormat.parse("2017.04.29 13:33:48 EDT"));
 
-			customer.getAddress().setStreet("street-1490903698307-Three");
+			customer.getAddress().setStreet("street-1491423494092-Three");
 
-			customer.getAddress().setCity("city-1490903698307-Three");
+			customer.getAddress().setCity("city-1491423494092-Three");
 
-			customer.getAddress().setProvince("province-1490903698307-Three");
+			customer.getAddress().setProvince("province-1491423494093-Three");
 
-			customer.setFirstName("firstName-1490903698308-Three");
+			customer.setFirstName("firstName-1491423494093-Three");
 
-			customer.setLastName("lastName-1490903698308-Three");
+			customer.setLastName("lastName-1491423494093-Three");
 
 		} catch (Exception ex) {
 			handleCreationException(ex);
@@ -113,17 +113,17 @@ public class CustomerTestDataFactory extends AbstractTestDataFactory<com.td.bbwp
 
 			register(customer);
 
-			customer.setDob(dateFormat.parse("2017.04.22 02:33:20 EDT"));
+			customer.setDob(dateFormat.parse("2017.04.04 14:34:21 EDT"));
 
-			customer.getAddress().setStreet("street-1490903698309-Four");
+			customer.getAddress().setStreet("street-1491423494093-Four");
 
-			customer.getAddress().setCity("city-1490903698309-Four");
+			customer.getAddress().setCity("city-1491423494093-Four");
 
-			customer.getAddress().setProvince("province-1490903698309-Four");
+			customer.getAddress().setProvince("province-1491423494093-Four");
 
-			customer.setFirstName("firstName-1490903698309-Four");
+			customer.setFirstName("firstName-1491423494093-Four");
 
-			customer.setLastName("lastName-1490903698309-Four");
+			customer.setLastName("lastName-1491423494093-Four");
 
 		} catch (Exception ex) {
 			handleCreationException(ex);
@@ -139,17 +139,17 @@ public class CustomerTestDataFactory extends AbstractTestDataFactory<com.td.bbwp
 
 			register(customer);
 
-			customer.setDob(dateFormat.parse("2017.03.16 02:16:07 EDT"));
+			customer.setDob(dateFormat.parse("2017.03.30 23:28:14 EDT"));
 
-			customer.getAddress().setStreet("street-1490903698310-Five");
+			customer.getAddress().setStreet("street-1491423494094-Five");
 
-			customer.getAddress().setCity("city-1490903698310-Five");
+			customer.getAddress().setCity("city-1491423494094-Five");
 
-			customer.getAddress().setProvince("province-1490903698311-Five");
+			customer.getAddress().setProvince("province-1491423494094-Five");
 
-			customer.setFirstName("firstName-1490903698311-Five");
+			customer.setFirstName("firstName-1491423494098-Five");
 
-			customer.setLastName("lastName-1490903698311-Five");
+			customer.setLastName("lastName-1491423494098-Five");
 
 		} catch (Exception ex) {
 			handleCreationException(ex);

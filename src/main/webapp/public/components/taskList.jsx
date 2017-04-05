@@ -14,7 +14,7 @@ export class TaskList extends React.Component {
         super( props );
         this.url = URL;
         if ( props.mine ) {
-            this.url = this.url + "/myTasks"
+            this.url = this.url + "myTasks"
         }
 
         //this.doPost = this.doPost.bind( this );
@@ -40,8 +40,8 @@ export class TaskList extends React.Component {
                 });
             });
     }
-    
-    refresh(){
+
+    refresh() {
         this.loadRecordsFromServer()
     }
 
@@ -82,7 +82,7 @@ class TaskTable extends React.Component {
 
             <div>
                 <button className="btn btn-danger btn-xs" onClick={this.props.refresh}>Press</button>
-               
+
                 <table className="table table-striped">
                     <thead>
                         <tr>
@@ -120,9 +120,9 @@ class Task extends React.Component {
         this.doPost( URL + 'claim?id=' + this.id, this.id )
         this.refresh()
     }
-    
-    refresh(){ 
-        window.location.reload(); 
+
+    refresh() {
+        window.location.reload();
     }
 
     releaseTask( id ) {
@@ -162,10 +162,11 @@ class Task extends React.Component {
                 <td>{this.props.task.name}</td>
                 <td>{this.props.task.subject}</td>
                 <td>{this.props.task.processId}</td>
-                <td>{this.props.task.id}</td>
+                <td>{this.props.task.id}-{this.props.task.processInstanceId}</td>
                 <td>{this.props.task.statusId}</td>
+                
                 <td>
-                    {JSON.toString( this.props.refresh )}
+                    
                     {!this.props.mine &&
                         <button className="btn btn-danger btn-xs" onClick={this.claimTask}>Claim</button>
                     }
@@ -200,9 +201,18 @@ const log = ( type ) => console.log.bind( console, type );
 //    }
 //};
 
+const taskSchema = 
+{title: 'lender_assesment',type: 'object',properties: {'recommended_risk-rating': {  title: 'recommended_risk-rating',type: 'number', required:true}, 
+    'risk-rating': {  title: 'risk-rating',type: 'number', required:true}, 
+    'color': {  title: 'color',type: 'string', required:true}}}
 
-const taskSchema = {title: 'Todo',type: 'object',properties: {
-    color: {  title: 'color',type: 'string',  required:true}, riskrating: {  title: 'riskrating',type: 'string',  required:true}}}
+//
+//
+//const taskSchema = {
+//    title: 'Todo', type: 'object', properties: {
+//        color: { title: 'color', type: 'string', required: true }, riskrating: { title: 'riskrating', type: 'string', required: true }
+//    }
+//}
 
 
 export class TaskView extends React.Component {
@@ -245,7 +255,7 @@ export class TaskView extends React.Component {
     onSubmit( formData ) {
         this.editRecord( formData )
         this.props.history.push( '/' )
-        window.location.reload(); 
+        window.location.reload();
     }
 
     componentDidMount() {
@@ -266,10 +276,18 @@ export class TaskView extends React.Component {
 
 
     render() {
+        
+      if ( !this.state.task.name )
+            return null;
+      
+          console.log(this.state.task.schema)
+        
+        let schema = JSON.parse(this.state.task.schema)
+
         return (
             <div>
-                <h3> {this.state.task.name}</h3>
-                <Form schema={taskSchema}
+                <h3> {this.state.task.name} !!!</h3>
+                <Form schema= {schema}
                     onSubmit={( {formData}) => this.onSubmit( formData )}
                     onError={log( "errors" )} />
             </div>

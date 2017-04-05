@@ -50,6 +50,22 @@ caseInstance: {
     },
 
 
+
+taskData:{ type: "string", title: "Task Data",  	
+},
+
+
+
+string:{ type: "string", title: "String",   
+
+ 'enum': LookupService.getLookup('statuses').map(x => x.id   ),
+ 'enumNames': LookupService.getLookup('statuses').map(x => x.displayName)
+
+
+	
+},
+
+
     
     }
  };
@@ -76,6 +92,14 @@ caseInstance: {
     },
 
 
+
+taskData: {  'ui:placeholder': "Task Data" },
+
+
+
+string: {  'ui:placeholder': "String" },
+
+
     
  }
 
@@ -93,6 +117,12 @@ caseInstance: {
 	 ,
 	 
 	 {property:"caseInstance_displayName",title:"Case Instance" }
+	 ,
+	 
+	 {property:"taskData",title:"Task Data" }
+	 ,
+	 
+	 {property:"string",title:"String" }
 	      
 	 ]
 

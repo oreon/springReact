@@ -280,6 +280,7 @@ GET taskDefinitions/id,   Find a  TaskDefinition by id,
   name ,  String   , Name
   caseDefinition ,   CaseDefinition   , Case Definition
   fields ,   Field    Array , Fields
+  formSchema ,  String   , Form Schema
 
 dateCreated,DateTime, Timestamp of creation
 createdBy, String, acfid of the user who created the record
@@ -295,6 +296,8 @@ findByName,    Find TaskDefinitions containing  name   ,
 
 
 
+findByFormSchema,    Find TaskDefinitions containing  formSchema   , 
+
 
 
 
@@ -306,6 +309,7 @@ GET caseInstances/id,   Find a  CaseInstance by id,
   taskInstances ,   TaskInstance    Array , Task Instances
   processInstanceId ,   long   , Process Instance Id
   name ,  String   , Name
+  string ,   status   , String
 
 dateCreated,DateTime, Timestamp of creation
 createdBy, String, acfid of the user who created the record
@@ -322,6 +326,25 @@ DELETE CaseInstances/id  , Delete by id,
 findByProcessInstanceId,    Return unique CaseInstance for  given processInstanceId    , 
 
 findByName,    Find CaseInstances containing  name   , 
+
+
+
+
+
+
+status  , , 
+
+GET statuses/id,   Find a  status by id,   
+
+dateCreated,DateTime, Timestamp of creation
+createdBy, String, acfid of the user who created the record
+dateUpdated,DateTime, Timestamp of last update
+lastUpdatedBy, String, acfid of the user who last updated the record
+		
+
+PUT/PATCH statuses/<<status>> , Edit existing status,  
+POST  , Create new status, 
+DELETE statuses/id  , Delete by id, 
 
 
 

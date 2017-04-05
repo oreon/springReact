@@ -1,6 +1,5 @@
-package com.td.bbwp.web.action.wf;
 
-import java.util.stream.Stream;
+package com.td.bbwp.service.wf;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,16 +9,17 @@ import org.witchcraft.base.spring.BaseServiceImpl;
 
 import com.td.bbwp.wf.CaseDefinition;
 
+import com.td.bbwp.web.action.wf.CaseDefinitionRepository;
+
 @Service
 @Transactional
-public class CaseDefinitionServiceImpl extends BaseServiceImpl<CaseDefinition> implements CaseDefinitionService{
-	
+public class CaseDefinitionServiceImpl extends BaseServiceImpl<CaseDefinition> implements CaseDefinitionService {
+
 	@Autowired
 	private final CaseDefinitionRepository caseDefinitionRepository = null;
-	
-	public BaseRepository<CaseDefinition> getRepository(){
+
+	@Override
+	public BaseRepository<CaseDefinition> getRepository() {
 		return caseDefinitionRepository;
 	}
-
-
 }

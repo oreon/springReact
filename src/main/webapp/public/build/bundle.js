@@ -52289,7 +52289,7 @@ var EntitiyLinks = function EntitiyLinks() {
             _react2.default.createElement(
                 _reactRouterDom.NavLink,
                 { to: '/entities/students', activeClassName: 'active' },
-                'Studentsyyy '
+                'CaseIsntances '
             ),
             _react2.default.createElement(
                 _reactRouterDom.NavLink,
@@ -62186,7 +62186,7 @@ var TaskList = exports.TaskList = function (_React$Component) {
 
         _this.url = URL;
         if (props.mine) {
-            _this.url = _this.url + "/myTasks";
+            _this.url = _this.url + "myTasks";
         }
 
         //this.doPost = this.doPost.bind( this );
@@ -62407,7 +62407,9 @@ var Task = function (_React$Component3) {
                 _react2.default.createElement(
                     'td',
                     null,
-                    this.props.task.id
+                    this.props.task.id,
+                    '-',
+                    this.props.task.processInstanceId
                 ),
                 _react2.default.createElement(
                     'td',
@@ -62417,7 +62419,6 @@ var Task = function (_React$Component3) {
                 _react2.default.createElement(
                     'td',
                     null,
-                    JSON.toString(this.props.refresh),
                     !this.props.mine && _react2.default.createElement(
                         'button',
                         { className: 'btn btn-danger btn-xs', onClick: this.claimTask },
@@ -62469,9 +62470,18 @@ var log = function log(type) {
 //    }
 //};
 
+var taskSchema = { title: 'lender_assesment', type: 'object', properties: { 'recommended_risk-rating': { title: 'recommended_risk-rating', type: 'number', required: true },
+        'risk-rating': { title: 'risk-rating', type: 'number', required: true },
+        'color': { title: 'color', type: 'string', required: true } } };
 
-var taskSchema = { title: 'Todo', type: 'object', properties: {
-        color: { title: 'color', type: 'string', required: true }, riskrating: { title: 'riskrating', type: 'string', required: true } } };
+//
+//
+//const taskSchema = {
+//    title: 'Todo', type: 'object', properties: {
+//        color: { title: 'color', type: 'string', required: true }, riskrating: { title: 'riskrating', type: 'string', required: true }
+//    }
+//}
+
 
 var TaskView = exports.TaskView = function (_React$Component4) {
     _inherits(TaskView, _React$Component4);
@@ -62540,6 +62550,12 @@ var TaskView = exports.TaskView = function (_React$Component4) {
         value: function render() {
             var _this8 = this;
 
+            if (!this.state.task.name) return null;
+
+            console.log(this.state.task.schema);
+
+            var schema = JSON.parse(this.state.task.schema);
+
             return _react2.default.createElement(
                 'div',
                 null,
@@ -62547,9 +62563,10 @@ var TaskView = exports.TaskView = function (_React$Component4) {
                     'h3',
                     null,
                     ' ',
-                    this.state.task.name
+                    this.state.task.name,
+                    ' !!!'
                 ),
-                _react2.default.createElement(_reactJsonschemaForm2.default, { schema: taskSchema,
+                _react2.default.createElement(_reactJsonschemaForm2.default, { schema: schema,
                     onSubmit: function onSubmit(_ref) {
                         var formData = _ref.formData;
                         return _this8.onSubmit(formData);

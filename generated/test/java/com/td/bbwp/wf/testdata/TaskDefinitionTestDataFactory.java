@@ -37,7 +37,9 @@ public class TaskDefinitionTestDataFactory extends AbstractTestDataFactory<com.t
 
 			register(taskDefinition);
 
-			taskDefinition.setName("name-1490903698444-One");
+			taskDefinition.setName("name-1491423494195-One");
+
+			taskDefinition.setFormSchema("formSchema-1491423494195-One");
 
 			taskDefinition.setCaseDefinition(caseDefinitionTestDataFactory.createCaseDefinitionOne());
 
@@ -55,7 +57,9 @@ public class TaskDefinitionTestDataFactory extends AbstractTestDataFactory<com.t
 
 			register(taskDefinition);
 
-			taskDefinition.setName("name-1490903698445-Two");
+			taskDefinition.setName("name-1491423494196-Two");
+
+			taskDefinition.setFormSchema("formSchema-1491423494196-Two");
 
 			taskDefinition.setCaseDefinition(caseDefinitionTestDataFactory.createCaseDefinitionTwo());
 
@@ -73,7 +77,9 @@ public class TaskDefinitionTestDataFactory extends AbstractTestDataFactory<com.t
 
 			register(taskDefinition);
 
-			taskDefinition.setName("name-1490903698445-Three");
+			taskDefinition.setName("name-1491423494196-Three");
+
+			taskDefinition.setFormSchema("formSchema-1491423494196-Three");
 
 			taskDefinition.setCaseDefinition(caseDefinitionTestDataFactory.createCaseDefinitionThree());
 
@@ -91,7 +97,9 @@ public class TaskDefinitionTestDataFactory extends AbstractTestDataFactory<com.t
 
 			register(taskDefinition);
 
-			taskDefinition.setName("name-1490903698446-Four");
+			taskDefinition.setName("name-1491423494197-Four");
+
+			taskDefinition.setFormSchema("formSchema-1491423494197-Four");
 
 			taskDefinition.setCaseDefinition(caseDefinitionTestDataFactory.createCaseDefinitionFour());
 
@@ -109,7 +117,9 @@ public class TaskDefinitionTestDataFactory extends AbstractTestDataFactory<com.t
 
 			register(taskDefinition);
 
-			taskDefinition.setName("name-1490903698446-Five");
+			taskDefinition.setName("name-1491423494198-Five");
+
+			taskDefinition.setFormSchema("formSchema-1491423494198-Five");
 
 			taskDefinition.setCaseDefinition(caseDefinitionTestDataFactory.createCaseDefinitionFive());
 

@@ -12,6 +12,8 @@ public interface BaseRepository<T extends BaseEntity> extends PagingAndSortingRe
 	
 	Optional<T> findById(@Param("id") Long id);
 	
+	Stream<T> allEntities();
+	
 //	@Override
 //	@PreAuthorize("@taskInstanceRepository.findOne(#id)?.createdByUser.userName == authentication?.name  ||  hasRole('admin')")         
 	//public Optional<T> findOne(@Param("id") Long id);

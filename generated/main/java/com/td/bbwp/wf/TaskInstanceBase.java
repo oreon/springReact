@@ -61,6 +61,18 @@ public abstract class TaskInstanceBase extends BaseEntity {
 
 	;
 
+	@Column(name = "TASK_DATA", unique = false)
+
+	protected String taskData
+
+	;
+
+	@Column(name = "STRING", unique = false)
+
+	protected status string
+
+	;
+
 	public void setTaskId(Long taskId) {
 		this.taskId = taskId;
 	}
@@ -95,6 +107,24 @@ public abstract class TaskInstanceBase extends BaseEntity {
 	public CaseInstance getCaseInstance() {
 
 		return caseInstance;
+	}
+
+	public void setTaskData(String taskData) {
+		this.taskData = taskData;
+	}
+
+	public String getTaskData() {
+
+		return taskData;
+	}
+
+	public void setString(status string) {
+		this.string = string;
+	}
+
+	public status getString() {
+
+		return string;
 	}
 
 	@Transient

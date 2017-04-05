@@ -4,6 +4,7 @@ package com.td.bbwp.web.action.commerce;
 import com.td.bbwp.commerce.Employee;
 import org.witchcraft.base.entity.BaseRepository;
 
+import java.util.stream.Stream;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.PagingAndSortingRepository;
@@ -17,32 +18,37 @@ import java.util.Optional;
 import org.springframework.data.repository.query.Param;
 import org.springframework.security.access.prepost.PreAuthorize;
 
+import org.springframework.data.jpa.repository.Query;
+
 import com.td.bbwp.commerce.Employee;
 
 //@RepositoryRestResource(exported=false)
 public interface EmployeeRepositoryBase extends BaseRepository<Employee> {
 
-	Page<Employee> findByGender(@Param("gender") com.td.bbwp.commerce.Gender gender, Pageable pageable);
+	@Query("select e from Employee e")
+	Stream<Employee> allEntities();
 
-	Page<Employee> findByDob(@Param("dob") Date dob, Pageable pageable);
+	Stream<Employee> findByGender(@Param("gender") com.td.bbwp.commerce.Gender gender);
 
-	Page<Employee> findByAddress(@Param("address") com.td.bbwp.commerce.Address address, Pageable pageable);
+	Stream<Employee> findByDob(@Param("dob") Date dob);
 
-	Page<Employee> findByDepartment(@Param("department") com.td.bbwp.commerce.Department department, Pageable pageable);
+	Stream<Employee> findByAddress(@Param("address") com.td.bbwp.commerce.Address address);
 
-	Page<Employee> findByFirstNameContainingAllIgnoringCase(@Param("firstName") String firstName, Pageable pageable);
+	Stream<Employee> findByDepartment(@Param("department") com.td.bbwp.commerce.Department department);
 
-	Page<Employee> findByFirstName(@Param("firstName") String firstName, Pageable pageable);
-	Page<Employee> findByFirstNameIgnoringCase(@Param("firstName") String firstName, Pageable pageable);
+	Stream<Employee> findByFirstNameContainingAllIgnoringCase(@Param("firstName") String firstName);
 
-	Page<Employee> findByLastNameContainingAllIgnoringCase(@Param("lastName") String lastName, Pageable pageable);
+	Stream<Employee> findByFirstName(@Param("firstName") String firstName);
+	Stream<Employee> findByFirstNameIgnoringCase(@Param("firstName") String firstName);
 
-	Page<Employee> findByLastName(@Param("lastName") String lastName, Pageable pageable);
-	Page<Employee> findByLastNameIgnoringCase(@Param("lastName") String lastName, Pageable pageable);
+	Stream<Employee> findByLastNameContainingAllIgnoringCase(@Param("lastName") String lastName);
 
-	Page<Employee> findByCodeContainingAllIgnoringCase(@Param("code") String code, Pageable pageable);
+	Stream<Employee> findByLastName(@Param("lastName") String lastName);
+	Stream<Employee> findByLastNameIgnoringCase(@Param("lastName") String lastName);
 
-	Page<Employee> findByCode(@Param("code") String code, Pageable pageable);
-	Page<Employee> findByCodeIgnoringCase(@Param("code") String code, Pageable pageable);
+	Stream<Employee> findByCodeContainingAllIgnoringCase(@Param("code") String code);
+
+	Stream<Employee> findByCode(@Param("code") String code);
+	Stream<Employee> findByCodeIgnoringCase(@Param("code") String code);
 
 }

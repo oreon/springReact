@@ -26,6 +26,8 @@ public class CaseInstanceDto
 
 	protected String name;
 
+	protected status string;
+
 	public void setCaseDefinition(CaseDefinitionDto caseDefinitionDto) {
 		this.caseDefinitionDto = caseDefinitionDto;
 	}
@@ -66,6 +68,14 @@ public class CaseInstanceDto
 
 	public String getName() {
 		return name;
+	}
+
+	public void setString(status string) {
+		this.string = string;
+	}
+
+	public status getString() {
+		return string;
 	}
 
 }

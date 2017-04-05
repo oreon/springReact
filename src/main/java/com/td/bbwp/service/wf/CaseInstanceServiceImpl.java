@@ -1,0 +1,25 @@
+
+package com.td.bbwp.service.wf;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.witchcraft.base.entity.BaseRepository;
+import org.witchcraft.base.spring.BaseServiceImpl;
+
+import com.td.bbwp.wf.CaseInstance;
+
+import com.td.bbwp.web.action.wf.CaseInstanceRepository;
+
+@Service
+@Transactional
+public class CaseInstanceServiceImpl extends BaseServiceImpl<CaseInstance> implements CaseInstanceService {
+
+	@Autowired
+	private final CaseInstanceRepository caseInstanceRepository = null;
+
+	@Override
+	public BaseRepository<CaseInstance> getRepository() {
+		return caseInstanceRepository;
+	}
+}

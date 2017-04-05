@@ -42,7 +42,7 @@ public abstract class TaskDefinitionBase extends BaseEntity {
 
 	@ManyToOne(optional = false, fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
 	@JoinColumn(name = "CASE_DEFINITION_ID", nullable = false, updatable = true, insertable = true)
-	@com.fasterxml.jackson.annotation.JsonIgnore
+	@com.fasterxml.jackson.annotation.JsonBackReference
 
 	protected CaseDefinition caseDefinition
 
@@ -54,6 +54,12 @@ public abstract class TaskDefinitionBase extends BaseEntity {
 	protected List<Field> fields
 
 			= new ArrayList<Field>()
+
+	;
+
+	@Column(name = "FORM_SCHEMA", unique = false)
+
+	protected String formSchema
 
 	;
 
@@ -104,6 +110,15 @@ public abstract class TaskDefinitionBase extends BaseEntity {
 	@Transient
 	public String createListFieldsAsString() {
 		return listAsString(fields);
+	}
+
+	public void setFormSchema(String formSchema) {
+		this.formSchema = formSchema;
+	}
+
+	public String getFormSchema() {
+
+		return formSchema;
 	}
 
 	@Transient

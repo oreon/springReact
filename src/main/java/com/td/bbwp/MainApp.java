@@ -46,15 +46,16 @@ public class MainApp {
 			// "kate@robinson.com"));
 			
 			if(caseDefinitionRepository.count() == 0){
-				CaseDefinition caseDefinition = new CaseDefinition("aan_annual");
+				CaseDefinition caseDefinition = new CaseDefinition("bb_aam.aam_lending");
 				
-				TaskDefinition td = new TaskDefinition("lender_assesment");
-				td.addField(new Field("color", FieldType.string, true));
+				TaskDefinition td = new TaskDefinition("writeup");
+				td.addField(new Field("color", FieldType.string, false));
 				td.addField(new Field("risk-rating", FieldType.number, true));
 				
-				TaskDefinition td2 = new TaskDefinition("adjudicate");
-				//td.addField(new Field("color", FieldType.string, true));
-				td.addField(new Field("recommended_risk-rating", FieldType.number, true));
+				TaskDefinition td2 = new TaskDefinition("assess");
+				
+				td2.addField(new Field("recommended_risk_rating", FieldType.number, true));
+				td2.addField(new Field("out_rework", FieldType.bool, true));
 				
 				
 				caseDefinition.addTaskDefinition(td);

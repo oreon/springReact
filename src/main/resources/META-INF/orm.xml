@@ -282,6 +282,8 @@
 
 	
 
+	
+
 	</entity>
 
 	<!--  Field  JPA Configurations -->
@@ -334,6 +336,8 @@
 
 	
 
+	
+
 	</entity>
 
 	<!--  TaskInstance  JPA Configurations -->
@@ -364,6 +368,24 @@
 
 	
 
+	
+
+	
+
+	</entity>
+
+	<!--  status  JPA Configurations -->
+	<entity class="com.td.bbwp.wf.status" name="status">
+		<table name="STATUS"  >
+				
+		
+		  
+		
+		
+		
+		</table>
+ 	
+ 	
 	</entity>
 
 	

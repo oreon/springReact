@@ -39,7 +39,9 @@ public class CaseInstanceTestDataFactory extends AbstractTestDataFactory<com.td.
 
 			caseInstance.setProcessInstanceId(null/*unknown attrib type:long*/);
 
-			caseInstance.setName("name-1490903698467-One");
+			caseInstance.setName("name-1491423494216-One");
+
+			caseInstance.setString(null/*unknown attrib type:status*/);
 
 			caseInstance.setCaseDefinition(caseDefinitionTestDataFactory.createCaseDefinitionOne());
 
@@ -59,7 +61,9 @@ public class CaseInstanceTestDataFactory extends AbstractTestDataFactory<com.td.
 
 			caseInstance.setProcessInstanceId(null/*unknown attrib type:long*/);
 
-			caseInstance.setName("name-1490903698470-Two");
+			caseInstance.setName("name-1491423494217-Two");
+
+			caseInstance.setString(null/*unknown attrib type:status*/);
 
 			caseInstance.setCaseDefinition(caseDefinitionTestDataFactory.createCaseDefinitionTwo());
 
@@ -79,7 +83,9 @@ public class CaseInstanceTestDataFactory extends AbstractTestDataFactory<com.td.
 
 			caseInstance.setProcessInstanceId(null/*unknown attrib type:long*/);
 
-			caseInstance.setName("name-1490903698473-Three");
+			caseInstance.setName("name-1491423494218-Three");
+
+			caseInstance.setString(null/*unknown attrib type:status*/);
 
 			caseInstance.setCaseDefinition(caseDefinitionTestDataFactory.createCaseDefinitionThree());
 
@@ -99,7 +105,9 @@ public class CaseInstanceTestDataFactory extends AbstractTestDataFactory<com.td.
 
 			caseInstance.setProcessInstanceId(null/*unknown attrib type:long*/);
 
-			caseInstance.setName("name-1490903698474-Four");
+			caseInstance.setName("name-1491423494219-Four");
+
+			caseInstance.setString(null/*unknown attrib type:status*/);
 
 			caseInstance.setCaseDefinition(caseDefinitionTestDataFactory.createCaseDefinitionFour());
 
@@ -119,7 +127,9 @@ public class CaseInstanceTestDataFactory extends AbstractTestDataFactory<com.td.
 
 			caseInstance.setProcessInstanceId(null/*unknown attrib type:long*/);
 
-			caseInstance.setName("name-1490903698474-Five");
+			caseInstance.setName("name-1491423494220-Five");
+
+			caseInstance.setString(null/*unknown attrib type:status*/);
 
 			caseInstance.setCaseDefinition(caseDefinitionTestDataFactory.createCaseDefinitionFive());
 

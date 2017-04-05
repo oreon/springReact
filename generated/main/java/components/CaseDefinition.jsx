@@ -48,6 +48,11 @@ caseDefinition: {
       "type": "number",
     },
 
+
+
+formSchema:{ type: "string", title: "Form Schema",  	
+},
+
  
                  
 fields: {
@@ -67,10 +72,10 @@ name:{ type: "string", title: "Name",
 
 type:{ type: "string", title: "Type",   
 'enum' : [
-'','0' ,'1' ,'2'   
+'','0' ,'1' ,'2' ,'3'   
 ],
 'enumNames' : [
-'Select','string' ,'number' ,'date'   
+'Select','string' ,'number' ,'date' ,'boolean'   
 ]
 	
 },
@@ -119,6 +124,10 @@ name: {  'ui:placeholder': "Name" },
 caseDefinition: {
       "ui:widget": "hidden"
     },
+
+
+
+formSchema: {  'ui:placeholder': "Form Schema" },
 
  
          
