@@ -67,9 +67,9 @@ public abstract class TaskInstanceBase extends BaseEntity {
 
 	;
 
-	@Column(name = "STRING", unique = false)
+	@Column(name = "STATUS", unique = false)
 
-	protected status string
+	protected String status
 
 	;
 
@@ -118,13 +118,13 @@ public abstract class TaskInstanceBase extends BaseEntity {
 		return taskData;
 	}
 
-	public void setString(status string) {
-		this.string = string;
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
-	public status getString() {
+	public String getStatus() {
 
-		return string;
+		return status;
 	}
 
 	@Transient

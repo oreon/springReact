@@ -26,6 +26,10 @@ public class FieldDto
 
 	protected Boolean required;
 
+	protected Integer min;
+
+	protected Integer max;
+
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -56,6 +60,22 @@ public class FieldDto
 
 	public Boolean getRequired() {
 		return required;
+	}
+
+	public void setMin(Integer min) {
+		this.min = min;
+	}
+
+	public Integer getMin() {
+		return min;
+	}
+
+	public void setMax(Integer max) {
+		this.max = max;
+	}
+
+	public Integer getMax() {
+		return max;
 	}
 
 }

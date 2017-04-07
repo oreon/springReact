@@ -11,6 +11,10 @@ import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColu
 import Form from "react-jsonschema-form";
 import {BaseComponent, BaseEditComponent} from '../commons/BaseComponent.jsx'
 import Griddle, {plugins} from 'griddle-react';
+
+import { Layout } from '../commons/Layout.jsx'
+import { SimpleView } from '../commons/SimpleView.jsx'
+import {Tabs, Tab} from 'material-ui/Tabs';
 import {SimpleList} from '../commons/SimpleList.jsx'
 
 
@@ -19,7 +23,7 @@ export function createSchema(){
  return {
     title: "Product",
     type: "object",
-    required: [  'name' 
+    required: [ 
 ],
     properties: {
     
@@ -52,7 +56,9 @@ name: {  'ui:placeholder': "Name" },
 	 ]
 
 
-let customerSchema = createSchema()
+
+
+let productSchema = createSchema()
 const log = (type) => console.log.bind(console, type);
 
 
@@ -62,8 +68,11 @@ export class ProductList extends BaseComponent {
         super(props);
         this.entityName = 'products'
         this.name = 'products'
-        this.editLink = "/entities/products/edit/"
+        this.baseLink = "/entities/products/"
+        this.editLink = this.baseLink + "edit/"
     }
+    
+     getEntityName() { return  'products' }
 
     renderExtra(record) {
         return null
@@ -86,6 +95,7 @@ export class ProductList extends BaseComponent {
             <div>
                 <SimpleList headers={productHeaders} editLink={this.editLink}
                             renderExtra={this.renderExtra}
+                            baseLink = {this.baseLink}
                             records={ records } nested={this.props.nested}
                             container={this.props.container} uneditable={this.props.uneditable}
                             containerId={this.props.containerId}
@@ -106,8 +116,9 @@ export class EditProduct extends BaseEditComponent {
     constructor(props) {
         super(props);
         this.state = {entity: {}};
-        this.entityName = 'customers'
+        this.entityName = 'products'
         this.onSubmit = this.onSubmit.bind(this);
+        
         //this.handleChange = this.handleChange.bind(this);
     }
 
@@ -130,3 +141,35 @@ export class EditProduct extends BaseEditComponent {
         )
     }
 }
+
+
+export class ViewProduct extends BaseEditComponent {
+
+  renderExtra(record: any) { <p> IN render </p> }
+  
+  constructor(props) {
+    super(props);
+    this.state = { record: {}, error: {}, message: {} };
+    this.entityName = 'products';
+    //this.onSubmit = this.onSubmit.bind(this)
+  }
+  
+  render() {
+  
+    let record = this.state.entity
+    return (
+     <div>
+       <SimpleView  headers= {productHeaders} renderExtra={this.renderExtra}
+       record={record}   entityName='Product' /> 
+       
+       <Tabs>
+        
+         </Tabs>
+      </div>
+    )	
+
+  }
+}
+
+
+

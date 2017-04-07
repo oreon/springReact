@@ -33,26 +33,18 @@ public class AppRoleRepositoryIntegrationTestBase {
 	@Autowired
 	protected com.td.bbwp.web.action.users.AppRoleRepository appRoleRepository;
 
-	//@Autowired 
-	protected com.td.bbwp.users.testdata.AppRoleTestDataFactory appRoleTestDataFactory = new com.td.bbwp.users.testdata.AppRoleTestDataFactory();
+	protected com.td.bbwp.users.testdata.AppRoleFixture appRoleFixture = new com.td.bbwp.users.testdata.AppRoleFixture();
 
 	AppRole appRole;
 
 	@Before
 	public void setup() throws Exception {
 
-		try {
-			appRoleRepository.deleteAll();
-			appRole = appRoleTestDataFactory.createAppRoleOne();
+		appRoleRepository.deleteAll();
 
-			appRoleRepository.save(appRole);
+		appRole = appRoleFixture.getOneRecord();
 
-		} catch (AccessDeniedException ade) {
-			System.out.println(ade.getMessage());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
+		appRole = appRoleRepository.save(appRole);
 	}
 
 	@Test
@@ -72,7 +64,7 @@ public class AppRoleRepositoryIntegrationTestBase {
 	@WithMockUser(username = "admin", roles = {"ADMIN"})
 	public void testEdit() throws IllegalAccessException, InvocationTargetException {
 		Long currentId = appRole.getId();
-		BeanUtils.copyProperties(appRole, appRoleTestDataFactory.createAppRoleTwo());
+		BeanUtils.copyProperties(appRole, appRoleFixture.getOneRecord());
 		appRole.setId(currentId);
 		appRoleRepository.save(appRole);
 		assertCount(1L);

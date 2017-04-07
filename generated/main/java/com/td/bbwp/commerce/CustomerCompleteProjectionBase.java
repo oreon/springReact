@@ -35,4 +35,6 @@ interface CustomerCompleteProjectionBase {
 
 	Optional<String> getLastName();
 
+	List<com.td.bbwp.wf.CaseInstance> getCaseInstances();
+
 }

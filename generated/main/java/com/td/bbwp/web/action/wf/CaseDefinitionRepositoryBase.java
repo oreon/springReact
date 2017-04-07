@@ -35,4 +35,6 @@ public interface CaseDefinitionRepositoryBase extends BaseRepository<CaseDefinit
 	Optional<CaseDefinition> findByName(@Param("name") String name);
 	Optional<CaseDefinition> findByNameIgnoringCase(@Param("name") String name);
 
+	Stream<CaseDefinition> findByClosable(@Param("closable") Boolean closable);
+
 }

@@ -1,9 +1,9 @@
 
 package com.td.bbwp.web.action.commerce;
 
-import org.springframework.stereotype.Repository;
+import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
-@Repository
+@RepositoryRestResource
 public interface CustomerRepository extends CustomerRepositoryBase {
 
 }

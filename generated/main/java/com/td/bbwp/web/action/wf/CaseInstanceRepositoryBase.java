@@ -39,6 +39,11 @@ public interface CaseInstanceRepositoryBase extends BaseRepository<CaseInstance>
 	Stream<CaseInstance> findByName(@Param("name") String name);
 	Stream<CaseInstance> findByNameIgnoringCase(@Param("name") String name);
 
-	Stream<CaseInstance> findByString(@Param("string") com.td.bbwp.wf.status string);
+	Stream<CaseInstance> findByStatusContainingAllIgnoringCase(@Param("status") String status);
+
+	Stream<CaseInstance> findByStatus(@Param("status") String status);
+	Stream<CaseInstance> findByStatusIgnoringCase(@Param("status") String status);
+
+	Stream<CaseInstance> findByCustomer(@Param("customer") com.td.bbwp.commerce.Customer customer);
 
 }

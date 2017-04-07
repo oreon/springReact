@@ -15,26 +15,29 @@ public abstract class BaseServiceImpl<T extends BaseEntity> {
 	
 	//@Override
 	public T save(T t) {
-		// TODO Auto-generated method stub
+		
 		return getRepository().save(t);
 	}
 
-	//@Override
+	
 	public Optional<T> findOne(Long id) {
-		// TODO Auto-generated method stub
 		return  getRepository().findById(id);
 	}
 
-	//@Override
-	public Stream<T> findAll() {
-		// TODO Auto-generated method stub
+	
+	public Iterable<T> findAll() {
+		return getRepository().findAll();
+	}
+	
+	
+	public Stream<T> findAllStream() {
 		return getRepository().allEntities();
 	}
 
 	//@Override
 	public void delete(Long id) {
 		getRepository().delete(id);
-		// TODO Auto-generated method stub
+		
 	}
 	
 	public long count(){ return getRepository().count() ; }

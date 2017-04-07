@@ -8,6 +8,8 @@ import com.td.bbwp.commerce.Customer;
 import com.td.bbwp.course.domain.Student;
 import com.td.bbwp.course.domain.User;
 import com.td.bbwp.wf.CaseDefinition;
+import com.td.bbwp.wf.CaseInstance;
+import com.td.bbwp.wf.TaskDefinition;
 
 @Configuration
 public class RepositoryConfiguration extends RepositoryRestConfigurerAdapter {
@@ -18,5 +20,8 @@ public class RepositoryConfiguration extends RepositoryRestConfigurerAdapter {
         config.exposeIdsFor(Student.class);
         config.exposeIdsFor(Customer.class);
         config.exposeIdsFor(CaseDefinition.class);
+        config.exposeIdsFor(TaskDefinition.class);
+        config.exposeIdsFor(CaseInstance.class);
+        
     }
 }

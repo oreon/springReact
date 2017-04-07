@@ -11,6 +11,10 @@ import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColu
 import Form from "react-jsonschema-form";
 import {BaseComponent, BaseEditComponent} from '../commons/BaseComponent.jsx'
 import Griddle, {plugins} from 'griddle-react';
+
+import { Layout } from '../commons/Layout.jsx'
+import { SimpleView } from '../commons/SimpleView.jsx'
+import {Tabs, Tab} from 'material-ui/Tabs';
 import {SimpleList} from '../commons/SimpleList.jsx'
 
 
@@ -42,10 +46,6 @@ dob:{ type: "string", title: "Dob",   "format": "date"
 
 
 address:{ type: "integer", title: "Address",   
-
- 'enum': LookupService.getLookup('addresses').map(x => x.id   ),
- 'enumNames': LookupService.getLookup('addresses').map(x => x.displayName)
-
 
 	
 },
@@ -143,7 +143,9 @@ code: {  'ui:placeholder': "Code" },
 	 ]
 
 
-let customerSchema = createSchema()
+
+
+let employeeSchema = createSchema()
 const log = (type) => console.log.bind(console, type);
 
 
@@ -153,8 +155,11 @@ export class EmployeeList extends BaseComponent {
         super(props);
         this.entityName = 'employees'
         this.name = 'employees'
-        this.editLink = "/entities/employees/edit/"
+        this.baseLink = "/entities/employees/"
+        this.editLink = this.baseLink + "edit/"
     }
+    
+     getEntityName() { return  'employees' }
 
     renderExtra(record) {
         return null
@@ -177,6 +182,7 @@ export class EmployeeList extends BaseComponent {
             <div>
                 <SimpleList headers={employeeHeaders} editLink={this.editLink}
                             renderExtra={this.renderExtra}
+                            baseLink = {this.baseLink}
                             records={ records } nested={this.props.nested}
                             container={this.props.container} uneditable={this.props.uneditable}
                             containerId={this.props.containerId}
@@ -197,8 +203,9 @@ export class EditEmployee extends BaseEditComponent {
     constructor(props) {
         super(props);
         this.state = {entity: {}};
-        this.entityName = 'customers'
+        this.entityName = 'employees'
         this.onSubmit = this.onSubmit.bind(this);
+        
         //this.handleChange = this.handleChange.bind(this);
     }
 
@@ -221,3 +228,35 @@ export class EditEmployee extends BaseEditComponent {
         )
     }
 }
+
+
+export class ViewEmployee extends BaseEditComponent {
+
+  renderExtra(record: any) { <p> IN render </p> }
+  
+  constructor(props) {
+    super(props);
+    this.state = { record: {}, error: {}, message: {} };
+    this.entityName = 'employees';
+    //this.onSubmit = this.onSubmit.bind(this)
+  }
+  
+  render() {
+  
+    let record = this.state.entity
+    return (
+     <div>
+       <SimpleView  headers= {employeeHeaders} renderExtra={this.renderExtra}
+       record={record}   entityName='Employee' /> 
+       
+       <Tabs>
+        
+         </Tabs>
+      </div>
+    )	
+
+  }
+}
+
+
+

@@ -70,6 +70,8 @@
 
 	
 
+	
+
 	</entity>
 
 	<!--  CustomerOrder  JPA Configurations -->
@@ -262,6 +264,8 @@
 
 	
 
+	
+
 	</entity>
 
 	<!--  TaskDefinition  JPA Configurations -->
@@ -306,6 +310,10 @@
 
 	
 
+	
+
+	
+
 	</entity>
 
 	<!--  CaseInstance  JPA Configurations -->
@@ -332,6 +340,8 @@
 			]]>
 		</query>
 	</named-query>
+	
+
 	
 
 	
@@ -372,20 +382,6 @@
 
 	
 
-	</entity>
-
-	<!--  status  JPA Configurations -->
-	<entity class="com.td.bbwp.wf.status" name="status">
-		<table name="STATUS"  >
-				
-		
-		  
-		
-		
-		
-		</table>
- 	
- 	
 	</entity>
 
 	

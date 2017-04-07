@@ -33,26 +33,18 @@ public class PaymentMethodRepositoryIntegrationTestBase {
 	@Autowired
 	protected com.td.bbwp.web.action.commerce.PaymentMethodRepository paymentMethodRepository;
 
-	//@Autowired 
-	protected com.td.bbwp.commerce.testdata.PaymentMethodTestDataFactory paymentMethodTestDataFactory = new com.td.bbwp.commerce.testdata.PaymentMethodTestDataFactory();
+	protected com.td.bbwp.commerce.testdata.PaymentMethodFixture paymentMethodFixture = new com.td.bbwp.commerce.testdata.PaymentMethodFixture();
 
 	PaymentMethod paymentMethod;
 
 	@Before
 	public void setup() throws Exception {
 
-		try {
-			paymentMethodRepository.deleteAll();
-			paymentMethod = paymentMethodTestDataFactory.createPaymentMethodOne();
+		paymentMethodRepository.deleteAll();
 
-			paymentMethodRepository.save(paymentMethod);
+		paymentMethod = paymentMethodFixture.getOneRecord();
 
-		} catch (AccessDeniedException ade) {
-			System.out.println(ade.getMessage());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
+		paymentMethod = paymentMethodRepository.save(paymentMethod);
 	}
 
 	@Test
@@ -72,7 +64,7 @@ public class PaymentMethodRepositoryIntegrationTestBase {
 	@WithMockUser(username = "admin", roles = {"ADMIN"})
 	public void testEdit() throws IllegalAccessException, InvocationTargetException {
 		Long currentId = paymentMethod.getId();
-		BeanUtils.copyProperties(paymentMethod, paymentMethodTestDataFactory.createPaymentMethodTwo());
+		BeanUtils.copyProperties(paymentMethod, paymentMethodFixture.getOneRecord());
 		paymentMethod.setId(currentId);
 		paymentMethodRepository.save(paymentMethod);
 		assertCount(1L);

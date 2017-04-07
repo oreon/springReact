@@ -28,7 +28,7 @@ public class TaskInstanceDto
 
 	protected String taskData;
 
-	protected status string;
+	protected String status;
 
 	public void setTaskId(Long taskId) {
 		this.taskId = taskId;
@@ -70,12 +70,12 @@ public class TaskInstanceDto
 		return taskData;
 	}
 
-	public void setString(status string) {
-		this.string = string;
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
-	public status getString() {
-		return string;
+	public String getStatus() {
+		return status;
 	}
 
 }

@@ -35,8 +35,6 @@ public class UserTaskController {
 	public Collection<TaskSummary> getTasks() {
 		String userId =jbpmTaskService.getAuthUser();
 
-		// List<TaskSummary> tasks = jbpmTaskService.getTaskService()
-		// .getTasksAssignedAsPotentialOwner(userId, "en-uk");
 		String grp = userId.equalsIgnoreCase("krisv")?"lenders":"adjudicators";
 		
 		List<String> groups = Arrays.asList(new String[] { "lenders","adjudicators" });

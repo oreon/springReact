@@ -11,6 +11,10 @@ import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColu
 import Form from "react-jsonschema-form";
 import {BaseComponent, BaseEditComponent} from '../commons/BaseComponent.jsx'
 import Griddle, {plugins} from 'griddle-react';
+
+import { Layout } from '../commons/Layout.jsx'
+import { SimpleView } from '../commons/SimpleView.jsx'
+import {Tabs, Tab} from 'material-ui/Tabs';
 import {SimpleList} from '../commons/SimpleList.jsx'
 
 
@@ -26,36 +30,39 @@ export function createSchema(){
 
 gender:{ type: "string", title: "Gender",   
 'enum' : [
-'Select','MALE' ,'FEMALE' 
+'','0' ,'1'   
 ],
 'enumNames' : [
 'Select','MALE' ,'FEMALE'   
 ]
-    
+	
 },
 
 
 
-dob:{ type: "string", title: "Dob",   "format": "date"  
-},
-
-
-//
-//address:{ type: "integer", title: "Address",   
-//
-// 'enum': LookupService.getLookup('addresses').map(x => x.id   ),
-// 'enumNames': LookupService.getLookup('addresses').map(x => x.displayName)
-//},
-
-
-
-firstName:{ type: "string", title: "First Name",    
+dob:{ type: "string", title: "Dob",   "format": "date"	
 },
 
 
 
-lastName:{ type: "string", title: "Last Name",      
+address:{ type: "integer", title: "Address",   
+
+	
 },
+
+
+
+firstName:{ type: "string", title: "First Name",  	
+},
+
+
+
+lastName:{ type: "string", title: "Last Name",  	
+},
+
+
+
+
 
 
     
@@ -65,7 +72,7 @@ lastName:{ type: "string", title: "Last Name",
 }
 
 export const customerUISchema = {
-    
+ 	
 
 gender: {  'ui:placeholder': "Gender" },
 
@@ -86,28 +93,34 @@ firstName: {  'ui:placeholder': "First Name" },
 lastName: {  'ui:placeholder': "Last Name" },
 
 
+
+caseInstances: {  'ui:placeholder': "Case Instances" },
+
+
     
  }
 
 
-    export const customerHeaders = [
-     
-     
-     {property:"gender",title:"Gender" }
-     ,
-     
-     {property:"dob",title:"Dob" }
-     ,
-     
-     {property:"address_displayName",title:"Address" }
-     ,
-     
-     {property:"firstName",title:"First Name" }
-     ,
-     
-     {property:"lastName",title:"Last Name" }
-          
-     ]
+	export const customerHeaders = [
+	 
+	 
+	 {property:"gender",title:"Gender" }
+	 ,
+	 
+	 {property:"dob",title:"Dob" }
+	 ,
+	 
+	 {property:"address_displayName",title:"Address" }
+	 ,
+	 
+	 {property:"firstName",title:"First Name" }
+	 ,
+	 
+	 {property:"lastName",title:"Last Name" }
+	      
+	 ]
+
+
 
 
 let customerSchema = createSchema()
@@ -120,7 +133,8 @@ export class CustomerList extends BaseComponent {
         super(props);
         this.entityName = 'customers'
         this.name = 'customers'
-        this.editLink = "/entities/customers/edit/"
+        this.baseLink = "/entities/customers/"
+        this.editLink = this.baseLink + "edit/"
     }
     
      getEntityName() { return  'customers' }
@@ -146,6 +160,7 @@ export class CustomerList extends BaseComponent {
             <div>
                 <SimpleList headers={customerHeaders} editLink={this.editLink}
                             renderExtra={this.renderExtra}
+                            baseLink = {this.baseLink}
                             records={ records } nested={this.props.nested}
                             container={this.props.container} uneditable={this.props.uneditable}
                             containerId={this.props.containerId}
@@ -168,6 +183,7 @@ export class EditCustomer extends BaseEditComponent {
         this.state = {entity: {}};
         this.entityName = 'customers'
         this.onSubmit = this.onSubmit.bind(this);
+        
         //this.handleChange = this.handleChange.bind(this);
     }
 
@@ -181,7 +197,7 @@ export class EditCustomer extends BaseEditComponent {
             <div>
                 <h3> Edit Customer </h3>
                 <Form schema={customerSchema}
-                    uiSchema={customerUISchema}
+                	uiSchema={customerUISchema}
                       formData={this.state.entity }
                     //onChange={log("changed")}
                       onSubmit={({formData}) => this.onSubmit(formData) }
@@ -190,3 +206,35 @@ export class EditCustomer extends BaseEditComponent {
         )
     }
 }
+
+
+export class ViewCustomer extends BaseEditComponent {
+
+  renderExtra(record: any) { <p> IN render </p> }
+  
+  constructor(props) {
+    super(props);
+    this.state = { record: {}, error: {}, message: {} };
+    this.entityName = 'customers';
+    //this.onSubmit = this.onSubmit.bind(this)
+  }
+  
+  render() {
+  
+    let record = this.state.entity
+    return (
+     <div>
+       <SimpleView  headers= {customerHeaders} renderExtra={this.renderExtra}
+       record={record}   entityName='Customer' /> 
+       
+       <Tabs>
+        
+         </Tabs>
+      </div>
+    )	
+
+  }
+}
+
+
+

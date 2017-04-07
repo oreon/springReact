@@ -44,6 +44,9 @@ public interface TaskInstanceRepositoryBase extends BaseRepository<TaskInstance>
 	Stream<TaskInstance> findByTaskData(@Param("taskData") String taskData);
 	Stream<TaskInstance> findByTaskDataIgnoringCase(@Param("taskData") String taskData);
 
-	Stream<TaskInstance> findByString(@Param("string") com.td.bbwp.wf.status string);
+	Stream<TaskInstance> findByStatusContainingAllIgnoringCase(@Param("status") String status);
+
+	Stream<TaskInstance> findByStatus(@Param("status") String status);
+	Stream<TaskInstance> findByStatusIgnoringCase(@Param("status") String status);
 
 }

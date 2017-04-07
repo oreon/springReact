@@ -29,4 +29,6 @@ interface CaseDefinitionCompleteProjectionBase {
 
 	List<com.td.bbwp.wf.TaskDefinition> getTaskDefinitions();
 
+	Optional<Boolean> getClosable();
+
 }

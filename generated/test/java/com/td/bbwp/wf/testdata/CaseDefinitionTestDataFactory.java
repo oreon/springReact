@@ -35,7 +35,9 @@ public class CaseDefinitionTestDataFactory extends AbstractTestDataFactory<com.t
 
 			register(caseDefinition);
 
-			caseDefinition.setName("name-1491423494186-One");
+			caseDefinition.setName("name-1491586206660-One");
+
+			caseDefinition.setClosable(true);
 
 		} catch (Exception ex) {
 			handleCreationException(ex);
@@ -51,7 +53,9 @@ public class CaseDefinitionTestDataFactory extends AbstractTestDataFactory<com.t
 
 			register(caseDefinition);
 
-			caseDefinition.setName("name-1491423494187-Two");
+			caseDefinition.setName("name-1491586206661-Two");
+
+			caseDefinition.setClosable(false);
 
 		} catch (Exception ex) {
 			handleCreationException(ex);
@@ -67,7 +71,9 @@ public class CaseDefinitionTestDataFactory extends AbstractTestDataFactory<com.t
 
 			register(caseDefinition);
 
-			caseDefinition.setName("name-1491423494187-Three");
+			caseDefinition.setName("name-1491586206662-Three");
+
+			caseDefinition.setClosable(true);
 
 		} catch (Exception ex) {
 			handleCreationException(ex);
@@ -83,7 +89,9 @@ public class CaseDefinitionTestDataFactory extends AbstractTestDataFactory<com.t
 
 			register(caseDefinition);
 
-			caseDefinition.setName("name-1491423494188-Four");
+			caseDefinition.setName("name-1491586206663-Four");
+
+			caseDefinition.setClosable(true);
 
 		} catch (Exception ex) {
 			handleCreationException(ex);
@@ -99,7 +107,9 @@ public class CaseDefinitionTestDataFactory extends AbstractTestDataFactory<com.t
 
 			register(caseDefinition);
 
-			caseDefinition.setName("name-1491423494188-Five");
+			caseDefinition.setName("name-1491586206663-Five");
+
+			caseDefinition.setClosable(false);
 
 		} catch (Exception ex) {
 			handleCreationException(ex);

@@ -11,6 +11,10 @@ import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColu
 import Form from "react-jsonschema-form";
 import {BaseComponent, BaseEditComponent} from '../commons/BaseComponent.jsx'
 import Griddle, {plugins} from 'griddle-react';
+
+import { Layout } from '../commons/Layout.jsx'
+import { SimpleView } from '../commons/SimpleView.jsx'
+import {Tabs, Tab} from 'material-ui/Tabs';
 import {SimpleList} from '../commons/SimpleList.jsx'
 
 
@@ -56,13 +60,7 @@ taskData:{ type: "string", title: "Task Data",
 
 
 
-string:{ type: "string", title: "String",   
-
- 'enum': LookupService.getLookup('statuses').map(x => x.id   ),
- 'enumNames': LookupService.getLookup('statuses').map(x => x.displayName)
-
-
-	
+status:{ type: "string", title: "Status",  	
 },
 
 
@@ -97,7 +95,7 @@ taskData: {  'ui:placeholder': "Task Data" },
 
 
 
-string: {  'ui:placeholder': "String" },
+status: {  'ui:placeholder': "Status" },
 
 
     
@@ -122,12 +120,14 @@ string: {  'ui:placeholder': "String" },
 	 {property:"taskData",title:"Task Data" }
 	 ,
 	 
-	 {property:"string",title:"String" }
+	 {property:"status",title:"Status" }
 	      
 	 ]
 
 
-let customerSchema = createSchema()
+
+
+let taskInstanceSchema = createSchema()
 const log = (type) => console.log.bind(console, type);
 
 
@@ -137,8 +137,11 @@ export class TaskInstanceList extends BaseComponent {
         super(props);
         this.entityName = 'taskInstances'
         this.name = 'taskInstances'
-        this.editLink = "/entities/taskInstances/edit/"
+        this.baseLink = "/entities/taskInstances/"
+        this.editLink = this.baseLink + "edit/"
     }
+    
+     getEntityName() { return  'taskInstances' }
 
     renderExtra(record) {
         return null
@@ -161,6 +164,7 @@ export class TaskInstanceList extends BaseComponent {
             <div>
                 <SimpleList headers={taskInstanceHeaders} editLink={this.editLink}
                             renderExtra={this.renderExtra}
+                            baseLink = {this.baseLink}
                             records={ records } nested={this.props.nested}
                             container={this.props.container} uneditable={this.props.uneditable}
                             containerId={this.props.containerId}
@@ -181,8 +185,9 @@ export class EditTaskInstance extends BaseEditComponent {
     constructor(props) {
         super(props);
         this.state = {entity: {}};
-        this.entityName = 'customers'
+        this.entityName = 'taskInstances'
         this.onSubmit = this.onSubmit.bind(this);
+        
         //this.handleChange = this.handleChange.bind(this);
     }
 
@@ -205,3 +210,35 @@ export class EditTaskInstance extends BaseEditComponent {
         )
     }
 }
+
+
+export class ViewTaskInstance extends BaseEditComponent {
+
+  renderExtra(record: any) { <p> IN render </p> }
+  
+  constructor(props) {
+    super(props);
+    this.state = { record: {}, error: {}, message: {} };
+    this.entityName = 'taskInstances';
+    //this.onSubmit = this.onSubmit.bind(this)
+  }
+  
+  render() {
+  
+    let record = this.state.entity
+    return (
+     <div>
+       <SimpleView  headers= {taskInstanceHeaders} renderExtra={this.renderExtra}
+       record={record}   entityName='TaskInstance' /> 
+       
+       <Tabs>
+        
+         </Tabs>
+      </div>
+    )	
+
+  }
+}
+
+
+

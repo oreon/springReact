@@ -33,26 +33,18 @@ public class ProductRepositoryIntegrationTestBase {
 	@Autowired
 	protected com.td.bbwp.web.action.commerce.ProductRepository productRepository;
 
-	//@Autowired 
-	protected com.td.bbwp.commerce.testdata.ProductTestDataFactory productTestDataFactory = new com.td.bbwp.commerce.testdata.ProductTestDataFactory();
+	protected com.td.bbwp.commerce.testdata.ProductFixture productFixture = new com.td.bbwp.commerce.testdata.ProductFixture();
 
 	Product product;
 
 	@Before
 	public void setup() throws Exception {
 
-		try {
-			productRepository.deleteAll();
-			product = productTestDataFactory.createProductOne();
+		productRepository.deleteAll();
 
-			productRepository.save(product);
+		product = productFixture.getOneRecord();
 
-		} catch (AccessDeniedException ade) {
-			System.out.println(ade.getMessage());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
+		product = productRepository.save(product);
 	}
 
 	@Test
@@ -72,7 +64,7 @@ public class ProductRepositoryIntegrationTestBase {
 	@WithMockUser(username = "admin", roles = {"ADMIN"})
 	public void testEdit() throws IllegalAccessException, InvocationTargetException {
 		Long currentId = product.getId();
-		BeanUtils.copyProperties(product, productTestDataFactory.createProductTwo());
+		BeanUtils.copyProperties(product, productFixture.getOneRecord());
 		product.setId(currentId);
 		productRepository.save(product);
 		assertCount(1L);

@@ -33,26 +33,18 @@ public class AppUserRepositoryIntegrationTestBase {
 	@Autowired
 	protected com.td.bbwp.web.action.users.AppUserRepository appUserRepository;
 
-	//@Autowired 
-	protected com.td.bbwp.users.testdata.AppUserTestDataFactory appUserTestDataFactory = new com.td.bbwp.users.testdata.AppUserTestDataFactory();
+	protected com.td.bbwp.users.testdata.AppUserFixture appUserFixture = new com.td.bbwp.users.testdata.AppUserFixture();
 
 	AppUser appUser;
 
 	@Before
 	public void setup() throws Exception {
 
-		try {
-			appUserRepository.deleteAll();
-			appUser = appUserTestDataFactory.createAppUserOne();
+		appUserRepository.deleteAll();
 
-			appUserRepository.save(appUser);
+		appUser = appUserFixture.getOneRecord();
 
-		} catch (AccessDeniedException ade) {
-			System.out.println(ade.getMessage());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
+		appUser = appUserRepository.save(appUser);
 	}
 
 	@Test
@@ -72,7 +64,7 @@ public class AppUserRepositoryIntegrationTestBase {
 	@WithMockUser(username = "admin", roles = {"ADMIN"})
 	public void testEdit() throws IllegalAccessException, InvocationTargetException {
 		Long currentId = appUser.getId();
-		BeanUtils.copyProperties(appUser, appUserTestDataFactory.createAppUserTwo());
+		BeanUtils.copyProperties(appUser, appUserFixture.getOneRecord());
 		appUser.setId(currentId);
 		appUserRepository.save(appUser);
 		assertCount(1L);

@@ -1,6 +1,7 @@
 import React from 'react'
+let spring = require('spring-data-rest-js');
 
-export const URL = "http://localhost:9033/rest/";
+export const URL = "http://localhost:9033/api/";
 
 export  class BaseComponent extends React.Component {
 
@@ -12,7 +13,7 @@ export  class BaseComponent extends React.Component {
         super(props);
         this.deleteRecord = this.deleteRecord.bind(this);
         this.createRecord = this.createRecord.bind(this);
-        this.url = URL + this.getEntityName() + "/"
+        this.url = URL + this.getEntityName()
 
         this.state = {
             records: [],
@@ -37,12 +38,14 @@ export  class BaseComponent extends React.Component {
 
     // Load students from database
     loadRecordsFromServer() {
+        console.log(this.url)
+        
         fetch(this.url,
             {credentials: 'same-origin'})
             .then((response) => response.json())
             .then((responseData) => {
                 this.setState({
-                    records: responseData,
+                    records: responseData._embedded[this.name],
                 });
             });
     }
@@ -69,6 +72,11 @@ export  class BaseComponent extends React.Component {
 }
 
 export class BaseEditComponent extends React.Component{
+    
+    componentDidMount() {
+        if ( this.props.match.params.id )
+            this.fetchSingleRecord( this.props.match.params.id );
+    }
     
    
     fetchSingleRecord(id) {

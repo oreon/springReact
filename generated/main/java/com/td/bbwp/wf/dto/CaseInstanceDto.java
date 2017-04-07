@@ -26,7 +26,9 @@ public class CaseInstanceDto
 
 	protected String name;
 
-	protected status string;
+	protected String status;
+
+	protected com.td.bbwp.commerce.dto.CustomerDto customerDto;
 
 	public void setCaseDefinition(CaseDefinitionDto caseDefinitionDto) {
 		this.caseDefinitionDto = caseDefinitionDto;
@@ -70,12 +72,20 @@ public class CaseInstanceDto
 		return name;
 	}
 
-	public void setString(status string) {
-		this.string = string;
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
-	public status getString() {
-		return string;
+	public String getStatus() {
+		return status;
+	}
+
+	public void setCustomer(com.td.bbwp.commerce.dto.CustomerDto customerDto) {
+		this.customerDto = customerDto;
+	}
+
+	public com.td.bbwp.commerce.dto.CustomerDto getCustomer() {
+		return customerDto;
 	}
 
 }

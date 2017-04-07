@@ -90,8 +90,9 @@ class TaskTable extends React.Component {
                             <th>Subject</th>
                             <th>Process Id</th>
                             <th>Task status Id</th>
-
-                            <th></th>
+                            <th> Status </th>
+                            <th> Expiration </th>
+                            <th> </th>
                             <th></th>
                         </tr>
                     </thead>
@@ -164,6 +165,8 @@ class Task extends React.Component {
                 <td>{this.props.task.processId}</td>
                 <td>{this.props.task.id}-{this.props.task.processInstanceId}</td>
                 <td>{this.props.task.statusId}</td>
+                <td>{this.props.task.expirationTime}</td>
+                
                 
                 <td>
                     

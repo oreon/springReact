@@ -33,26 +33,18 @@ public class EmployeeRepositoryIntegrationTestBase {
 	@Autowired
 	protected com.td.bbwp.web.action.commerce.EmployeeRepository employeeRepository;
 
-	//@Autowired 
-	protected com.td.bbwp.commerce.testdata.EmployeeTestDataFactory employeeTestDataFactory = new com.td.bbwp.commerce.testdata.EmployeeTestDataFactory();
+	protected com.td.bbwp.commerce.testdata.EmployeeFixture employeeFixture = new com.td.bbwp.commerce.testdata.EmployeeFixture();
 
 	Employee employee;
 
 	@Before
 	public void setup() throws Exception {
 
-		try {
-			employeeRepository.deleteAll();
-			employee = employeeTestDataFactory.createEmployeeOne();
+		employeeRepository.deleteAll();
 
-			employeeRepository.save(employee);
+		employee = employeeFixture.getOneRecord();
 
-		} catch (AccessDeniedException ade) {
-			System.out.println(ade.getMessage());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
+		employee = employeeRepository.save(employee);
 	}
 
 	@Test
@@ -72,7 +64,7 @@ public class EmployeeRepositoryIntegrationTestBase {
 	@WithMockUser(username = "admin", roles = {"ADMIN"})
 	public void testEdit() throws IllegalAccessException, InvocationTargetException {
 		Long currentId = employee.getId();
-		BeanUtils.copyProperties(employee, employeeTestDataFactory.createEmployeeTwo());
+		BeanUtils.copyProperties(employee, employeeFixture.getOneRecord());
 		employee.setId(currentId);
 		employeeRepository.save(employee);
 		assertCount(1L);

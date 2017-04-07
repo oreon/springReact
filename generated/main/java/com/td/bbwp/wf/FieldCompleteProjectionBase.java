@@ -33,4 +33,8 @@ interface FieldCompleteProjectionBase {
 
 	Optional<Boolean> getRequired();
 
+	Optional<Integer> getMin();
+
+	Optional<Integer> getMax();
+
 }

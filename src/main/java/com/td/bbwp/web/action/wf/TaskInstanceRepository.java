@@ -16,7 +16,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 
 import com.td.bbwp.wf.TaskInstance;
 
-@RepositoryRestResource
+@RepositoryRestResource(exported=false)
 public interface TaskInstanceRepository extends TaskInstanceRepositoryBase {
 
 }

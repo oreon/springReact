@@ -60,6 +60,18 @@ public abstract class FieldBase extends BaseEntity {
 
 	;
 
+	@Column(name = "MIN", unique = false)
+
+	protected Integer min
+
+	;
+
+	@Column(name = "MAX", unique = false)
+
+	protected Integer max
+
+	;
+
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -94,6 +106,24 @@ public abstract class FieldBase extends BaseEntity {
 	public Boolean getRequired() {
 
 		return required;
+	}
+
+	public void setMin(Integer min) {
+		this.min = min;
+	}
+
+	public Integer getMin() {
+
+		return min;
+	}
+
+	public void setMax(Integer max) {
+		this.max = max;
+	}
+
+	public Integer getMax() {
+
+		return max;
 	}
 
 	@Transient

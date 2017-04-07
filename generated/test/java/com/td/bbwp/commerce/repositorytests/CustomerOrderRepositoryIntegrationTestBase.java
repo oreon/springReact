@@ -33,34 +33,27 @@ public class CustomerOrderRepositoryIntegrationTestBase {
 	@Autowired
 	protected com.td.bbwp.web.action.commerce.CustomerOrderRepository customerOrderRepository;
 
-	//@Autowired 
-	protected com.td.bbwp.commerce.testdata.CustomerOrderTestDataFactory customerOrderTestDataFactory = new com.td.bbwp.commerce.testdata.CustomerOrderTestDataFactory();
+	protected com.td.bbwp.commerce.testdata.CustomerOrderFixture customerOrderFixture = new com.td.bbwp.commerce.testdata.CustomerOrderFixture();
 
 	@Autowired
 	protected com.td.bbwp.web.action.commerce.OrderItemRepository orderItemRepository;
 
-	//@Autowired
-	protected com.td.bbwp.commerce.testdata.OrderItemTestDataFactory orderItemTestDataFactory = new com.td.bbwp.commerce.testdata.OrderItemTestDataFactory();
+	protected com.td.bbwp.commerce.testdata.OrderItemFixture orderItemFixture = new com.td.bbwp.commerce.testdata.OrderItemFixture();
 
 	CustomerOrder customerOrder;
 
 	@Before
 	public void setup() throws Exception {
 
-		try {
-			customerOrderRepository.deleteAll();
-			customerOrder = customerOrderTestDataFactory.createCustomerOrderOne();
+		customerOrderRepository.deleteAll();
 
-			customerOrder.addOrderItem(orderItemTestDataFactory.createOrderItemOne());
+		orderItemRepository.deleteAll();
 
-			customerOrderRepository.save(customerOrder);
+		customerOrder = customerOrderFixture.getOneRecord();
 
-		} catch (AccessDeniedException ade) {
-			System.out.println(ade.getMessage());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		customerOrder.addOrderItem(orderItemFixture.getOneRecord());
 
+		customerOrder = customerOrderRepository.save(customerOrder);
 	}
 
 	@Test
@@ -87,7 +80,7 @@ public class CustomerOrderRepositoryIntegrationTestBase {
 	@WithMockUser(username = "admin", roles = {"ADMIN"})
 	public void testEdit() throws IllegalAccessException, InvocationTargetException {
 		Long currentId = customerOrder.getId();
-		BeanUtils.copyProperties(customerOrder, customerOrderTestDataFactory.createCustomerOrderTwo());
+		BeanUtils.copyProperties(customerOrder, customerOrderFixture.getOneRecord());
 		customerOrder.setId(currentId);
 		customerOrderRepository.save(customerOrder);
 		assertCount(1L);

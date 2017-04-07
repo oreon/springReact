@@ -17,7 +17,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import com.td.bbwp.wf.CaseDefinition;
 import com.td.bbwp.wf.TaskDefinition;
 
-@RepositoryRestResource(exported=true)
+@RepositoryRestResource(exported=false)
 public interface TaskDefinitionRepository extends TaskDefinitionRepositoryBase {
 	
 	Optional<TaskDefinition> findByNameAndCaseDefinition(String name, CaseDefinition caseDefinition);

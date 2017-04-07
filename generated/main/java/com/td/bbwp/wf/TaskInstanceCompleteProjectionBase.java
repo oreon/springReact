@@ -35,6 +35,6 @@ interface TaskInstanceCompleteProjectionBase {
 
 	Optional<String> getTaskData();
 
-	Optional<com.td.bbwp.wf.status> getString();
+	Optional<String> getStatus();
 
 }

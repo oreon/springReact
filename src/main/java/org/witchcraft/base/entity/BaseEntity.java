@@ -29,7 +29,7 @@ import com.td.bbwp.users.AppUser;
 
 @MappedSuperclass
 @EntityListeners({EntityListener.class})
-public class BaseEntity implements Serializable, Persistable<Long>{
+public abstract class BaseEntity implements Serializable, Persistable<Long>{
 	private static final long serialVersionUID = -2225862673125944610L;
 
     @Id @GeneratedValue(strategy=GenerationType.AUTO)

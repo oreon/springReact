@@ -11,6 +11,10 @@ import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColu
 import Form from "react-jsonschema-form";
 import {BaseComponent, BaseEditComponent} from '../commons/BaseComponent.jsx'
 import Griddle, {plugins} from 'griddle-react';
+
+import { Layout } from '../commons/Layout.jsx'
+import { SimpleView } from '../commons/SimpleView.jsx'
+import {Tabs, Tab} from 'material-ui/Tabs';
 import {SimpleList} from '../commons/SimpleList.jsx'
 
 
@@ -19,7 +23,7 @@ export function createSchema(){
  return {
     title: "Task Definition",
     type: "object",
-    required: [  'name' 
+    required: [ 
 ],
     properties: {
     
@@ -43,7 +47,7 @@ formSchema:{ type: "string", title: "Form Schema",
 fields: {
             title: "Fields",
             type: "array",
-            required: [ 'name' 
+            required: [
 ],
             items: {
                 "type": "object",
@@ -57,10 +61,10 @@ name:{ type: "string", title: "Name",
 
 type:{ type: "string", title: "Type",   
 'enum' : [
-'','0' ,'1' ,'2' ,'3'   
+'','0' ,'1' ,'2' ,'3' ,'4'   
 ],
 'enumNames' : [
-'Select','string' ,'number' ,'date' ,'boolean'   
+'Select','string' ,'number' ,'date' ,'bool' ,'textBlob'   
 ]
 	
 },
@@ -74,6 +78,16 @@ taskDefinition: {
 
 
 required:{ type: "boolean", title: "Required",  	
+},
+
+
+
+min:{ type: "integer", title: "Min",  	
+},
+
+
+
+max:{ type: "integer", title: "Max",  	
 },
 
  
@@ -124,6 +138,14 @@ taskDefinition: {
 
 required: {  'ui:placeholder': "Required" },
 
+
+
+min: { 'ui:widget': "updown" , 'ui:placeholder': "Min" },
+
+
+
+max: { 'ui:widget': "updown" , 'ui:placeholder': "Max" },
+
  
          
      }
@@ -146,7 +168,11 @@ required: {  'ui:placeholder': "Required" },
 	 ]
 
 
-let customerSchema = createSchema()
+
+	import { FieldList} from './Field.jsx';
+
+
+let taskDefinitionSchema = createSchema()
 const log = (type) => console.log.bind(console, type);
 
 
@@ -156,8 +182,11 @@ export class TaskDefinitionList extends BaseComponent {
         super(props);
         this.entityName = 'taskDefinitions'
         this.name = 'taskDefinitions'
-        this.editLink = "/entities/taskDefinitions/edit/"
+        this.baseLink = "/entities/taskDefinitions/"
+        this.editLink = this.baseLink + "edit/"
     }
+    
+     getEntityName() { return  'taskDefinitions' }
 
     renderExtra(record) {
         return null
@@ -180,6 +209,7 @@ export class TaskDefinitionList extends BaseComponent {
             <div>
                 <SimpleList headers={taskDefinitionHeaders} editLink={this.editLink}
                             renderExtra={this.renderExtra}
+                            baseLink = {this.baseLink}
                             records={ records } nested={this.props.nested}
                             container={this.props.container} uneditable={this.props.uneditable}
                             containerId={this.props.containerId}
@@ -200,8 +230,9 @@ export class EditTaskDefinition extends BaseEditComponent {
     constructor(props) {
         super(props);
         this.state = {entity: {}};
-        this.entityName = 'customers'
+        this.entityName = 'taskDefinitions'
         this.onSubmit = this.onSubmit.bind(this);
+        
         //this.handleChange = this.handleChange.bind(this);
     }
 
@@ -224,3 +255,44 @@ export class EditTaskDefinition extends BaseEditComponent {
         )
     }
 }
+
+
+export class ViewTaskDefinition extends BaseEditComponent {
+
+  renderExtra(record: any) { <p> IN render </p> }
+  
+  constructor(props) {
+    super(props);
+    this.state = { record: {}, error: {}, message: {} };
+    this.entityName = 'taskDefinitions';
+    //this.onSubmit = this.onSubmit.bind(this)
+  }
+  
+  render() {
+  
+    let record = this.state.entity
+    return (
+     <div>
+       <SimpleView  headers= {taskDefinitionHeaders} renderExtra={this.renderExtra}
+       record={record}   entityName='TaskDefinition' /> 
+       
+       <Tabs>
+       	  <Tab label="Field" >
+          <FieldList records={record.fields} 
+          nested={true}  
+          container={'taskDefinition_displayName'}
+          containerId={record.id}
+           prev={this.props.location?this.props.location.pathName:null }
+           uneditable={true} 
+           />
+           </Tab>
+		  
+         </Tabs>
+      </div>
+    )	
+
+  }
+}
+
+
+

@@ -93,11 +93,6 @@ public class TestDataFactoryManager {
 		return new com.td.bbwp.wf.testdata.TaskInstanceTestDataFactory();
 	}
 
-	//@Bean
-	public com.td.bbwp.wf.testdata.statusTestDataFactory createstatusTestDataFactory() {
-		return new com.td.bbwp.wf.testdata.statusTestDataFactory();
-	}
-
 	static {
 
 		listDataFactory.add(new com.td.bbwp.commerce.testdata.EmployeeTestDataFactory());
@@ -131,8 +126,6 @@ public class TestDataFactoryManager {
 		listDataFactory.add(new com.td.bbwp.wf.testdata.CaseInstanceTestDataFactory());
 
 		listDataFactory.add(new com.td.bbwp.wf.testdata.TaskInstanceTestDataFactory());
-
-		listDataFactory.add(new com.td.bbwp.wf.testdata.statusTestDataFactory());
 
 	}
 

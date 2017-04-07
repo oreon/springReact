@@ -11,6 +11,10 @@ import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColu
 import Form from "react-jsonschema-form";
 import {BaseComponent, BaseEditComponent} from '../commons/BaseComponent.jsx'
 import Griddle, {plugins} from 'griddle-react';
+
+import { Layout } from '../commons/Layout.jsx'
+import { SimpleView } from '../commons/SimpleView.jsx'
+import {Tabs, Tab} from 'material-ui/Tabs';
 import {SimpleList} from '../commons/SimpleList.jsx'
 
 
@@ -64,7 +68,9 @@ paypalAccountNumber: {  'ui:placeholder': "Paypal Account Number" },
 	 ]
 
 
-let customerSchema = createSchema()
+
+
+let payPalSchema = createSchema()
 const log = (type) => console.log.bind(console, type);
 
 
@@ -74,8 +80,11 @@ export class PayPalList extends BaseComponent {
         super(props);
         this.entityName = 'payPals'
         this.name = 'payPals'
-        this.editLink = "/entities/payPals/edit/"
+        this.baseLink = "/entities/payPals/"
+        this.editLink = this.baseLink + "edit/"
     }
+    
+     getEntityName() { return  'payPals' }
 
     renderExtra(record) {
         return null
@@ -98,6 +107,7 @@ export class PayPalList extends BaseComponent {
             <div>
                 <SimpleList headers={payPalHeaders} editLink={this.editLink}
                             renderExtra={this.renderExtra}
+                            baseLink = {this.baseLink}
                             records={ records } nested={this.props.nested}
                             container={this.props.container} uneditable={this.props.uneditable}
                             containerId={this.props.containerId}
@@ -118,8 +128,9 @@ export class EditPayPal extends BaseEditComponent {
     constructor(props) {
         super(props);
         this.state = {entity: {}};
-        this.entityName = 'customers'
+        this.entityName = 'payPals'
         this.onSubmit = this.onSubmit.bind(this);
+        
         //this.handleChange = this.handleChange.bind(this);
     }
 
@@ -142,3 +153,35 @@ export class EditPayPal extends BaseEditComponent {
         )
     }
 }
+
+
+export class ViewPayPal extends BaseEditComponent {
+
+  renderExtra(record: any) { <p> IN render </p> }
+  
+  constructor(props) {
+    super(props);
+    this.state = { record: {}, error: {}, message: {} };
+    this.entityName = 'payPals';
+    //this.onSubmit = this.onSubmit.bind(this)
+  }
+  
+  render() {
+  
+    let record = this.state.entity
+    return (
+     <div>
+       <SimpleView  headers= {payPalHeaders} renderExtra={this.renderExtra}
+       record={record}   entityName='PayPal' /> 
+       
+       <Tabs>
+        
+         </Tabs>
+      </div>
+    )	
+
+  }
+}
+
+
+

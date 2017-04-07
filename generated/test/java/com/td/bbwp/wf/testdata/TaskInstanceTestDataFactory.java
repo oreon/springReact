@@ -41,11 +41,11 @@ public class TaskInstanceTestDataFactory extends AbstractTestDataFactory<com.td.
 
 			taskInstance.setTaskId(null/*unknown attrib type:long*/);
 
-			taskInstance.setName("name-1491423494228-One");
+			taskInstance.setName("name-1491586206789-One");
 
-			taskInstance.setTaskData("taskData-1491423494228-One");
+			taskInstance.setTaskData("taskData-1491586206789-One");
 
-			taskInstance.setString(null/*unknown attrib type:status*/);
+			taskInstance.setStatus("status-1491586206790-One");
 
 			taskInstance.setTaskDefinition(taskDefinitionTestDataFactory.createTaskDefinitionOne());
 
@@ -67,11 +67,11 @@ public class TaskInstanceTestDataFactory extends AbstractTestDataFactory<com.td.
 
 			taskInstance.setTaskId(null/*unknown attrib type:long*/);
 
-			taskInstance.setName("name-1491423494229-Two");
+			taskInstance.setName("name-1491586206790-Two");
 
-			taskInstance.setTaskData("taskData-1491423494229-Two");
+			taskInstance.setTaskData("taskData-1491586206790-Two");
 
-			taskInstance.setString(null/*unknown attrib type:status*/);
+			taskInstance.setStatus("status-1491586206790-Two");
 
 			taskInstance.setTaskDefinition(taskDefinitionTestDataFactory.createTaskDefinitionTwo());
 
@@ -93,11 +93,11 @@ public class TaskInstanceTestDataFactory extends AbstractTestDataFactory<com.td.
 
 			taskInstance.setTaskId(null/*unknown attrib type:long*/);
 
-			taskInstance.setName("name-1491423494230-Three");
+			taskInstance.setName("name-1491586206791-Three");
 
-			taskInstance.setTaskData("taskData-1491423494230-Three");
+			taskInstance.setTaskData("taskData-1491586206791-Three");
 
-			taskInstance.setString(null/*unknown attrib type:status*/);
+			taskInstance.setStatus("status-1491586206791-Three");
 
 			taskInstance.setTaskDefinition(taskDefinitionTestDataFactory.createTaskDefinitionThree());
 
@@ -119,11 +119,11 @@ public class TaskInstanceTestDataFactory extends AbstractTestDataFactory<com.td.
 
 			taskInstance.setTaskId(null/*unknown attrib type:long*/);
 
-			taskInstance.setName("name-1491423494231-Four");
+			taskInstance.setName("name-1491586206792-Four");
 
-			taskInstance.setTaskData("taskData-1491423494231-Four");
+			taskInstance.setTaskData("taskData-1491586206792-Four");
 
-			taskInstance.setString(null/*unknown attrib type:status*/);
+			taskInstance.setStatus("status-1491586206792-Four");
 
 			taskInstance.setTaskDefinition(taskDefinitionTestDataFactory.createTaskDefinitionFour());
 
@@ -145,11 +145,11 @@ public class TaskInstanceTestDataFactory extends AbstractTestDataFactory<com.td.
 
 			taskInstance.setTaskId(null/*unknown attrib type:long*/);
 
-			taskInstance.setName("name-1491423494232-Five");
+			taskInstance.setName("name-1491586206800-Five");
 
-			taskInstance.setTaskData("taskData-1491423494232-Five");
+			taskInstance.setTaskData("taskData-1491586206800-Five");
 
-			taskInstance.setString(null/*unknown attrib type:status*/);
+			taskInstance.setStatus("status-1491586206800-Five");
 
 			taskInstance.setTaskDefinition(taskDefinitionTestDataFactory.createTaskDefinitionFive());
 

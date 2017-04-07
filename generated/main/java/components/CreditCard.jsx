@@ -11,6 +11,10 @@ import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColu
 import Form from "react-jsonschema-form";
 import {BaseComponent, BaseEditComponent} from '../commons/BaseComponent.jsx'
 import Griddle, {plugins} from 'griddle-react';
+
+import { Layout } from '../commons/Layout.jsx'
+import { SimpleView } from '../commons/SimpleView.jsx'
+import {Tabs, Tab} from 'material-ui/Tabs';
 import {SimpleList} from '../commons/SimpleList.jsx'
 
 
@@ -76,7 +80,9 @@ expiry: {  'ui:placeholder': "Expiry" },
 	 ]
 
 
-let customerSchema = createSchema()
+
+
+let creditCardSchema = createSchema()
 const log = (type) => console.log.bind(console, type);
 
 
@@ -86,8 +92,11 @@ export class CreditCardList extends BaseComponent {
         super(props);
         this.entityName = 'creditCards'
         this.name = 'creditCards'
-        this.editLink = "/entities/creditCards/edit/"
+        this.baseLink = "/entities/creditCards/"
+        this.editLink = this.baseLink + "edit/"
     }
+    
+     getEntityName() { return  'creditCards' }
 
     renderExtra(record) {
         return null
@@ -110,6 +119,7 @@ export class CreditCardList extends BaseComponent {
             <div>
                 <SimpleList headers={creditCardHeaders} editLink={this.editLink}
                             renderExtra={this.renderExtra}
+                            baseLink = {this.baseLink}
                             records={ records } nested={this.props.nested}
                             container={this.props.container} uneditable={this.props.uneditable}
                             containerId={this.props.containerId}
@@ -130,8 +140,9 @@ export class EditCreditCard extends BaseEditComponent {
     constructor(props) {
         super(props);
         this.state = {entity: {}};
-        this.entityName = 'customers'
+        this.entityName = 'creditCards'
         this.onSubmit = this.onSubmit.bind(this);
+        
         //this.handleChange = this.handleChange.bind(this);
     }
 
@@ -154,3 +165,35 @@ export class EditCreditCard extends BaseEditComponent {
         )
     }
 }
+
+
+export class ViewCreditCard extends BaseEditComponent {
+
+  renderExtra(record: any) { <p> IN render </p> }
+  
+  constructor(props) {
+    super(props);
+    this.state = { record: {}, error: {}, message: {} };
+    this.entityName = 'creditCards';
+    //this.onSubmit = this.onSubmit.bind(this)
+  }
+  
+  render() {
+  
+    let record = this.state.entity
+    return (
+     <div>
+       <SimpleView  headers= {creditCardHeaders} renderExtra={this.renderExtra}
+       record={record}   entityName='CreditCard' /> 
+       
+       <Tabs>
+        
+         </Tabs>
+      </div>
+    )	
+
+  }
+}
+
+
+

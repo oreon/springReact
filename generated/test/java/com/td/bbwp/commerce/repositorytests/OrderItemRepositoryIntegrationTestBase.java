@@ -33,26 +33,18 @@ public class OrderItemRepositoryIntegrationTestBase {
 	@Autowired
 	protected com.td.bbwp.web.action.commerce.OrderItemRepository orderItemRepository;
 
-	//@Autowired 
-	protected com.td.bbwp.commerce.testdata.OrderItemTestDataFactory orderItemTestDataFactory = new com.td.bbwp.commerce.testdata.OrderItemTestDataFactory();
+	protected com.td.bbwp.commerce.testdata.OrderItemFixture orderItemFixture = new com.td.bbwp.commerce.testdata.OrderItemFixture();
 
 	OrderItem orderItem;
 
 	@Before
 	public void setup() throws Exception {
 
-		try {
-			orderItemRepository.deleteAll();
-			orderItem = orderItemTestDataFactory.createOrderItemOne();
+		orderItemRepository.deleteAll();
 
-			orderItemRepository.save(orderItem);
+		orderItem = orderItemFixture.getOneRecord();
 
-		} catch (AccessDeniedException ade) {
-			System.out.println(ade.getMessage());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
+		orderItem = orderItemRepository.save(orderItem);
 	}
 
 	@Test
@@ -72,7 +64,7 @@ public class OrderItemRepositoryIntegrationTestBase {
 	@WithMockUser(username = "admin", roles = {"ADMIN"})
 	public void testEdit() throws IllegalAccessException, InvocationTargetException {
 		Long currentId = orderItem.getId();
-		BeanUtils.copyProperties(orderItem, orderItemTestDataFactory.createOrderItemTwo());
+		BeanUtils.copyProperties(orderItem, orderItemFixture.getOneRecord());
 		orderItem.setId(currentId);
 		orderItemRepository.save(orderItem);
 		assertCount(1L);

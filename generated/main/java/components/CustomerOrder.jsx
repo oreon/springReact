@@ -11,6 +11,10 @@ import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColu
 import Form from "react-jsonschema-form";
 import {BaseComponent, BaseEditComponent} from '../commons/BaseComponent.jsx'
 import Griddle, {plugins} from 'griddle-react';
+
+import { Layout } from '../commons/Layout.jsx'
+import { SimpleView } from '../commons/SimpleView.jsx'
+import {Tabs, Tab} from 'material-ui/Tabs';
 import {SimpleList} from '../commons/SimpleList.jsx'
 
 
@@ -19,7 +23,7 @@ export function createSchema(){
  return {
     title: "Customer Order",
     type: "object",
-    required: [  'notes' 
+    required: [ 
 ],
     properties: {
     
@@ -157,7 +161,11 @@ customerOrder: {
 	 ]
 
 
-let customerSchema = createSchema()
+
+	import { OrderItemList} from './OrderItem.jsx';
+
+
+let customerOrderSchema = createSchema()
 const log = (type) => console.log.bind(console, type);
 
 
@@ -167,8 +175,11 @@ export class CustomerOrderList extends BaseComponent {
         super(props);
         this.entityName = 'customerOrders'
         this.name = 'customerOrders'
-        this.editLink = "/entities/customerOrders/edit/"
+        this.baseLink = "/entities/customerOrders/"
+        this.editLink = this.baseLink + "edit/"
     }
+    
+     getEntityName() { return  'customerOrders' }
 
     renderExtra(record) {
         return null
@@ -191,6 +202,7 @@ export class CustomerOrderList extends BaseComponent {
             <div>
                 <SimpleList headers={customerOrderHeaders} editLink={this.editLink}
                             renderExtra={this.renderExtra}
+                            baseLink = {this.baseLink}
                             records={ records } nested={this.props.nested}
                             container={this.props.container} uneditable={this.props.uneditable}
                             containerId={this.props.containerId}
@@ -211,8 +223,9 @@ export class EditCustomerOrder extends BaseEditComponent {
     constructor(props) {
         super(props);
         this.state = {entity: {}};
-        this.entityName = 'customers'
+        this.entityName = 'customerOrders'
         this.onSubmit = this.onSubmit.bind(this);
+        
         //this.handleChange = this.handleChange.bind(this);
     }
 
@@ -235,3 +248,44 @@ export class EditCustomerOrder extends BaseEditComponent {
         )
     }
 }
+
+
+export class ViewCustomerOrder extends BaseEditComponent {
+
+  renderExtra(record: any) { <p> IN render </p> }
+  
+  constructor(props) {
+    super(props);
+    this.state = { record: {}, error: {}, message: {} };
+    this.entityName = 'customerOrders';
+    //this.onSubmit = this.onSubmit.bind(this)
+  }
+  
+  render() {
+  
+    let record = this.state.entity
+    return (
+     <div>
+       <SimpleView  headers= {customerOrderHeaders} renderExtra={this.renderExtra}
+       record={record}   entityName='CustomerOrder' /> 
+       
+       <Tabs>
+       	  <Tab label="OrderItem" >
+          <OrderItemList records={record.orderItems} 
+          nested={true}  
+          container={'customerOrder_displayName'}
+          containerId={record.id}
+           prev={this.props.location?this.props.location.pathName:null }
+           uneditable={true} 
+           />
+           </Tab>
+		  
+         </Tabs>
+      </div>
+    )	
+
+  }
+}
+
+
+

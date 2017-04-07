@@ -33,26 +33,18 @@ public class TaskInstanceRepositoryIntegrationTestBase {
 	@Autowired
 	protected com.td.bbwp.web.action.wf.TaskInstanceRepository taskInstanceRepository;
 
-	//@Autowired 
-	protected com.td.bbwp.wf.testdata.TaskInstanceTestDataFactory taskInstanceTestDataFactory = new com.td.bbwp.wf.testdata.TaskInstanceTestDataFactory();
+	protected com.td.bbwp.wf.testdata.TaskInstanceFixture taskInstanceFixture = new com.td.bbwp.wf.testdata.TaskInstanceFixture();
 
 	TaskInstance taskInstance;
 
 	@Before
 	public void setup() throws Exception {
 
-		try {
-			taskInstanceRepository.deleteAll();
-			taskInstance = taskInstanceTestDataFactory.createTaskInstanceOne();
+		taskInstanceRepository.deleteAll();
 
-			taskInstanceRepository.save(taskInstance);
+		taskInstance = taskInstanceFixture.getOneRecord();
 
-		} catch (AccessDeniedException ade) {
-			System.out.println(ade.getMessage());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
+		taskInstance = taskInstanceRepository.save(taskInstance);
 	}
 
 	@Test
@@ -72,7 +64,7 @@ public class TaskInstanceRepositoryIntegrationTestBase {
 	@WithMockUser(username = "admin", roles = {"ADMIN"})
 	public void testEdit() throws IllegalAccessException, InvocationTargetException {
 		Long currentId = taskInstance.getId();
-		BeanUtils.copyProperties(taskInstance, taskInstanceTestDataFactory.createTaskInstanceTwo());
+		BeanUtils.copyProperties(taskInstance, taskInstanceFixture.getOneRecord());
 		taskInstance.setId(currentId);
 		taskInstanceRepository.save(taskInstance);
 		assertCount(1L);

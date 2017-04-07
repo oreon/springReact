@@ -33,26 +33,18 @@ public class PayPalRepositoryIntegrationTestBase {
 	@Autowired
 	protected com.td.bbwp.web.action.commerce.PayPalRepository payPalRepository;
 
-	//@Autowired 
-	protected com.td.bbwp.commerce.testdata.PayPalTestDataFactory payPalTestDataFactory = new com.td.bbwp.commerce.testdata.PayPalTestDataFactory();
+	protected com.td.bbwp.commerce.testdata.PayPalFixture payPalFixture = new com.td.bbwp.commerce.testdata.PayPalFixture();
 
 	PayPal payPal;
 
 	@Before
 	public void setup() throws Exception {
 
-		try {
-			payPalRepository.deleteAll();
-			payPal = payPalTestDataFactory.createPayPalOne();
+		payPalRepository.deleteAll();
 
-			payPalRepository.save(payPal);
+		payPal = payPalFixture.getOneRecord();
 
-		} catch (AccessDeniedException ade) {
-			System.out.println(ade.getMessage());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
+		payPal = payPalRepository.save(payPal);
 	}
 
 	@Test
@@ -72,7 +64,7 @@ public class PayPalRepositoryIntegrationTestBase {
 	@WithMockUser(username = "admin", roles = {"ADMIN"})
 	public void testEdit() throws IllegalAccessException, InvocationTargetException {
 		Long currentId = payPal.getId();
-		BeanUtils.copyProperties(payPal, payPalTestDataFactory.createPayPalTwo());
+		BeanUtils.copyProperties(payPal, payPalFixture.getOneRecord());
 		payPal.setId(currentId);
 		payPalRepository.save(payPal);
 		assertCount(1L);

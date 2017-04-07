@@ -33,34 +33,27 @@ public class TaskDefinitionRepositoryIntegrationTestBase {
 	@Autowired
 	protected com.td.bbwp.web.action.wf.TaskDefinitionRepository taskDefinitionRepository;
 
-	//@Autowired 
-	protected com.td.bbwp.wf.testdata.TaskDefinitionTestDataFactory taskDefinitionTestDataFactory = new com.td.bbwp.wf.testdata.TaskDefinitionTestDataFactory();
+	protected com.td.bbwp.wf.testdata.TaskDefinitionFixture taskDefinitionFixture = new com.td.bbwp.wf.testdata.TaskDefinitionFixture();
 
 	@Autowired
 	protected com.td.bbwp.web.action.wf.FieldRepository fieldRepository;
 
-	//@Autowired
-	protected com.td.bbwp.wf.testdata.FieldTestDataFactory fieldTestDataFactory = new com.td.bbwp.wf.testdata.FieldTestDataFactory();
+	protected com.td.bbwp.wf.testdata.FieldFixture fieldFixture = new com.td.bbwp.wf.testdata.FieldFixture();
 
 	TaskDefinition taskDefinition;
 
 	@Before
 	public void setup() throws Exception {
 
-		try {
-			taskDefinitionRepository.deleteAll();
-			taskDefinition = taskDefinitionTestDataFactory.createTaskDefinitionOne();
+		taskDefinitionRepository.deleteAll();
 
-			taskDefinition.addField(fieldTestDataFactory.createFieldOne());
+		fieldRepository.deleteAll();
 
-			taskDefinitionRepository.save(taskDefinition);
+		taskDefinition = taskDefinitionFixture.getOneRecord();
 
-		} catch (AccessDeniedException ade) {
-			System.out.println(ade.getMessage());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		taskDefinition.addField(fieldFixture.getOneRecord());
 
+		taskDefinition = taskDefinitionRepository.save(taskDefinition);
 	}
 
 	@Test
@@ -87,7 +80,7 @@ public class TaskDefinitionRepositoryIntegrationTestBase {
 	@WithMockUser(username = "admin", roles = {"ADMIN"})
 	public void testEdit() throws IllegalAccessException, InvocationTargetException {
 		Long currentId = taskDefinition.getId();
-		BeanUtils.copyProperties(taskDefinition, taskDefinitionTestDataFactory.createTaskDefinitionTwo());
+		BeanUtils.copyProperties(taskDefinition, taskDefinitionFixture.getOneRecord());
 		taskDefinition.setId(currentId);
 		taskDefinitionRepository.save(taskDefinition);
 		assertCount(1L);

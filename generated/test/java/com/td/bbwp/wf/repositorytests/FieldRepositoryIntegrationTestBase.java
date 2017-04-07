@@ -33,26 +33,18 @@ public class FieldRepositoryIntegrationTestBase {
 	@Autowired
 	protected com.td.bbwp.web.action.wf.FieldRepository fieldRepository;
 
-	//@Autowired 
-	protected com.td.bbwp.wf.testdata.FieldTestDataFactory fieldTestDataFactory = new com.td.bbwp.wf.testdata.FieldTestDataFactory();
+	protected com.td.bbwp.wf.testdata.FieldFixture fieldFixture = new com.td.bbwp.wf.testdata.FieldFixture();
 
 	Field field;
 
 	@Before
 	public void setup() throws Exception {
 
-		try {
-			fieldRepository.deleteAll();
-			field = fieldTestDataFactory.createFieldOne();
+		fieldRepository.deleteAll();
 
-			fieldRepository.save(field);
+		field = fieldFixture.getOneRecord();
 
-		} catch (AccessDeniedException ade) {
-			System.out.println(ade.getMessage());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
+		field = fieldRepository.save(field);
 	}
 
 	@Test
@@ -72,7 +64,7 @@ public class FieldRepositoryIntegrationTestBase {
 	@WithMockUser(username = "admin", roles = {"ADMIN"})
 	public void testEdit() throws IllegalAccessException, InvocationTargetException {
 		Long currentId = field.getId();
-		BeanUtils.copyProperties(field, fieldTestDataFactory.createFieldTwo());
+		BeanUtils.copyProperties(field, fieldFixture.getOneRecord());
 		field.setId(currentId);
 		fieldRepository.save(field);
 		assertCount(1L);

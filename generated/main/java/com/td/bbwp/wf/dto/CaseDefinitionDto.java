@@ -22,6 +22,8 @@ public class CaseDefinitionDto
 
 	private List<TaskDefinitionDto> taskDefinitionsDto = new ArrayList<TaskDefinitionDto>();
 
+	protected Boolean closable;
+
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -46,6 +48,14 @@ public class CaseDefinitionDto
 		}
 
 		this.taskDefinitionsDto.add(taskDefinitionDto);
+	}
+
+	public void setClosable(Boolean closable) {
+		this.closable = closable;
+	}
+
+	public Boolean getClosable() {
+		return closable;
 	}
 
 }

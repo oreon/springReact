@@ -11,6 +11,10 @@ import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColu
 import Form from "react-jsonschema-form";
 import {BaseComponent, BaseEditComponent} from '../commons/BaseComponent.jsx'
 import Griddle, {plugins} from 'griddle-react';
+
+import { Layout } from '../commons/Layout.jsx'
+import { SimpleView } from '../commons/SimpleView.jsx'
+import {Tabs, Tab} from 'material-ui/Tabs';
 import {SimpleList} from '../commons/SimpleList.jsx'
 
 
@@ -19,7 +23,7 @@ export function createSchema(){
  return {
     title: "App Role",
     type: "object",
-    required: [  'name' 
+    required: [ 
 ],
     properties: {
     
@@ -64,7 +68,9 @@ appUsers: {  'ui:placeholder': "App Users" },
 	 ]
 
 
-let customerSchema = createSchema()
+
+
+let appRoleSchema = createSchema()
 const log = (type) => console.log.bind(console, type);
 
 
@@ -74,8 +80,11 @@ export class AppRoleList extends BaseComponent {
         super(props);
         this.entityName = 'appRoles'
         this.name = 'appRoles'
-        this.editLink = "/entities/appRoles/edit/"
+        this.baseLink = "/entities/appRoles/"
+        this.editLink = this.baseLink + "edit/"
     }
+    
+     getEntityName() { return  'appRoles' }
 
     renderExtra(record) {
         return null
@@ -98,6 +107,7 @@ export class AppRoleList extends BaseComponent {
             <div>
                 <SimpleList headers={appRoleHeaders} editLink={this.editLink}
                             renderExtra={this.renderExtra}
+                            baseLink = {this.baseLink}
                             records={ records } nested={this.props.nested}
                             container={this.props.container} uneditable={this.props.uneditable}
                             containerId={this.props.containerId}
@@ -118,8 +128,9 @@ export class EditAppRole extends BaseEditComponent {
     constructor(props) {
         super(props);
         this.state = {entity: {}};
-        this.entityName = 'customers'
+        this.entityName = 'appRoles'
         this.onSubmit = this.onSubmit.bind(this);
+        
         //this.handleChange = this.handleChange.bind(this);
     }
 
@@ -142,3 +153,35 @@ export class EditAppRole extends BaseEditComponent {
         )
     }
 }
+
+
+export class ViewAppRole extends BaseEditComponent {
+
+  renderExtra(record: any) { <p> IN render </p> }
+  
+  constructor(props) {
+    super(props);
+    this.state = { record: {}, error: {}, message: {} };
+    this.entityName = 'appRoles';
+    //this.onSubmit = this.onSubmit.bind(this)
+  }
+  
+  render() {
+  
+    let record = this.state.entity
+    return (
+     <div>
+       <SimpleView  headers= {appRoleHeaders} renderExtra={this.renderExtra}
+       record={record}   entityName='AppRole' /> 
+       
+       <Tabs>
+        
+         </Tabs>
+      </div>
+    )	
+
+  }
+}
+
+
+

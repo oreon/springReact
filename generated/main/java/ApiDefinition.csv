@@ -70,6 +70,7 @@ GET customers/id,   Find a  Customer by id,
   address ,   Address   , Address
   firstName ,  String   , First Name
   lastName ,  String   , Last Name
+  caseInstances ,   CaseInstance    Array , Case Instances
 
 dateCreated,DateTime, Timestamp of creation
 createdBy, String, acfid of the user who created the record
@@ -87,6 +88,7 @@ DELETE Customers/id  , Delete by id,
 findByFirstName,    Find Customers containing  firstName   , 
 
 findByLastName,    Find Customers containing  lastName   , 
+
 
 
 
@@ -256,6 +258,7 @@ CaseDefinition  , ,
 GET caseDefinitions/id,   Find a  CaseDefinition by id,   
   name ,  String   , Name
   taskDefinitions ,   TaskDefinition    Array , Task Definitions
+  closable ,   Boolean   , Closable
 
 dateCreated,DateTime, Timestamp of creation
 createdBy, String, acfid of the user who created the record
@@ -268,6 +271,7 @@ POST  , Create new CaseDefinition,
 DELETE CaseDefinitions/id  , Delete by id, 
 
 findByName,    Return unique CaseDefinition for  given name    , 
+
 
 
 
@@ -309,7 +313,8 @@ GET caseInstances/id,   Find a  CaseInstance by id,
   taskInstances ,   TaskInstance    Array , Task Instances
   processInstanceId ,   long   , Process Instance Id
   name ,  String   , Name
-  string ,   status   , String
+  status ,  String   , Status
+  customer ,   Customer   , Customer
 
 dateCreated,DateTime, Timestamp of creation
 createdBy, String, acfid of the user who created the record
@@ -327,24 +332,8 @@ findByProcessInstanceId,    Return unique CaseInstance for  given processInstanc
 
 findByName,    Find CaseInstances containing  name   , 
 
+findByStatus,    Find CaseInstances containing  status   , 
 
-
-
-
-
-status  , , 
-
-GET statuses/id,   Find a  status by id,   
-
-dateCreated,DateTime, Timestamp of creation
-createdBy, String, acfid of the user who created the record
-dateUpdated,DateTime, Timestamp of last update
-lastUpdatedBy, String, acfid of the user who last updated the record
-		
-
-PUT/PATCH statuses/<<status>> , Edit existing status,  
-POST  , Create new status, 
-DELETE statuses/id  , Delete by id, 
 
 
 

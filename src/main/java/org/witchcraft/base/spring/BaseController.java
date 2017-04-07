@@ -2,8 +2,10 @@ package org.witchcraft.base.spring;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Stream;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
+import org.hornetq.core.journal.Journal;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,11 +20,15 @@ public abstract class BaseController<T extends BaseEntity> {
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public List<T> findAll() {
-		List<T> lstRecords = new ArrayList<>();
-		try (Stream<T> records = getBaseService().findAll()) {
-			records.forEach(x -> lstRecords.add(x));
-			return lstRecords;
-		}
+		//List<T> lstRecords = new ArrayList<>();
+		
+		Iterable<T> records = getBaseService().findAll();
+		return StreamSupport.stream(records.spliterator(), false).collect(Collectors.toList());
+		
+//		try (Stream<T> records = getBaseService().findAll()) {
+//			records.forEach(x -> lstRecords.add(x));
+//			return lstRecords;
+//		}
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })

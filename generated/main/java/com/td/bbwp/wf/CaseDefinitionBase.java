@@ -51,6 +51,12 @@ public abstract class CaseDefinitionBase extends BaseEntity {
 
 	;
 
+	@Column(name = "CLOSABLE", unique = false)
+
+	protected Boolean closable
+
+	;
+
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -89,6 +95,15 @@ public abstract class CaseDefinitionBase extends BaseEntity {
 	@Transient
 	public String createListTaskDefinitionsAsString() {
 		return listAsString(taskDefinitions);
+	}
+
+	public void setClosable(Boolean closable) {
+		this.closable = closable;
+	}
+
+	public Boolean getClosable() {
+
+		return closable;
 	}
 
 	@Transient

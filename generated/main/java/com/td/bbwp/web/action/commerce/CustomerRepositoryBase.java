@@ -22,6 +22,8 @@ import org.springframework.data.jpa.repository.Query;
 
 import com.td.bbwp.commerce.Customer;
 
+import com.td.bbwp.wf.CaseInstance;
+
 //@RepositoryRestResource(exported=false)
 public interface CustomerRepositoryBase extends BaseRepository<Customer> {
 

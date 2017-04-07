@@ -33,26 +33,18 @@ public class CreditCardRepositoryIntegrationTestBase {
 	@Autowired
 	protected com.td.bbwp.web.action.commerce.CreditCardRepository creditCardRepository;
 
-	//@Autowired 
-	protected com.td.bbwp.commerce.testdata.CreditCardTestDataFactory creditCardTestDataFactory = new com.td.bbwp.commerce.testdata.CreditCardTestDataFactory();
+	protected com.td.bbwp.commerce.testdata.CreditCardFixture creditCardFixture = new com.td.bbwp.commerce.testdata.CreditCardFixture();
 
 	CreditCard creditCard;
 
 	@Before
 	public void setup() throws Exception {
 
-		try {
-			creditCardRepository.deleteAll();
-			creditCard = creditCardTestDataFactory.createCreditCardOne();
+		creditCardRepository.deleteAll();
 
-			creditCardRepository.save(creditCard);
+		creditCard = creditCardFixture.getOneRecord();
 
-		} catch (AccessDeniedException ade) {
-			System.out.println(ade.getMessage());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
+		creditCard = creditCardRepository.save(creditCard);
 	}
 
 	@Test
@@ -72,7 +64,7 @@ public class CreditCardRepositoryIntegrationTestBase {
 	@WithMockUser(username = "admin", roles = {"ADMIN"})
 	public void testEdit() throws IllegalAccessException, InvocationTargetException {
 		Long currentId = creditCard.getId();
-		BeanUtils.copyProperties(creditCard, creditCardTestDataFactory.createCreditCardTwo());
+		BeanUtils.copyProperties(creditCard, creditCardFixture.getOneRecord());
 		creditCard.setId(currentId);
 		creditCardRepository.save(creditCard);
 		assertCount(1L);

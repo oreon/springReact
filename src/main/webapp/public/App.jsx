@@ -11,6 +11,12 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import {Home} from './components/Routes.jsx';
 
 
+import {injectTapEventPlugin} from 'react-tap-event-plugin';
+
+
+//injectTapEventPlugin();r
+
+
 
 
 const About = (props) => <h1> About Nehchal is
@@ -31,7 +37,6 @@ class App extends React.Component {
     render() {
         return (
             <MuiThemeProvider>
-
             <Router>
                 <div>
                     <Links/>

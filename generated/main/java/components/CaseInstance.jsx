@@ -11,6 +11,10 @@ import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColu
 import Form from "react-jsonschema-form";
 import {BaseComponent, BaseEditComponent} from '../commons/BaseComponent.jsx'
 import Griddle, {plugins} from 'griddle-react';
+
+import { Layout } from '../commons/Layout.jsx'
+import { SimpleView } from '../commons/SimpleView.jsx'
+import {Tabs, Tab} from 'material-ui/Tabs';
 import {SimpleList} from '../commons/SimpleList.jsx'
 
 
@@ -45,10 +49,15 @@ name:{ type: "string", title: "Name",
 
 
 
-string:{ type: "string", title: "String",   
+status:{ type: "string", title: "Status",  	
+},
 
- 'enum': LookupService.getLookup('statuses').map(x => x.id   ),
- 'enumNames': LookupService.getLookup('statuses').map(x => x.displayName)
+
+
+customer:{ type: "integer", title: "Customer",   
+
+ 'enum': LookupService.getLookup('customers').map(x => x.id   ),
+ 'enumNames': LookupService.getLookup('customers').map(x => x.displayName)
 
 
 	
@@ -98,13 +107,7 @@ taskData:{ type: "string", title: "Task Data",
 
 
 
-string:{ type: "string", title: "String",   
-
- 'enum': LookupService.getLookup('statuses').map(x => x.id   ),
- 'enumNames': LookupService.getLookup('statuses').map(x => x.displayName)
-
-
-	
+status:{ type: "string", title: "Status",  	
 },
 
  
@@ -133,7 +136,11 @@ name: {  'ui:placeholder': "Name" },
 
 
 
-string: {  'ui:placeholder': "String" },
+status: {  'ui:placeholder': "Status" },
+
+
+
+customer: {  'ui:placeholder': "Customer" },
 
 
     
@@ -163,7 +170,7 @@ taskData: {  'ui:placeholder': "Task Data" },
 
 
 
-string: {  'ui:placeholder': "String" },
+status: {  'ui:placeholder': "Status" },
 
  
          
@@ -185,12 +192,19 @@ string: {  'ui:placeholder': "String" },
 	 {property:"name",title:"Name" }
 	 ,
 	 
-	 {property:"string",title:"String" }
+	 {property:"status",title:"Status" }
+	 ,
+	 
+	 {property:"customer_displayName",title:"Customer" }
 	      
 	 ]
 
 
-let customerSchema = createSchema()
+
+	import { TaskInstanceList} from './TaskInstance.jsx';
+
+
+let caseInstanceSchema = createSchema()
 const log = (type) => console.log.bind(console, type);
 
 
@@ -200,8 +214,11 @@ export class CaseInstanceList extends BaseComponent {
         super(props);
         this.entityName = 'caseInstances'
         this.name = 'caseInstances'
-        this.editLink = "/entities/caseInstances/edit/"
+        this.baseLink = "/entities/caseInstances/"
+        this.editLink = this.baseLink + "edit/"
     }
+    
+     getEntityName() { return  'caseInstances' }
 
     renderExtra(record) {
         return null
@@ -224,6 +241,7 @@ export class CaseInstanceList extends BaseComponent {
             <div>
                 <SimpleList headers={caseInstanceHeaders} editLink={this.editLink}
                             renderExtra={this.renderExtra}
+                            baseLink = {this.baseLink}
                             records={ records } nested={this.props.nested}
                             container={this.props.container} uneditable={this.props.uneditable}
                             containerId={this.props.containerId}
@@ -244,8 +262,9 @@ export class EditCaseInstance extends BaseEditComponent {
     constructor(props) {
         super(props);
         this.state = {entity: {}};
-        this.entityName = 'customers'
+        this.entityName = 'caseInstances'
         this.onSubmit = this.onSubmit.bind(this);
+        
         //this.handleChange = this.handleChange.bind(this);
     }
 
@@ -268,3 +287,44 @@ export class EditCaseInstance extends BaseEditComponent {
         )
     }
 }
+
+
+export class ViewCaseInstance extends BaseEditComponent {
+
+  renderExtra(record: any) { <p> IN render </p> }
+  
+  constructor(props) {
+    super(props);
+    this.state = { record: {}, error: {}, message: {} };
+    this.entityName = 'caseInstances';
+    //this.onSubmit = this.onSubmit.bind(this)
+  }
+  
+  render() {
+  
+    let record = this.state.entity
+    return (
+     <div>
+       <SimpleView  headers= {caseInstanceHeaders} renderExtra={this.renderExtra}
+       record={record}   entityName='CaseInstance' /> 
+       
+       <Tabs>
+       	  <Tab label="TaskInstance" >
+          <TaskInstanceList records={record.taskInstances} 
+          nested={true}  
+          container={'caseInstance_displayName'}
+          containerId={record.id}
+           prev={this.props.location?this.props.location.pathName:null }
+           uneditable={true} 
+           />
+           </Tab>
+		  
+         </Tabs>
+      </div>
+    )	
+
+  }
+}
+
+
+

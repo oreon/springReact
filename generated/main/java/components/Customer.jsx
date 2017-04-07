@@ -11,6 +11,10 @@ import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColu
 import Form from "react-jsonschema-form";
 import {BaseComponent, BaseEditComponent} from '../commons/BaseComponent.jsx'
 import Griddle, {plugins} from 'griddle-react';
+
+import { Layout } from '../commons/Layout.jsx'
+import { SimpleView } from '../commons/SimpleView.jsx'
+import {Tabs, Tab} from 'material-ui/Tabs';
 import {SimpleList} from '../commons/SimpleList.jsx'
 
 
@@ -43,10 +47,6 @@ dob:{ type: "string", title: "Dob",   "format": "date"
 
 address:{ type: "integer", title: "Address",   
 
- 'enum': LookupService.getLookup('addresses').map(x => x.id   ),
- 'enumNames': LookupService.getLookup('addresses').map(x => x.displayName)
-
-
 	
 },
 
@@ -58,6 +58,17 @@ firstName:{ type: "string", title: "First Name",
 
 
 lastName:{ type: "string", title: "Last Name",  	
+},
+
+
+
+caseInstances:{ type: "integer", title: "Case Instances",   
+
+ 'enum': LookupService.getLookup('caseInstances').map(x => x.id   ),
+ 'enumNames': LookupService.getLookup('caseInstances').map(x => x.displayName)
+
+
+	
 },
 
 
@@ -89,6 +100,10 @@ firstName: {  'ui:placeholder': "First Name" },
 lastName: {  'ui:placeholder': "Last Name" },
 
 
+
+caseInstances: {  'ui:placeholder': "Case Instances" },
+
+
     
  }
 
@@ -113,6 +128,8 @@ lastName: {  'ui:placeholder': "Last Name" },
 	 ]
 
 
+
+
 let customerSchema = createSchema()
 const log = (type) => console.log.bind(console, type);
 
@@ -123,8 +140,11 @@ export class CustomerList extends BaseComponent {
         super(props);
         this.entityName = 'customers'
         this.name = 'customers'
-        this.editLink = "/entities/customers/edit/"
+        this.baseLink = "/entities/customers/"
+        this.editLink = this.baseLink + "edit/"
     }
+    
+     getEntityName() { return  'customers' }
 
     renderExtra(record) {
         return null
@@ -147,6 +167,7 @@ export class CustomerList extends BaseComponent {
             <div>
                 <SimpleList headers={customerHeaders} editLink={this.editLink}
                             renderExtra={this.renderExtra}
+                            baseLink = {this.baseLink}
                             records={ records } nested={this.props.nested}
                             container={this.props.container} uneditable={this.props.uneditable}
                             containerId={this.props.containerId}
@@ -169,6 +190,7 @@ export class EditCustomer extends BaseEditComponent {
         this.state = {entity: {}};
         this.entityName = 'customers'
         this.onSubmit = this.onSubmit.bind(this);
+        
         //this.handleChange = this.handleChange.bind(this);
     }
 
@@ -191,3 +213,35 @@ export class EditCustomer extends BaseEditComponent {
         )
     }
 }
+
+
+export class ViewCustomer extends BaseEditComponent {
+
+  renderExtra(record: any) { <p> IN render </p> }
+  
+  constructor(props) {
+    super(props);
+    this.state = { record: {}, error: {}, message: {} };
+    this.entityName = 'customers';
+    //this.onSubmit = this.onSubmit.bind(this)
+  }
+  
+  render() {
+  
+    let record = this.state.entity
+    return (
+     <div>
+       <SimpleView  headers= {customerHeaders} renderExtra={this.renderExtra}
+       record={record}   entityName='Customer' /> 
+       
+       <Tabs>
+        
+         </Tabs>
+      </div>
+    )	
+
+  }
+}
+
+
+

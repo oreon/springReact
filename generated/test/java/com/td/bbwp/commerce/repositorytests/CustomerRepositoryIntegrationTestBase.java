@@ -33,26 +33,18 @@ public class CustomerRepositoryIntegrationTestBase {
 	@Autowired
 	protected com.td.bbwp.web.action.commerce.CustomerRepository customerRepository;
 
-	//@Autowired 
-	protected com.td.bbwp.commerce.testdata.CustomerTestDataFactory customerTestDataFactory = new com.td.bbwp.commerce.testdata.CustomerTestDataFactory();
+	protected com.td.bbwp.commerce.testdata.CustomerFixture customerFixture = new com.td.bbwp.commerce.testdata.CustomerFixture();
 
 	Customer customer;
 
 	@Before
 	public void setup() throws Exception {
 
-		try {
-			customerRepository.deleteAll();
-			customer = customerTestDataFactory.createCustomerOne();
+		customerRepository.deleteAll();
 
-			customerRepository.save(customer);
+		customer = customerFixture.getOneRecord();
 
-		} catch (AccessDeniedException ade) {
-			System.out.println(ade.getMessage());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
+		customer = customerRepository.save(customer);
 	}
 
 	@Test
@@ -72,7 +64,7 @@ public class CustomerRepositoryIntegrationTestBase {
 	@WithMockUser(username = "admin", roles = {"ADMIN"})
 	public void testEdit() throws IllegalAccessException, InvocationTargetException {
 		Long currentId = customer.getId();
-		BeanUtils.copyProperties(customer, customerTestDataFactory.createCustomerTwo());
+		BeanUtils.copyProperties(customer, customerFixture.getOneRecord());
 		customer.setId(currentId);
 		customerRepository.save(customer);
 		assertCount(1L);

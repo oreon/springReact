@@ -44,6 +44,15 @@ public abstract class CustomerBase extends com.td.bbwp.commerce.Person {
 
 	;
 
+	@OneToMany(mappedBy = "customer", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OrderBy("id DESC")
+
+	protected List<com.td.bbwp.wf.CaseInstance> caseInstances
+
+			= new ArrayList<com.td.bbwp.wf.CaseInstance>()
+
+	;
+
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
@@ -60,6 +69,37 @@ public abstract class CustomerBase extends com.td.bbwp.commerce.Person {
 	public String getLastName() {
 
 		return lastName;
+	}
+
+	public void setCaseInstances(List<com.td.bbwp.wf.CaseInstance> caseInstances) {
+		this.caseInstances = caseInstances;
+	}
+
+	public List<com.td.bbwp.wf.CaseInstance> getCaseInstances() {
+
+		return caseInstances;
+	}
+
+	public com.td.bbwp.wf.CaseInstance addCaseInstance(com.td.bbwp.wf.CaseInstance caseInstance) {
+
+		caseInstance.setCustomer((Customer) this);
+
+		if (this.caseInstances == null) {
+			this.caseInstances = new ArrayList<com.td.bbwp.wf.CaseInstance>();
+		}
+
+		this.caseInstances.add(caseInstance);
+
+		return caseInstance;
+	}
+
+	public void addCaseInstances(List<com.td.bbwp.wf.CaseInstance> caseInstancesToAdd) {
+		caseInstancesToAdd.forEach(record -> addCaseInstance(record));
+	}
+
+	@Transient
+	public String createListCaseInstancesAsString() {
+		return listAsString(caseInstances);
 	}
 
 	@Transient

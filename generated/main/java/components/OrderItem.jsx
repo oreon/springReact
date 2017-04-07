@@ -11,6 +11,10 @@ import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColu
 import Form from "react-jsonschema-form";
 import {BaseComponent, BaseEditComponent} from '../commons/BaseComponent.jsx'
 import Griddle, {plugins} from 'griddle-react';
+
+import { Layout } from '../commons/Layout.jsx'
+import { SimpleView } from '../commons/SimpleView.jsx'
+import {Tabs, Tab} from 'material-ui/Tabs';
 import {SimpleList} from '../commons/SimpleList.jsx'
 
 
@@ -85,7 +89,9 @@ customerOrder: {
 	 ]
 
 
-let customerSchema = createSchema()
+
+
+let orderItemSchema = createSchema()
 const log = (type) => console.log.bind(console, type);
 
 
@@ -95,8 +101,11 @@ export class OrderItemList extends BaseComponent {
         super(props);
         this.entityName = 'orderItems'
         this.name = 'orderItems'
-        this.editLink = "/entities/orderItems/edit/"
+        this.baseLink = "/entities/orderItems/"
+        this.editLink = this.baseLink + "edit/"
     }
+    
+     getEntityName() { return  'orderItems' }
 
     renderExtra(record) {
         return null
@@ -119,6 +128,7 @@ export class OrderItemList extends BaseComponent {
             <div>
                 <SimpleList headers={orderItemHeaders} editLink={this.editLink}
                             renderExtra={this.renderExtra}
+                            baseLink = {this.baseLink}
                             records={ records } nested={this.props.nested}
                             container={this.props.container} uneditable={this.props.uneditable}
                             containerId={this.props.containerId}
@@ -139,8 +149,9 @@ export class EditOrderItem extends BaseEditComponent {
     constructor(props) {
         super(props);
         this.state = {entity: {}};
-        this.entityName = 'customers'
+        this.entityName = 'orderItems'
         this.onSubmit = this.onSubmit.bind(this);
+        
         //this.handleChange = this.handleChange.bind(this);
     }
 
@@ -163,3 +174,35 @@ export class EditOrderItem extends BaseEditComponent {
         )
     }
 }
+
+
+export class ViewOrderItem extends BaseEditComponent {
+
+  renderExtra(record: any) { <p> IN render </p> }
+  
+  constructor(props) {
+    super(props);
+    this.state = { record: {}, error: {}, message: {} };
+    this.entityName = 'orderItems';
+    //this.onSubmit = this.onSubmit.bind(this)
+  }
+  
+  render() {
+  
+    let record = this.state.entity
+    return (
+     <div>
+       <SimpleView  headers= {orderItemHeaders} renderExtra={this.renderExtra}
+       record={record}   entityName='OrderItem' /> 
+       
+       <Tabs>
+        
+         </Tabs>
+      </div>
+    )	
+
+  }
+}
+
+
+

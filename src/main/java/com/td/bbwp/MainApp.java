@@ -4,7 +4,10 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.td.bbwp.commerce.Customer;
 import com.td.bbwp.commerce.Gender;
 import com.td.bbwp.course.domain.User;
@@ -13,8 +16,8 @@ import com.td.bbwp.web.action.commerce.CustomerRepository;
 import com.td.bbwp.web.action.wf.CaseDefinitionRepository;
 import com.td.bbwp.wf.CaseDefinition;
 import com.td.bbwp.wf.Field;
-import com.td.bbwp.wf.TaskDefinition;
 import com.td.bbwp.wf.FieldType;
+import com.td.bbwp.wf.TaskDefinition;
 
 @SpringBootApplication
 /// @EntityScan("com.delivery.domain")
@@ -22,6 +25,15 @@ public class MainApp {
 
 	public static void main(String[] args) {
 		SpringApplication.run(MainApp.class, args);
+	}
+	
+	@Bean
+	public MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter() {
+	    ObjectMapper mapper = new ObjectMapper();
+	    mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
+	    //MappingJackson2HttpMessageConverter converter = 
+	        
+	    return new MappingJackson2HttpMessageConverter(mapper);
 	}
 
 	@Bean

@@ -15,7 +15,7 @@ export class SimpleList extends React.Component {
 
     constructor(props) {
         super(props);
-        this.baseLink = '/admin/' + this.props.editLink
+        this.baseLink =  this.props.baseLink
     }
 
     renderRow(record, headers) {
@@ -25,7 +25,7 @@ export class SimpleList extends React.Component {
         });
         let prnt = ( this.props.parent ) ? "/" + this.props.parent : ""
         let editLink = this.props.editLink + record.id + prnt;
-        let viewLink = this.baseLink + "View/" + record.id
+        let viewLink = this.props.baseLink + "view/" + record.id
 
         return (
             <TableRow key={record.id}>

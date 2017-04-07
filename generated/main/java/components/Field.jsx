@@ -11,6 +11,10 @@ import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColu
 import Form from "react-jsonschema-form";
 import {BaseComponent, BaseEditComponent} from '../commons/BaseComponent.jsx'
 import Griddle, {plugins} from 'griddle-react';
+
+import { Layout } from '../commons/Layout.jsx'
+import { SimpleView } from '../commons/SimpleView.jsx'
+import {Tabs, Tab} from 'material-ui/Tabs';
 import {SimpleList} from '../commons/SimpleList.jsx'
 
 
@@ -19,7 +23,7 @@ export function createSchema(){
  return {
     title: "Field",
     type: "object",
-    required: [  'name' 
+    required: [ 
 ],
     properties: {
     
@@ -31,10 +35,10 @@ name:{ type: "string", title: "Name",
 
 type:{ type: "string", title: "Type",   
 'enum' : [
-'','0' ,'1' ,'2' ,'3'   
+'','0' ,'1' ,'2' ,'3' ,'4'   
 ],
 'enumNames' : [
-'Select','string' ,'number' ,'date' ,'boolean'   
+'Select','string' ,'number' ,'date' ,'bool' ,'textBlob'   
 ]
 	
 },
@@ -48,6 +52,16 @@ taskDefinition: {
 
 
 required:{ type: "boolean", title: "Required",  	
+},
+
+
+
+min:{ type: "integer", title: "Min",  	
+},
+
+
+
+max:{ type: "integer", title: "Max",  	
 },
 
 
@@ -77,6 +91,14 @@ taskDefinition: {
 required: {  'ui:placeholder': "Required" },
 
 
+
+min: { 'ui:widget': "updown" , 'ui:placeholder': "Min" },
+
+
+
+max: { 'ui:widget': "updown" , 'ui:placeholder': "Max" },
+
+
     
  }
 
@@ -94,11 +116,19 @@ required: {  'ui:placeholder': "Required" },
 	 ,
 	 
 	 {property:"required",title:"Required" }
+	 ,
+	 
+	 {property:"min",title:"Min" }
+	 ,
+	 
+	 {property:"max",title:"Max" }
 	      
 	 ]
 
 
-let customerSchema = createSchema()
+
+
+let fieldSchema = createSchema()
 const log = (type) => console.log.bind(console, type);
 
 
@@ -108,8 +138,11 @@ export class FieldList extends BaseComponent {
         super(props);
         this.entityName = 'fields'
         this.name = 'fields'
-        this.editLink = "/entities/fields/edit/"
+        this.baseLink = "/entities/fields/"
+        this.editLink = this.baseLink + "edit/"
     }
+    
+     getEntityName() { return  'fields' }
 
     renderExtra(record) {
         return null
@@ -132,6 +165,7 @@ export class FieldList extends BaseComponent {
             <div>
                 <SimpleList headers={fieldHeaders} editLink={this.editLink}
                             renderExtra={this.renderExtra}
+                            baseLink = {this.baseLink}
                             records={ records } nested={this.props.nested}
                             container={this.props.container} uneditable={this.props.uneditable}
                             containerId={this.props.containerId}
@@ -152,8 +186,9 @@ export class EditField extends BaseEditComponent {
     constructor(props) {
         super(props);
         this.state = {entity: {}};
-        this.entityName = 'customers'
+        this.entityName = 'fields'
         this.onSubmit = this.onSubmit.bind(this);
+        
         //this.handleChange = this.handleChange.bind(this);
     }
 
@@ -176,3 +211,35 @@ export class EditField extends BaseEditComponent {
         )
     }
 }
+
+
+export class ViewField extends BaseEditComponent {
+
+  renderExtra(record: any) { <p> IN render </p> }
+  
+  constructor(props) {
+    super(props);
+    this.state = { record: {}, error: {}, message: {} };
+    this.entityName = 'fields';
+    //this.onSubmit = this.onSubmit.bind(this)
+  }
+  
+  render() {
+  
+    let record = this.state.entity
+    return (
+     <div>
+       <SimpleView  headers= {fieldHeaders} renderExtra={this.renderExtra}
+       record={record}   entityName='Field' /> 
+       
+       <Tabs>
+        
+         </Tabs>
+      </div>
+    )	
+
+  }
+}
+
+
+

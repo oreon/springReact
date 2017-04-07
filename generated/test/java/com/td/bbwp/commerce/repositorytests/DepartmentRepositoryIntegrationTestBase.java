@@ -33,26 +33,18 @@ public class DepartmentRepositoryIntegrationTestBase {
 	@Autowired
 	protected com.td.bbwp.web.action.commerce.DepartmentRepository departmentRepository;
 
-	//@Autowired 
-	protected com.td.bbwp.commerce.testdata.DepartmentTestDataFactory departmentTestDataFactory = new com.td.bbwp.commerce.testdata.DepartmentTestDataFactory();
+	protected com.td.bbwp.commerce.testdata.DepartmentFixture departmentFixture = new com.td.bbwp.commerce.testdata.DepartmentFixture();
 
 	Department department;
 
 	@Before
 	public void setup() throws Exception {
 
-		try {
-			departmentRepository.deleteAll();
-			department = departmentTestDataFactory.createDepartmentOne();
+		departmentRepository.deleteAll();
 
-			departmentRepository.save(department);
+		department = departmentFixture.getOneRecord();
 
-		} catch (AccessDeniedException ade) {
-			System.out.println(ade.getMessage());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
+		department = departmentRepository.save(department);
 	}
 
 	@Test
@@ -72,7 +64,7 @@ public class DepartmentRepositoryIntegrationTestBase {
 	@WithMockUser(username = "admin", roles = {"ADMIN"})
 	public void testEdit() throws IllegalAccessException, InvocationTargetException {
 		Long currentId = department.getId();
-		BeanUtils.copyProperties(department, departmentTestDataFactory.createDepartmentTwo());
+		BeanUtils.copyProperties(department, departmentFixture.getOneRecord());
 		department.setId(currentId);
 		departmentRepository.save(department);
 		assertCount(1L);

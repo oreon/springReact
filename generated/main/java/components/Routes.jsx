@@ -4,39 +4,37 @@ import {BrowserRouter as Router, Route, NavLink, Switch, Redirect} from 'react-r
 
 
 
-	import {EmployeeList,EditEmployee} from './Employee';
+	import {EmployeeList,EditEmployee, ViewEmployee} from './Employee';
 
-	import {DepartmentList,EditDepartment} from './Department';
+	import {DepartmentList,EditDepartment, ViewDepartment} from './Department';
 
-	import {CustomerList,EditCustomer} from './Customer';
+	import {CustomerList,EditCustomer, ViewCustomer} from './Customer';
 
-	import {CustomerOrderList,EditCustomerOrder} from './CustomerOrder';
+	import {CustomerOrderList,EditCustomerOrder, ViewCustomerOrder} from './CustomerOrder';
 
-	import {ProductList,EditProduct} from './Product';
+	import {ProductList,EditProduct, ViewProduct} from './Product';
 
-	import {OrderItemList,EditOrderItem} from './OrderItem';
+	import {OrderItemList,EditOrderItem, ViewOrderItem} from './OrderItem';
 
-	import {PaymentMethodList,EditPaymentMethod} from './PaymentMethod';
+	import {PaymentMethodList,EditPaymentMethod, ViewPaymentMethod} from './PaymentMethod';
 
-	import {CreditCardList,EditCreditCard} from './CreditCard';
+	import {CreditCardList,EditCreditCard, ViewCreditCard} from './CreditCard';
 
-	import {PayPalList,EditPayPal} from './PayPal';
+	import {PayPalList,EditPayPal, ViewPayPal} from './PayPal';
 
-	import {AppUserList,EditAppUser} from './AppUser';
+	import {AppUserList,EditAppUser, ViewAppUser} from './AppUser';
 
-	import {AppRoleList,EditAppRole} from './AppRole';
+	import {AppRoleList,EditAppRole, ViewAppRole} from './AppRole';
 
-	import {CaseDefinitionList,EditCaseDefinition} from './CaseDefinition';
+	import {CaseDefinitionList,EditCaseDefinition, ViewCaseDefinition} from './CaseDefinition';
 
-	import {TaskDefinitionList,EditTaskDefinition} from './TaskDefinition';
+	import {TaskDefinitionList,EditTaskDefinition, ViewTaskDefinition} from './TaskDefinition';
 
-	import {FieldList,EditField} from './Field';
+	import {FieldList,EditField, ViewField} from './Field';
 
-	import {CaseInstanceList,EditCaseInstance} from './CaseInstance';
+	import {CaseInstanceList,EditCaseInstance, ViewCaseInstance} from './CaseInstance';
 
-	import {TaskInstanceList,EditTaskInstance} from './TaskInstance';
-
-	import {statusList,Editstatus} from './status';
+	import {TaskInstanceList,EditTaskInstance, ViewTaskInstance} from './TaskInstance';
 
 
 const CommerceEntitiyLinks = () => (
@@ -94,8 +92,6 @@ const WfEntitiyLinks = () => (
         	
             <NavLink to="/entities/TaskInstances" activeClassName="active">TaskInstances </NavLink>
         	
-            <NavLink to="/entities/statuss" activeClassName="active">statuss </NavLink>
-        	
         </nav>
     </div>
 )
@@ -116,55 +112,68 @@ const WfEntitiyLinks = () => (
             <Switch>
             
            		<Route path="/entities/Employees/edit/:id(\d+)?" component={EditEmployee}/>
+           		<Route path="/entities/Employees/view/:id(\d+)?" component={ViewEmployee}/>
         		<Route path="/entities/Employees" component={EmployeeList}/>
            
            		<Route path="/entities/Departments/edit/:id(\d+)?" component={EditDepartment}/>
+           		<Route path="/entities/Departments/view/:id(\d+)?" component={ViewDepartment}/>
         		<Route path="/entities/Departments" component={DepartmentList}/>
            
            		<Route path="/entities/Customers/edit/:id(\d+)?" component={EditCustomer}/>
+           		<Route path="/entities/Customers/view/:id(\d+)?" component={ViewCustomer}/>
         		<Route path="/entities/Customers" component={CustomerList}/>
            
            		<Route path="/entities/CustomerOrders/edit/:id(\d+)?" component={EditCustomerOrder}/>
+           		<Route path="/entities/CustomerOrders/view/:id(\d+)?" component={ViewCustomerOrder}/>
         		<Route path="/entities/CustomerOrders" component={CustomerOrderList}/>
            
            		<Route path="/entities/Products/edit/:id(\d+)?" component={EditProduct}/>
+           		<Route path="/entities/Products/view/:id(\d+)?" component={ViewProduct}/>
         		<Route path="/entities/Products" component={ProductList}/>
            
            		<Route path="/entities/OrderItems/edit/:id(\d+)?" component={EditOrderItem}/>
+           		<Route path="/entities/OrderItems/view/:id(\d+)?" component={ViewOrderItem}/>
         		<Route path="/entities/OrderItems" component={OrderItemList}/>
            
            		<Route path="/entities/PaymentMethods/edit/:id(\d+)?" component={EditPaymentMethod}/>
+           		<Route path="/entities/PaymentMethods/view/:id(\d+)?" component={ViewPaymentMethod}/>
         		<Route path="/entities/PaymentMethods" component={PaymentMethodList}/>
            
            		<Route path="/entities/CreditCards/edit/:id(\d+)?" component={EditCreditCard}/>
+           		<Route path="/entities/CreditCards/view/:id(\d+)?" component={ViewCreditCard}/>
         		<Route path="/entities/CreditCards" component={CreditCardList}/>
            
            		<Route path="/entities/PayPals/edit/:id(\d+)?" component={EditPayPal}/>
+           		<Route path="/entities/PayPals/view/:id(\d+)?" component={ViewPayPal}/>
         		<Route path="/entities/PayPals" component={PayPalList}/>
            
            		<Route path="/entities/AppUsers/edit/:id(\d+)?" component={EditAppUser}/>
+           		<Route path="/entities/AppUsers/view/:id(\d+)?" component={ViewAppUser}/>
         		<Route path="/entities/AppUsers" component={AppUserList}/>
            
            		<Route path="/entities/AppRoles/edit/:id(\d+)?" component={EditAppRole}/>
+           		<Route path="/entities/AppRoles/view/:id(\d+)?" component={ViewAppRole}/>
         		<Route path="/entities/AppRoles" component={AppRoleList}/>
            
            		<Route path="/entities/CaseDefinitions/edit/:id(\d+)?" component={EditCaseDefinition}/>
+           		<Route path="/entities/CaseDefinitions/view/:id(\d+)?" component={ViewCaseDefinition}/>
         		<Route path="/entities/CaseDefinitions" component={CaseDefinitionList}/>
            
            		<Route path="/entities/TaskDefinitions/edit/:id(\d+)?" component={EditTaskDefinition}/>
+           		<Route path="/entities/TaskDefinitions/view/:id(\d+)?" component={ViewTaskDefinition}/>
         		<Route path="/entities/TaskDefinitions" component={TaskDefinitionList}/>
            
            		<Route path="/entities/Fields/edit/:id(\d+)?" component={EditField}/>
+           		<Route path="/entities/Fields/view/:id(\d+)?" component={ViewField}/>
         		<Route path="/entities/Fields" component={FieldList}/>
            
            		<Route path="/entities/CaseInstances/edit/:id(\d+)?" component={EditCaseInstance}/>
+           		<Route path="/entities/CaseInstances/view/:id(\d+)?" component={ViewCaseInstance}/>
         		<Route path="/entities/CaseInstances" component={CaseInstanceList}/>
            
            		<Route path="/entities/TaskInstances/edit/:id(\d+)?" component={EditTaskInstance}/>
+           		<Route path="/entities/TaskInstances/view/:id(\d+)?" component={ViewTaskInstance}/>
         		<Route path="/entities/TaskInstances" component={TaskInstanceList}/>
-           
-           		<Route path="/entities/statuss/edit/:id(\d+)?" component={Editstatus}/>
-        		<Route path="/entities/statuss" component={statusList}/>
            
             </Switch>
         </div>

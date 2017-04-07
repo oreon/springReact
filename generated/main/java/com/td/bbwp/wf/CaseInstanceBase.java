@@ -62,9 +62,17 @@ public abstract class CaseInstanceBase extends BaseEntity {
 
 	;
 
-	@Column(name = "STRING", unique = false)
+	@Column(name = "STATUS", unique = false)
 
-	protected status string
+	protected String status
+
+	;
+
+	@ManyToOne(optional = true, fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+	@JoinColumn(name = "CUSTOMER_ID", nullable = true, updatable = true, insertable = true)
+	@com.fasterxml.jackson.annotation.JsonBackReference
+
+	protected com.td.bbwp.commerce.Customer customer
 
 	;
 
@@ -126,13 +134,22 @@ public abstract class CaseInstanceBase extends BaseEntity {
 		return name;
 	}
 
-	public void setString(status string) {
-		this.string = string;
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
-	public status getString() {
+	public String getStatus() {
 
-		return string;
+		return status;
+	}
+
+	public void setCustomer(com.td.bbwp.commerce.Customer customer) {
+		this.customer = customer;
+	}
+
+	public com.td.bbwp.commerce.Customer getCustomer() {
+
+		return customer;
 	}
 
 	@Transient

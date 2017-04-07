@@ -11,6 +11,10 @@ import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColu
 import Form from "react-jsonschema-form";
 import {BaseComponent, BaseEditComponent} from '../commons/BaseComponent.jsx'
 import Griddle, {plugins} from 'griddle-react';
+
+import { Layout } from '../commons/Layout.jsx'
+import { SimpleView } from '../commons/SimpleView.jsx'
+import {Tabs, Tab} from 'material-ui/Tabs';
 import {SimpleList} from '../commons/SimpleList.jsx'
 
 
@@ -52,7 +56,9 @@ accountAddress: {  'ui:placeholder': "Account Address" },
 	 ]
 
 
-let customerSchema = createSchema()
+
+
+let paymentMethodSchema = createSchema()
 const log = (type) => console.log.bind(console, type);
 
 
@@ -62,8 +68,11 @@ export class PaymentMethodList extends BaseComponent {
         super(props);
         this.entityName = 'paymentMethods'
         this.name = 'paymentMethods'
-        this.editLink = "/entities/paymentMethods/edit/"
+        this.baseLink = "/entities/paymentMethods/"
+        this.editLink = this.baseLink + "edit/"
     }
+    
+     getEntityName() { return  'paymentMethods' }
 
     renderExtra(record) {
         return null
@@ -86,6 +95,7 @@ export class PaymentMethodList extends BaseComponent {
             <div>
                 <SimpleList headers={paymentMethodHeaders} editLink={this.editLink}
                             renderExtra={this.renderExtra}
+                            baseLink = {this.baseLink}
                             records={ records } nested={this.props.nested}
                             container={this.props.container} uneditable={this.props.uneditable}
                             containerId={this.props.containerId}
@@ -106,8 +116,9 @@ export class EditPaymentMethod extends BaseEditComponent {
     constructor(props) {
         super(props);
         this.state = {entity: {}};
-        this.entityName = 'customers'
+        this.entityName = 'paymentMethods'
         this.onSubmit = this.onSubmit.bind(this);
+        
         //this.handleChange = this.handleChange.bind(this);
     }
 
@@ -130,3 +141,35 @@ export class EditPaymentMethod extends BaseEditComponent {
         )
     }
 }
+
+
+export class ViewPaymentMethod extends BaseEditComponent {
+
+  renderExtra(record: any) { <p> IN render </p> }
+  
+  constructor(props) {
+    super(props);
+    this.state = { record: {}, error: {}, message: {} };
+    this.entityName = 'paymentMethods';
+    //this.onSubmit = this.onSubmit.bind(this)
+  }
+  
+  render() {
+  
+    let record = this.state.entity
+    return (
+     <div>
+       <SimpleView  headers= {paymentMethodHeaders} renderExtra={this.renderExtra}
+       record={record}   entityName='PaymentMethod' /> 
+       
+       <Tabs>
+        
+         </Tabs>
+      </div>
+    )	
+
+  }
+}
+
+
+

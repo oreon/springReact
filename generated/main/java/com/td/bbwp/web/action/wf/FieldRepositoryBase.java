@@ -39,4 +39,8 @@ public interface FieldRepositoryBase extends BaseRepository<Field> {
 
 	Stream<Field> findByRequired(@Param("required") Boolean required);
 
+	Stream<Field> findByMin(@Param("min") Integer min);
+
+	Stream<Field> findByMax(@Param("max") Integer max);
+
 }

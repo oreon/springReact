@@ -13,7 +13,9 @@ public interface BaseService<T extends BaseEntity> {
 	
 	public  Optional<T> findOne(Long id) ;
 	
-	public Stream<T> findAll();
+	public Iterable<T> findAll();
+	
+	public  Stream<T> findAllStream();
 	
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public void delete(Long id);

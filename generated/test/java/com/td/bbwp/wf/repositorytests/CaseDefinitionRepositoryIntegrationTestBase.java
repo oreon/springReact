@@ -33,34 +33,27 @@ public class CaseDefinitionRepositoryIntegrationTestBase {
 	@Autowired
 	protected com.td.bbwp.web.action.wf.CaseDefinitionRepository caseDefinitionRepository;
 
-	//@Autowired 
-	protected com.td.bbwp.wf.testdata.CaseDefinitionTestDataFactory caseDefinitionTestDataFactory = new com.td.bbwp.wf.testdata.CaseDefinitionTestDataFactory();
+	protected com.td.bbwp.wf.testdata.CaseDefinitionFixture caseDefinitionFixture = new com.td.bbwp.wf.testdata.CaseDefinitionFixture();
 
 	@Autowired
 	protected com.td.bbwp.web.action.wf.TaskDefinitionRepository taskDefinitionRepository;
 
-	//@Autowired
-	protected com.td.bbwp.wf.testdata.TaskDefinitionTestDataFactory taskDefinitionTestDataFactory = new com.td.bbwp.wf.testdata.TaskDefinitionTestDataFactory();
+	protected com.td.bbwp.wf.testdata.TaskDefinitionFixture taskDefinitionFixture = new com.td.bbwp.wf.testdata.TaskDefinitionFixture();
 
 	CaseDefinition caseDefinition;
 
 	@Before
 	public void setup() throws Exception {
 
-		try {
-			caseDefinitionRepository.deleteAll();
-			caseDefinition = caseDefinitionTestDataFactory.createCaseDefinitionOne();
+		caseDefinitionRepository.deleteAll();
 
-			caseDefinition.addTaskDefinition(taskDefinitionTestDataFactory.createTaskDefinitionOne());
+		taskDefinitionRepository.deleteAll();
 
-			caseDefinitionRepository.save(caseDefinition);
+		caseDefinition = caseDefinitionFixture.getOneRecord();
 
-		} catch (AccessDeniedException ade) {
-			System.out.println(ade.getMessage());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		caseDefinition.addTaskDefinition(taskDefinitionFixture.getOneRecord());
 
+		caseDefinition = caseDefinitionRepository.save(caseDefinition);
 	}
 
 	@Test
@@ -87,7 +80,7 @@ public class CaseDefinitionRepositoryIntegrationTestBase {
 	@WithMockUser(username = "admin", roles = {"ADMIN"})
 	public void testEdit() throws IllegalAccessException, InvocationTargetException {
 		Long currentId = caseDefinition.getId();
-		BeanUtils.copyProperties(caseDefinition, caseDefinitionTestDataFactory.createCaseDefinitionTwo());
+		BeanUtils.copyProperties(caseDefinition, caseDefinitionFixture.getOneRecord());
 		caseDefinition.setId(currentId);
 		caseDefinitionRepository.save(caseDefinition);
 		assertCount(1L);
