@@ -134,12 +134,12 @@ public class UserTaskController {
 	}
 	
 	@RequestMapping(value = "/close", method = RequestMethod.POST)
-	public String closeProcess(@RequestParam Long id) {
+	public ResponseEntity<?> closeProcess(@RequestParam Long id) {
 		try {
 			jbpmTaskService.signalProcessInstance(id, "cls", "cls");
-			return "Task " + id + " started successfully";
+			 return new ResponseEntity(id, HttpStatus.OK);
 		} catch (Exception e) {
-			return "Task " + id + " start failed due to " + e.getMessage();
+			return new ResponseEntity("Task " + id + " start failed due to " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 	

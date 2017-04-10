@@ -109,7 +109,9 @@ class Task extends React.Component {
         this.claimTask = this.claimTask.bind( this )
         this.releaseTask = this.releaseTask.bind( this )
         this.startTask = this.startTask.bind( this )
+        this.close = this.close.bind(this)
         this.id = this.props.task.id;
+        this.procId = this.props.task.processInstanceId;
 
         // this.deleteRecord = this.deleteRecord.bind( this );
         // this.editRecord = this.editRecord.bind( this );
@@ -134,6 +136,11 @@ class Task extends React.Component {
     startTask( id ) {
         this.doPost( URL + 'start?id=' + this.id, this.id )
         this.refresh()
+    }
+    
+    close( id ) {
+        this.doPost( URL + 'close?id=' + this.procId, this.procId )
+       // this.refresh()
     }
 
     doPost( url, body ) {
@@ -172,6 +179,7 @@ class Task extends React.Component {
                     
                     {!this.props.mine &&
                         <button className="btn btn-danger btn-xs" onClick={this.claimTask}>Claim</button>
+                       
                     }
                     {this.props.mine &&
                         <p>
@@ -183,7 +191,10 @@ class Task extends React.Component {
                     }
                 </td>
                 <td>
+                    <div>
                     <Link className="btn btn-default btn-xs" to={this.toLink}>View</Link>
+                    <button className="btn btn-danger btn-xs" onClick={this.close}>Close</button>
+                    </div>
 
                 </td>
             </tr>

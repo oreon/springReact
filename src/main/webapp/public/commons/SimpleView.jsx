@@ -23,7 +23,7 @@ export class SimpleView extends React.Component{
             
             
             let vals = this.props.headers.map
-            ( x => { return <div key={x.property}> <b> {x.property} </b>: {current[x.property]}</div> });
+            ( x => { return <tr key={x.property}> <td><b> {x.property} </b> </td> <td> {current[x.property]}</td></tr> });
 
             return (
 
@@ -34,7 +34,11 @@ export class SimpleView extends React.Component{
                         <RaisedButton onClick={() => this.props.data.gotoList()}>Cancel</RaisedButton>
                     </CardActions>
                     <CardText>
+                        <table className="table table-striped">
+                        <tbody>
                         {vals}
+                        </tbody>
+                        </table>
                     </CardText>
                     {this.props.renderExtra( current )}
                 </Card>

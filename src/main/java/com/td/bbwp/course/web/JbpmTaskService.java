@@ -88,7 +88,7 @@ public class JbpmTaskService {
 		// String deploymentId = "demo:oneprocess:1.1";
 
 		RuntimeEngine engine = RemoteRuntimeEngineFactory.newRestBuilder().addUrl(serverRestUrl).addTimeout(5)
-				//.addDeploymentId(deploymentId)
+				.addDeploymentId(deploymentId)
 				.addUserName(user).addPassword(password).disableTaskSecurity()
 
 				// if you're sending custom class parameters, make sure that
@@ -195,7 +195,8 @@ public class JbpmTaskService {
 	}
 	
 	public String signalProcessInstance( Long id, String signal, String data) {
-		ksession.signalEvent(signal, data, id);
+		ksession.signalEvent(signal, null, id);
+		ksession.signalEvent("cls", null, 33);
 		return "Signal sent to instance (" + id + ") successfully";
 	}
 

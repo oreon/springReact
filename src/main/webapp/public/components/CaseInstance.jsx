@@ -293,6 +293,7 @@ export class ViewCaseInstance extends BaseEditComponent {
       let record = this.state.entity
       return (
          <div>
+           <button onClick={() => this.props.data.gotoList()}>Close Case</button>
          <SimpleView  headers= {caseInstanceHeaders} renderExtra={this.renderExtra} record={record}/> 
               <Tabs></Tabs>
          </div>
