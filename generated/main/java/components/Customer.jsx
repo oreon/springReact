@@ -28,45 +28,7 @@ export function createSchema(){
     properties: {
     
 
-gender:{ type: "string", title: "Gender",   
-'enum' : [
-'','0' ,'1'   
-],
-'enumNames' : [
-'Select','MALE' ,'FEMALE'   
-]
-	
-},
-
-
-
-dob:{ type: "string", title: "Dob",   "format": "date"	
-},
-
-
-
 address:{ type: "integer", title: "Address",   
-
-	
-},
-
-
-
-firstName:{ type: "string", title: "First Name",  	
-},
-
-
-
-lastName:{ type: "string", title: "Last Name",  	
-},
-
-
-
-caseInstances:{ type: "integer", title: "Case Instances",   
-
- 'enum': LookupService.getLookup('caseInstances').map(x => x.id   ),
- 'enumNames': LookupService.getLookup('caseInstances').map(x => x.displayName)
-
 
 	
 },
@@ -128,6 +90,8 @@ caseInstances: {  'ui:placeholder': "Case Instances" },
 	 ]
 
 
+
+	import { CaseInstanceList} from './CaseInstance.jsx';
 
 
 let customerSchema = createSchema()
@@ -229,13 +193,23 @@ export class ViewCustomer extends BaseEditComponent {
   render() {
   
     let record = this.state.entity
+     if(!record) return null;
     return (
      <div>
        <SimpleView  headers= {customerHeaders} renderExtra={this.renderExtra}
        record={record}   entityName='Customer' /> 
        
        <Tabs>
-        
+       	  <Tab label="CaseInstance" >
+          <CaseInstanceList records={record.caseInstances} 
+          nested={true}  
+          container={'customer_displayName'}
+          containerId={record.id}
+           prev={this.props.location?this.props.location.pathName:null }
+          
+           />
+           </Tab>
+		  
          </Tabs>
       </div>
     )	

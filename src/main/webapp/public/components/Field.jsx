@@ -21,97 +21,128 @@ import {SimpleList} from '../commons/SimpleList.jsx'
 export function createSchema(){ 
  
  return {
-    title: "Customer Order",
+    title: "Field",
     type: "object",
     required: [ 
 ],
     properties: {
     
+
+name:{ type: "string", title: "Name",  	
+},
+
+
+
+type:{ type: "string", title: "Type",   
+'enum' : [
+'','0' ,'1' ,'2' ,'3' ,'4'   
+],
+'enumNames' : [
+'Select','string' ,'number' ,'date' ,'bool' ,'textBlob'   
+]
+	
+},
+
+
+  
+taskDefinition: {
+      "type": "number",
+    },
+
+
+
+required:{ type: "boolean", title: "Required",  	
+},
+
+
+
+min:{ type: "integer", title: "Min",  	
+},
+
+
+
+max:{ type: "integer", title: "Max",  	
+},
+
+
     
     }
  };
 
 }
 
-export const customerOrderUISchema = {
+export const fieldUISchema = {
  	
 
-notes: { 'ui:widget': "textarea" , 'ui:placeholder': "Notes" },
+name: {  'ui:placeholder': "Name" },
 
 
 
-customer: {  'ui:placeholder': "Customer" },
-
-
-
-shipDate: {  'ui:placeholder': "Ship Date" },
-
-
-
-paymentMethod: {  'ui:placeholder': "Payment Method" },
-
-
-    
-orderItems: {
- 	items:{
-         
-
-qty: { 'ui:widget': "updown" , 'ui:placeholder': "Qty" },
-
-
-
-product: {  'ui:placeholder': "Product" },
+type: {  'ui:placeholder': "Type" },
 
 
   
-customerOrder: {
+taskDefinition: {
       "ui:widget": "hidden"
     },
 
- 
-         
-     }
- },
 
+
+required: {  'ui:placeholder': "Required" },
+
+
+
+min: { 'ui:widget': "updown" , 'ui:placeholder': "Min" },
+
+
+
+max: { 'ui:widget': "updown" , 'ui:placeholder': "Max" },
+
+
+    
  }
 
 
-	export const customerOrderHeaders = [
+	export const fieldHeaders = [
 	 
 	 
-	 {property:"notes",title:"Notes" }
+	 {property:"name",title:"Name" }
 	 ,
 	 
-	 {property:"customer_displayName",title:"Customer" }
+	 {property:"type",title:"Type" }
 	 ,
 	 
-	 {property:"shipDate",title:"Ship Date" }
+	 {property:"taskDefinition_displayName",title:"Task Definition" }
 	 ,
 	 
-	 {property:"paymentMethod_displayName",title:"Payment Method" }
+	 {property:"required",title:"Required" }
+	 ,
+	 
+	 {property:"min",title:"Min" }
+	 ,
+	 
+	 {property:"max",title:"Max" }
 	      
 	 ]
 
 
 
-	import { OrderItemList} from './OrderItem.jsx';
 
-
-let customerOrderSchema = createSchema()
+let fieldSchema = createSchema()
 const log = (type) => console.log.bind(console, type);
 
 
-export class CustomerOrderList extends BaseComponent {
+export class FieldList extends BaseComponent {
 
     constructor(props) {
         super(props);
-        this.entityName = 'customerOrders'
-        this.name = 'customerOrders'
-        this.baseLink = "/entities/customerOrders/"
+        this.entityName = 'fields'
+        this.name = 'fields'
+        this.baseLink = "/entities/fields/"
         this.editLink = this.baseLink + "edit/"
     }
     
-     getEntityName() { return  'customerOrders' }
+     getEntityName() { return  'fields' }
 
     renderExtra(record) {
         return null
@@ -132,7 +163,7 @@ export class CustomerOrderList extends BaseComponent {
 
         return (
             <div>
-                <SimpleList headers={customerOrderHeaders} editLink={this.editLink}
+                <SimpleList headers={fieldHeaders} editLink={this.editLink}
                             renderExtra={this.renderExtra}
                             baseLink = {this.baseLink}
                             records={ records } nested={this.props.nested}
@@ -145,7 +176,7 @@ export class CustomerOrderList extends BaseComponent {
     }
 }
 
-export class EditCustomerOrder extends BaseEditComponent {
+export class EditField extends BaseEditComponent {
 
     componentDidMount() {
         if (this.props.match.params.id)
@@ -155,7 +186,7 @@ export class EditCustomerOrder extends BaseEditComponent {
     constructor(props) {
         super(props);
         this.state = {entity: {}};
-        this.entityName = 'customerOrders'
+        this.entityName = 'fields'
         this.onSubmit = this.onSubmit.bind(this);
         
         //this.handleChange = this.handleChange.bind(this);
@@ -163,15 +194,15 @@ export class EditCustomerOrder extends BaseEditComponent {
 
     onSubmit(formData) {
         this.editRecord(formData)
-        this.props.history.push('/entities/customerOrders')
+        this.props.history.push('/entities/fields')
     }
 
     render() {
         return (
             <div>
-                <h3> Edit CustomerOrder </h3>
-                <Form schema={customerOrderSchema}
-                	uiSchema={customerOrderUISchema}
+                <h3> Edit Field </h3>
+                <Form schema={fieldSchema}
+                	uiSchema={fieldUISchema}
                       formData={this.state.entity }
                     //onChange={log("changed")}
                       onSubmit={({formData}) => this.onSubmit(formData) }
@@ -182,37 +213,27 @@ export class EditCustomerOrder extends BaseEditComponent {
 }
 
 
-export class ViewCustomerOrder extends BaseEditComponent {
+export class ViewField extends BaseEditComponent {
 
   renderExtra(record: any) { <p> IN render </p> }
   
   constructor(props) {
     super(props);
     this.state = { record: {}, error: {}, message: {} };
-    this.entityName = 'customerOrders';
+    this.entityName = 'fields';
     //this.onSubmit = this.onSubmit.bind(this)
   }
   
   render() {
   
     let record = this.state.entity
-     if(!record) return null;
     return (
      <div>
-       <SimpleView  headers= {customerOrderHeaders} renderExtra={this.renderExtra}
-       record={record}   entityName='CustomerOrder' /> 
+       <SimpleView  headers= {fieldHeaders} renderExtra={this.renderExtra}
+       record={record}   entityName='Field' /> 
        
        <Tabs>
-       	  <Tab label="OrderItem" >
-          <OrderItemList records={record.orderItems} 
-          nested={true}  
-          container={'customerOrder_displayName'}
-          containerId={record.id}
-           prev={this.props.location?this.props.location.pathName:null }
-           uneditable={true} 
-           />
-           </Tab>
-		  
+        
          </Tabs>
       </div>
     )	

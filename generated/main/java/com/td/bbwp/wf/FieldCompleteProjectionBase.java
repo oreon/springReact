@@ -37,4 +37,6 @@ interface FieldCompleteProjectionBase {
 
 	Optional<Integer> getMax();
 
+	Optional<String> getRegularEx();
+
 }

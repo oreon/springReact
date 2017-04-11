@@ -27,11 +27,6 @@ export function createSchema(){
 ],
     properties: {
     
-
-accountAddress:{ type: "string", title: "Account Address",  	
-},
-
-
     
     }
  };
@@ -157,6 +152,7 @@ export class ViewPaymentMethod extends BaseEditComponent {
   render() {
   
     let record = this.state.entity
+     if(!record) return null;
     return (
      <div>
        <SimpleView  headers= {paymentMethodHeaders} renderExtra={this.renderExtra}

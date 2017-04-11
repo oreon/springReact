@@ -140,7 +140,7 @@ class Task extends React.Component {
     
     close( id ) {
         this.doPost( URL + 'close?id=' + this.procId, this.procId )
-       // this.refresh()
+       this.refresh()
     }
 
     doPost( url, body ) {
@@ -185,14 +185,17 @@ class Task extends React.Component {
                         <p>
                             <button className="btn btn-danger btn-xs" onClick={this.releaseTask}>Release</button>
                             {this.props.task.statusId === "Reserved" &&
-                                < button className="btn btn-primary btn-xs" onClick={this.startTask}>Start</button>
+                                <button className="btn btn-primary btn-xs" onClick={this.startTask}>Start</button>
                             }
                         </p>
                     }
                 </td>
                 <td>
                     <div>
+                    
+                    {this.props.task.statusId === "InProgress" &&
                     <Link className="btn btn-default btn-xs" to={this.toLink}>View</Link>
+                    }
                     <button className="btn btn-danger btn-xs" onClick={this.close}>Close</button>
                     </div>
 

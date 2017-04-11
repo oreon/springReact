@@ -27,21 +27,6 @@ export function createSchema(){
 ],
     properties: {
     
-
-accountAddress:{ type: "string", title: "Account Address",  	
-},
-
-
-
-ccNumber:{ type: "string", title: "Cc Number",  	
-},
-
-
-
-expiry:{ type: "string", title: "Expiry",   "format": "date"	
-},
-
-
     
     }
  };
@@ -181,6 +166,7 @@ export class ViewCreditCard extends BaseEditComponent {
   render() {
   
     let record = this.state.entity
+     if(!record) return null;
     return (
      <div>
        <SimpleView  headers= {creditCardHeaders} renderExtra={this.renderExtra}

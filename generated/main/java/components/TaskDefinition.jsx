@@ -28,74 +28,11 @@ export function createSchema(){
     properties: {
     
 
-name:{ type: "string", title: "Name",  	
-},
-
-
-  
-caseDefinition: {
-      "type": "number",
-    },
-
-
-
 formSchema:{ type: "string", title: "Form Schema",  	
 },
 
 
     
-fields: {
-            title: "Fields",
-            type: "array",
-            required: [
-],
-            items: {
-                "type": "object",
-                "properties": {
-                 
-
-name:{ type: "string", title: "Name",  	
-},
-
-
-
-type:{ type: "string", title: "Type",   
-'enum' : [
-'','0' ,'1' ,'2' ,'3' ,'4'   
-],
-'enumNames' : [
-'Select','string' ,'number' ,'date' ,'bool' ,'textBlob'   
-]
-	
-},
-
-
-  
-taskDefinition: {
-      "type": "number",
-    },
-
-
-
-required:{ type: "boolean", title: "Required",  	
-},
-
-
-
-min:{ type: "integer", title: "Min",  	
-},
-
-
-
-max:{ type: "integer", title: "Max",  	
-},
-
- 
-                 
-                }
-            }
-        },
-
     }
  };
 
@@ -145,6 +82,10 @@ min: { 'ui:widget': "updown" , 'ui:placeholder': "Min" },
 
 
 max: { 'ui:widget': "updown" , 'ui:placeholder': "Max" },
+
+
+
+regularEx: {  'ui:placeholder': "Regular Ex" },
 
  
          
@@ -271,6 +212,7 @@ export class ViewTaskDefinition extends BaseEditComponent {
   render() {
   
     let record = this.state.entity
+     if(!record) return null;
     return (
      <div>
        <SimpleView  headers= {taskDefinitionHeaders} renderExtra={this.renderExtra}

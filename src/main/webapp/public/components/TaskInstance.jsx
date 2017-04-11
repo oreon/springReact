@@ -21,97 +21,126 @@ import {SimpleList} from '../commons/SimpleList.jsx'
 export function createSchema(){ 
  
  return {
-    title: "Customer Order",
+    title: "Task Instance",
     type: "object",
     required: [ 
 ],
     properties: {
     
+
+taskId:{ type: "integer", title: "Task Id",  	
+},
+
+
+
+name:{ type: "string", title: "Name",  	
+},
+
+
+
+//taskDefinition:{ type: "integer", title: "Task Definition",   
+//
+// 'enum': LookupService.getLookup('taskDefinitions').map(x => x.id   ),
+// 'enumNames': LookupService.getLookup('taskDefinitions').map(x => x.displayName)
+//
+//	
+//},
+
+
+  
+caseInstance: {
+      "type": "number",
+    },
+
+
+
+taskData:{ type: "string", title: "Task Data",  	
+},
+
+
+
+status:{ type: "string", title: "Status",  	
+},
+
+
     
     }
  };
 
 }
 
-export const customerOrderUISchema = {
+export const taskInstanceUISchema = {
  	
 
-notes: { 'ui:widget': "textarea" , 'ui:placeholder': "Notes" },
+taskId: { 'ui:widget': "updown" , 'ui:placeholder': "Task Id" },
 
 
 
-customer: {  'ui:placeholder': "Customer" },
+name: {  'ui:placeholder': "Name" },
 
 
 
-shipDate: {  'ui:placeholder': "Ship Date" },
-
-
-
-paymentMethod: {  'ui:placeholder': "Payment Method" },
-
-
-    
-orderItems: {
- 	items:{
-         
-
-qty: { 'ui:widget': "updown" , 'ui:placeholder': "Qty" },
-
-
-
-product: {  'ui:placeholder': "Product" },
+taskDefinition: {  'ui:placeholder': "Task Definition" },
 
 
   
-customerOrder: {
+caseInstance: {
       "ui:widget": "hidden"
     },
 
- 
-         
-     }
- },
 
+
+taskData: {  'ui:placeholder': "Task Data" },
+
+
+
+status: {  'ui:placeholder': "Status" },
+
+
+    
  }
 
 
-	export const customerOrderHeaders = [
+	export const taskInstanceHeaders = [
 	 
 	 
-	 {property:"notes",title:"Notes" }
+	 {property:"taskId",title:"Task Id" }
 	 ,
 	 
-	 {property:"customer_displayName",title:"Customer" }
+	 {property:"name",title:"Name" }
 	 ,
 	 
-	 {property:"shipDate",title:"Ship Date" }
+	 {property:"taskDefinition_displayName",title:"Task Definition" }
 	 ,
 	 
-	 {property:"paymentMethod_displayName",title:"Payment Method" }
+	 {property:"caseInstance_displayName",title:"Case Instance" }
+	 ,
+	 
+	 {property:"taskData",title:"Task Data" }
+	 ,
+	 
+	 {property:"status",title:"Status" }
 	      
 	 ]
 
 
 
-	import { OrderItemList} from './OrderItem.jsx';
 
-
-let customerOrderSchema = createSchema()
+let taskInstanceSchema = createSchema()
 const log = (type) => console.log.bind(console, type);
 
 
-export class CustomerOrderList extends BaseComponent {
+export class TaskInstanceList extends BaseComponent {
 
     constructor(props) {
         super(props);
-        this.entityName = 'customerOrders'
-        this.name = 'customerOrders'
-        this.baseLink = "/entities/customerOrders/"
+        this.entityName = 'taskInstances'
+        this.name = 'taskInstances'
+        this.baseLink = "/entities/taskInstances/"
         this.editLink = this.baseLink + "edit/"
     }
     
-     getEntityName() { return  'customerOrders' }
+     getEntityName() { return  'taskInstances' }
 
     renderExtra(record) {
         return null
@@ -132,7 +161,7 @@ export class CustomerOrderList extends BaseComponent {
 
         return (
             <div>
-                <SimpleList headers={customerOrderHeaders} editLink={this.editLink}
+                <SimpleList headers={taskInstanceHeaders} editLink={this.editLink}
                             renderExtra={this.renderExtra}
                             baseLink = {this.baseLink}
                             records={ records } nested={this.props.nested}
@@ -145,7 +174,7 @@ export class CustomerOrderList extends BaseComponent {
     }
 }
 
-export class EditCustomerOrder extends BaseEditComponent {
+export class EditTaskInstance extends BaseEditComponent {
 
     componentDidMount() {
         if (this.props.match.params.id)
@@ -155,7 +184,7 @@ export class EditCustomerOrder extends BaseEditComponent {
     constructor(props) {
         super(props);
         this.state = {entity: {}};
-        this.entityName = 'customerOrders'
+        this.entityName = 'taskInstances'
         this.onSubmit = this.onSubmit.bind(this);
         
         //this.handleChange = this.handleChange.bind(this);
@@ -163,15 +192,15 @@ export class EditCustomerOrder extends BaseEditComponent {
 
     onSubmit(formData) {
         this.editRecord(formData)
-        this.props.history.push('/entities/customerOrders')
+        this.props.history.push('/entities/taskInstances')
     }
 
     render() {
         return (
             <div>
-                <h3> Edit CustomerOrder </h3>
-                <Form schema={customerOrderSchema}
-                	uiSchema={customerOrderUISchema}
+                <h3> Edit TaskInstance </h3>
+                <Form schema={taskInstanceSchema}
+                	uiSchema={taskInstanceUISchema}
                       formData={this.state.entity }
                     //onChange={log("changed")}
                       onSubmit={({formData}) => this.onSubmit(formData) }
@@ -182,37 +211,27 @@ export class EditCustomerOrder extends BaseEditComponent {
 }
 
 
-export class ViewCustomerOrder extends BaseEditComponent {
+export class ViewTaskInstance extends BaseEditComponent {
 
   renderExtra(record: any) { <p> IN render </p> }
   
   constructor(props) {
     super(props);
     this.state = { record: {}, error: {}, message: {} };
-    this.entityName = 'customerOrders';
+    this.entityName = 'taskInstances';
     //this.onSubmit = this.onSubmit.bind(this)
   }
   
   render() {
   
     let record = this.state.entity
-     if(!record) return null;
     return (
      <div>
-       <SimpleView  headers= {customerOrderHeaders} renderExtra={this.renderExtra}
-       record={record}   entityName='CustomerOrder' /> 
+       <SimpleView  headers= {taskInstanceHeaders} renderExtra={this.renderExtra}
+       record={record}   entityName='TaskInstance' /> 
        
        <Tabs>
-       	  <Tab label="OrderItem" >
-          <OrderItemList records={record.orderItems} 
-          nested={true}  
-          container={'customerOrder_displayName'}
-          containerId={record.id}
-           prev={this.props.location?this.props.location.pathName:null }
-           uneditable={true} 
-           />
-           </Tab>
-		  
+        
          </Tabs>
       </div>
     )	

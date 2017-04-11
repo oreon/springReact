@@ -13,14 +13,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.annotation.DirtiesContext.ClassMode;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.td.bbwp.MainApp;
 import com.td.bbwp.SecurityConfiguration;
-import com.td.bbwp.web.action.wf.CaseInstanceRepository;
+import com.td.bbwp.MainApp;
+
 import com.td.bbwp.wf.CaseInstance;
 
 /**
@@ -30,7 +28,6 @@ import com.td.bbwp.wf.CaseInstance;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = {MainApp.class, SecurityConfiguration.class})
 @Transactional
-@DirtiesContext(classMode = ClassMode.BEFORE_EACH_TEST_METHOD)
 public class CaseInstanceRepositoryIntegrationTestBase {
 
 	@Autowired

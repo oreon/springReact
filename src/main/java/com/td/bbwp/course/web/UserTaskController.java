@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.td.bbwp.web.action.wf.CaseInstanceRepository;
+
 @RestController
 @RequestMapping("/api/task")
 public class UserTaskController {
@@ -49,22 +51,18 @@ public class UserTaskController {
 	
 	
 	@RequestMapping(value = "/launch", method = RequestMethod.POST)
-	public Long newProcessInstance(@RequestParam String deploymentId, @RequestParam String processId,
-			@RequestParam Map<String,String> processParams) {
+	public Long newProcessInstance(@RequestParam Long customerId/*, @RequestParam Map<String,String> processParams*/) {
 		
-		Map<String, Object> params = new HashMap<String, Object>();
-		//params.put("paramName", new MyType("name", 23));
-	//	ProcessInstance processInstance = ksession.startProcess("bb_aam.aam_lending", params);
+//		Map<String, Object> params = new HashMap<String, Object>();
+//		params.put("paramName", new MyType("name", 23));
+	
 		
-		long processInstanceId = jbpmTaskService.launchProcess("bb_aam", "aam_lending", params);
+		long processInstanceId = jbpmTaskService.launchProcess(JbpmTaskService.BB_AAM_AAM_LENDING, customerId, null);
 		
 		return processInstanceId;
- 
 	}
 	
-	//= new HashMap<String, Object>();
-			//params.put("paramName", new MyType("name", 23));
-	
+
 
 	@RequestMapping(value = "/myTasks", method = RequestMethod.GET)
 	public Collection<TaskSummary> getMyTasks() {

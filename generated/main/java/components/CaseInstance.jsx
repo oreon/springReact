@@ -27,95 +27,7 @@ export function createSchema(){
 ],
     properties: {
     
-
-caseDefinition:{ type: "integer", title: "Case Definition",   
-
- 'enum': LookupService.getLookup('caseDefinitions').map(x => x.id   ),
- 'enumNames': LookupService.getLookup('caseDefinitions').map(x => x.displayName)
-
-
-	
-},
-
-
-
-processInstanceId:{ type: "integer", title: "Process Instance Id",  	
-},
-
-
-
-name:{ type: "string", title: "Name",  	
-},
-
-
-
-status:{ type: "string", title: "Status",  	
-},
-
-
-
-customer:{ type: "integer", title: "Customer",   
-
- 'enum': LookupService.getLookup('customers').map(x => x.id   ),
- 'enumNames': LookupService.getLookup('customers').map(x => x.displayName)
-
-
-	
-},
-
-
     
-taskInstances: {
-            title: "Task Instances",
-            type: "array",
-            required: [
-],
-            items: {
-                "type": "object",
-                "properties": {
-                 
-
-taskId:{ type: "integer", title: "Task Id",  	
-},
-
-
-
-name:{ type: "string", title: "Name",  	
-},
-
-
-
-taskDefinition:{ type: "integer", title: "Task Definition",   
-
- 'enum': LookupService.getLookup('taskDefinitions').map(x => x.id   ),
- 'enumNames': LookupService.getLookup('taskDefinitions').map(x => x.displayName)
-
-
-	
-},
-
-
-  
-caseInstance: {
-      "type": "number",
-    },
-
-
-
-taskData:{ type: "string", title: "Task Data",  	
-},
-
-
-
-status:{ type: "string", title: "Status",  	
-},
-
- 
-                 
-                }
-            }
-        },
-
     }
  };
 
@@ -303,6 +215,7 @@ export class ViewCaseInstance extends BaseEditComponent {
   render() {
   
     let record = this.state.entity
+     if(!record) return null;
     return (
      <div>
        <SimpleView  headers= {caseInstanceHeaders} renderExtra={this.renderExtra}

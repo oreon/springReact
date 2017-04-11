@@ -34,6 +34,7 @@ public class FieldFixture extends BaseFixtureFactory<Field> implements TemplateL
 				add("required", random(true, false));
 				add("min", random(Integer.class, range(1, 200)));
 				add("max", random(Integer.class, range(1, 200)));
+				add("regularEx", uniqueRandom(arrayNames));
 
 				add("taskDefinition", new com.td.bbwp.wf.testdata.TaskDefinitionFixture().getOneRecord());
 

@@ -27,11 +27,6 @@ export function createSchema(){
 ],
     properties: {
     
-
-name:{ type: "string", title: "Name",  	
-},
-
-
     
     }
  };
@@ -157,6 +152,7 @@ export class ViewProduct extends BaseEditComponent {
   render() {
   
     let record = this.state.entity
+     if(!record) return null;
     return (
      <div>
        <SimpleView  headers= {productHeaders} renderExtra={this.renderExtra}

@@ -3,172 +3,166 @@
 import React from 'react';
 import SkyLight from 'react-skylight';
 import Alert from 'react-s-alert';
-var fetch = require( 'node-fetch' );
-import { Link, NavLink, Switch, Redirect } from 'react-router-dom';
-import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn } from 'material-ui/Table';
+var fetch = require('node-fetch');
+import {Link, NavLink, Switch, Redirect} from 'react-router-dom';
+import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
 
 
 import Form from "react-jsonschema-form";
-import { BaseComponent, BaseEditComponent } from '../commons/BaseComponent.jsx'
-import Griddle, { plugins } from 'griddle-react';
-import { SimpleList } from '../commons/SimpleList.jsx'
+import {BaseComponent, BaseEditComponent} from '../commons/BaseComponent.jsx'
+import Griddle, {plugins} from 'griddle-react';
+
+import { Layout } from '../commons/Layout.jsx'
+import { SimpleView } from '../commons/SimpleView.jsx'
+import {Tabs, Tab} from 'material-ui/Tabs';
+import {SimpleList} from '../commons/SimpleList.jsx'
 
 
-export function createSchema() {
-
-    return {
-        title: "Case Definition",
-        type: "object",
-        required: ['name'
-        ],
-        properties: {
-
-            name: {
-                type: "string", title: "Name",
-            },
-
-            taskDefinitions: {
-                title: "Task Definitions",
-                type: "array",
-                items: {
-                    "type": "object",
-                    "properties": {
-                        name: {
-                            type: "string", title: "Name",
-                        },
-
-                        caseDefinition: {
-                            "type": "number",
-                        },
-
-                        fields: {
-                            title: "Fields",
-                            type: "array",
-                           
-                            items: {
-                                "type": "object",
-                                "properties": {
-                                    name: {
-                                        type: "string", title: "Name", minLength: 2, required:true
-                                    },
-
-                                    type: {
-                                        type: "string", title: "Type",
-                                    },
-
-                                    taskDefinition: {
-                                        "type": "number",
-                                    },
-                                }
-                            }
-                        },
-
-                    }
-                }
-            },
-
-        }
-    };
+export function createSchema(){ 
+ 
+ return {
+    title: "Case Definition",
+    type: "object",
+    required: [ 
+],
+    properties: {
+    
+    
+    }
+ };
 
 }
 
 export const caseDefinitionUISchema = {
+ 	
 
-
-    name: { 'ui:placeholder': "Name" },
-
-
-
-    taskDefinitions: {
-        items: {
-
-
-            name: { 'ui:placeholder': "Name" },
+name: {  'ui:placeholder': "Name" },
 
 
 
-            caseDefinition: {
-                "ui:widget": "hidden"
-            },
+closable: {  'ui:placeholder': "Closable" },
 
 
+    
+taskDefinitions: {
+ 	items:{
+         
 
-            fields: {
-                items: {
-
-
-                    name: { 'ui:placeholder': "Name" },
-
-
-
-                    type: { 'ui:placeholder': "Type" },
+name: {  'ui:placeholder': "Name" },
 
 
-
-                    taskDefinition: {
-                        "ui:widget": "hidden"
-                    },
-
-
-
-                }
-            },
-
-        }
+  
+caseDefinition: {
+      "ui:widget": "hidden"
     },
 
-}
 
 
-export const caseDefinitionHeaders = [
+formSchema: {  'ui:placeholder': "Form Schema" },
+
+ 
+         
+fields: {
+ 	items:{
+         
+
+name: {  'ui:placeholder': "Name" },
 
 
-    { property: "name", title: "Name" }
 
-]
+type: {  'ui:placeholder': "Type" },
+
+
+  
+taskDefinition: {
+      "ui:widget": "hidden"
+    },
+
+
+
+required: {  'ui:placeholder': "Required" },
+
+
+
+min: { 'ui:widget': "updown" , 'ui:placeholder': "Min" },
+
+
+
+max: { 'ui:widget': "updown" , 'ui:placeholder': "Max" },
+
+
+
+regularEx: {  'ui:placeholder': "Regular Ex" },
+
+ 
+         
+     }
+ },
+
+     }
+ },
+
+ }
+
+
+	export const caseDefinitionHeaders = [
+	 
+	 
+	 {property:"name",title:"Name" }
+	 ,
+	 
+	 {property:"closable",title:"Closable" }
+	      
+	 ]
+
+
+
+	import { TaskDefinitionList} from './TaskDefinition.jsx';
 
 
 let caseDefinitionSchema = createSchema()
-const log = ( type ) => console.log.bind( console, type );
+const log = (type) => console.log.bind(console, type);
 
 
 export class CaseDefinitionList extends BaseComponent {
 
-    constructor( props ) {
-        super( props );
+    constructor(props) {
+        super(props);
         this.entityName = 'caseDefinitions'
         this.name = 'caseDefinitions'
-        this.editLink = "/entities/caseDefinitions/edit/"
+        this.baseLink = "/entities/caseDefinitions/"
+        this.editLink = this.baseLink + "edit/"
     }
+    
+     getEntityName() { return  'caseDefinitions' }
 
-    getEntityName() { return 'caseDefinitions' }
-
-    renderExtra( record ) {
+    renderExtra(record) {
         return null
     }
 
 
-    handleRowSelection( selectedRows ) {
-        this.props.push( <Link className="btn btn-default btn-xs" to={this.toLink}>Edit</Link> )
-        console.log( 'selectedRows: ' + selectedRows );
+    handleRowSelection(selectedRows) {
+        this.props.push(<Link className="btn btn-default btn-xs" to={this.toLink}>Edit</Link>)
+        console.log('selectedRows: ' + selectedRows);
     }
 
 
     render() {
         let records = this.props.nested ? this.props.records : this.state.records
 
-        if ( !records )
-            return ( <p>Loading...</p> )
+        if (!records)
+            return (<p>Loading...</p>)
 
         return (
             <div>
                 <SimpleList headers={caseDefinitionHeaders} editLink={this.editLink}
-                    renderExtra={this.renderExtra}
-                    records={records} nested={this.props.nested}
-                    container={this.props.container} uneditable={this.props.uneditable}
-                    containerId={this.props.containerId}
-                    prev={this.props.prev}
-                    />
+                            renderExtra={this.renderExtra}
+                            baseLink = {this.baseLink}
+                            records={ records } nested={this.props.nested}
+                            container={this.props.container} uneditable={this.props.uneditable}
+                            containerId={this.props.containerId}
+                            prev={this.props.prev}
+                />
             </div>
         );
     }
@@ -177,34 +171,76 @@ export class CaseDefinitionList extends BaseComponent {
 export class EditCaseDefinition extends BaseEditComponent {
 
     componentDidMount() {
-        if ( this.props.match.params.id )
-            this.fetchSingleRecord( this.props.match.params.id );
+        if (this.props.match.params.id)
+            this.fetchSingleRecord(this.props.match.params.id);
     }
 
-    constructor( props ) {
-        super( props );
-        this.state = { entity: {} };
+    constructor(props) {
+        super(props);
+        this.state = {entity: {}};
         this.entityName = 'caseDefinitions'
-        this.onSubmit = this.onSubmit.bind( this );
+        this.onSubmit = this.onSubmit.bind(this);
+        
         //this.handleChange = this.handleChange.bind(this);
     }
 
-    onSubmit( formData ) {
-        this.editRecord( formData )
-        this.props.history.push( '/entities/caseDefinitions' )
+    onSubmit(formData) {
+        this.editRecord(formData)
+        this.props.history.push('/entities/caseDefinitions')
     }
 
     render() {
         return (
             <div>
-                <h3> Edit CaseDefinition </h3>
+                <h3> Edit CaseDefinition ! </h3>
                 <Form schema={caseDefinitionSchema}
-                    uiSchema={caseDefinitionUISchema}
-                    formData={this.state.entity}
-                    onChange={log( "changed" )}
-                    onSubmit={( {formData}) => this.onSubmit( formData )}
-                    onError={log( "errors" )} />
+                	uiSchema={caseDefinitionUISchema}
+                      formData={this.state.entity }
+                      onSubmit={({formData}) => this.onSubmit(formData) }
+                      onError={log("errors")}/>
             </div>
         )
     }
 }
+
+
+export class ViewCaseDefinition extends BaseEditComponent {
+
+  renderExtra(record: any) { <p> IN render </p> }
+  
+  constructor(props) {
+    super(props);
+    this.state = { record: {}, error: {}, message: {} };
+    this.entityName = 'caseDefinitions';
+    //this.onSubmit = this.onSubmit.bind(this)
+  }
+  
+  render() {
+  
+    let record = this.state.entity
+     if(!record) return (<p> Loading </p>);
+    return (
+     <div>
+       <SimpleView  headers= {caseDefinitionHeaders} renderExtra={this.renderExtra}
+       record={record}   entityName='CaseDefinition' /> 
+       
+       <Tabs>
+       	  <Tab label="TaskDefinition" >
+          <TaskDefinitionList records={record.taskDefinitions} 
+          nested={true}  
+          container={'caseDefinition_displayName'}
+          containerId={record.id}
+           prev={this.props.location?this.props.location.pathName:null }
+          
+           />
+           </Tab>
+		  
+         </Tabs>
+      </div>
+    )	
+
+  }
+}
+
+
+

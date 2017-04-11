@@ -30,6 +30,8 @@ public class FieldDto
 
 	protected Integer max;
 
+	protected String regularEx;
+
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -76,6 +78,14 @@ public class FieldDto
 
 	public Integer getMax() {
 		return max;
+	}
+
+	public void setRegularEx(String regularEx) {
+		this.regularEx = regularEx;
+	}
+
+	public String getRegularEx() {
+		return regularEx;
 	}
 
 }

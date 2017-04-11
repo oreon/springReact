@@ -36,5 +36,7 @@ interface TaskInstanceCompleteProjectionBase {
 	Optional<String> getTaskData();
 
 	Optional<String> getStatus();
+	
+	List<Field>  getFields();
 
 }

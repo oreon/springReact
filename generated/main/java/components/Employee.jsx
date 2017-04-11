@@ -28,52 +28,9 @@ export function createSchema(){
     properties: {
     
 
-gender:{ type: "string", title: "Gender",   
-'enum' : [
-'','0' ,'1'   
-],
-'enumNames' : [
-'Select','MALE' ,'FEMALE'   
-]
-	
-},
-
-
-
-dob:{ type: "string", title: "Dob",   "format": "date"	
-},
-
-
-
 address:{ type: "integer", title: "Address",   
 
 	
-},
-
-
-
-department:{ type: "integer", title: "Department",   
-
- 'enum': LookupService.getLookup('departments').map(x => x.id   ),
- 'enumNames': LookupService.getLookup('departments').map(x => x.displayName)
-
-
-	
-},
-
-
-
-firstName:{ type: "string", title: "First Name",  	
-},
-
-
-
-lastName:{ type: "string", title: "Last Name",  	
-},
-
-
-
-code:{ type: "string", title: "Code",  	
 },
 
 
@@ -244,6 +201,7 @@ export class ViewEmployee extends BaseEditComponent {
   render() {
   
     let record = this.state.entity
+     if(!record) return null;
     return (
      <div>
        <SimpleView  headers= {employeeHeaders} renderExtra={this.renderExtra}

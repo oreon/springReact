@@ -27,22 +27,6 @@ export function createSchema(){
 ],
     properties: {
     
-
-employees:{ type: "integer", title: "Employees",   
-
- 'enum': LookupService.getLookup('employees').map(x => x.id   ),
- 'enumNames': LookupService.getLookup('employees').map(x => x.displayName)
-
-
-	
-},
-
-
-
-name:{ type: "string", title: "Name",  	
-},
-
-
     
     }
  };
@@ -71,6 +55,8 @@ name: {  'ui:placeholder': "Name" },
 	 ]
 
 
+
+	import { EmployeeList} from './Employee.jsx';
 
 
 let departmentSchema = createSchema()
@@ -172,13 +158,23 @@ export class ViewDepartment extends BaseEditComponent {
   render() {
   
     let record = this.state.entity
+     if(!record) return null;
     return (
      <div>
        <SimpleView  headers= {departmentHeaders} renderExtra={this.renderExtra}
        record={record}   entityName='Department' /> 
        
        <Tabs>
-        
+       	  <Tab label="Employee" >
+          <EmployeeList records={record.employees} 
+          nested={true}  
+          container={'department_displayName'}
+          containerId={record.id}
+           prev={this.props.location?this.props.location.pathName:null }
+          
+           />
+           </Tab>
+		  
          </Tabs>
       </div>
     )	

@@ -27,28 +27,6 @@ export function createSchema(){
 ],
     properties: {
     
-
-qty:{ type: "integer", title: "Qty",  	
-},
-
-
-
-product:{ type: "integer", title: "Product",   
-
- 'enum': LookupService.getLookup('products').map(x => x.id   ),
- 'enumNames': LookupService.getLookup('products').map(x => x.displayName)
-
-
-	
-},
-
-
-  
-customerOrder: {
-      "type": "number",
-    },
-
-
     
     }
  };
@@ -190,6 +168,7 @@ export class ViewOrderItem extends BaseEditComponent {
   render() {
   
     let record = this.state.entity
+     if(!record) return null;
     return (
      <div>
        <SimpleView  headers= {orderItemHeaders} renderExtra={this.renderExtra}

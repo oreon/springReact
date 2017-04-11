@@ -27,19 +27,6 @@ export function createSchema(){
 ],
     properties: {
     
-
-name:{ type: "string", title: "Name",  	
-},
-
-
-
-appUsers:{ type: "string", title: "App Users",   
-
-
-	
-},
-
-
     
     }
  };
@@ -169,6 +156,7 @@ export class ViewAppRole extends BaseEditComponent {
   render() {
   
     let record = this.state.entity
+     if(!record) return null;
     return (
      <div>
        <SimpleView  headers= {appRoleHeaders} renderExtra={this.renderExtra}

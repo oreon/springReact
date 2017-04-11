@@ -27,43 +27,6 @@ export function createSchema(){
 ],
     properties: {
     
-
-taskId:{ type: "integer", title: "Task Id",  	
-},
-
-
-
-name:{ type: "string", title: "Name",  	
-},
-
-
-
-taskDefinition:{ type: "integer", title: "Task Definition",   
-
- 'enum': LookupService.getLookup('taskDefinitions').map(x => x.id   ),
- 'enumNames': LookupService.getLookup('taskDefinitions').map(x => x.displayName)
-
-
-	
-},
-
-
-  
-caseInstance: {
-      "type": "number",
-    },
-
-
-
-taskData:{ type: "string", title: "Task Data",  	
-},
-
-
-
-status:{ type: "string", title: "Status",  	
-},
-
-
     
     }
  };
@@ -226,6 +189,7 @@ export class ViewTaskInstance extends BaseEditComponent {
   render() {
   
     let record = this.state.entity
+     if(!record) return null;
     return (
      <div>
        <SimpleView  headers= {taskInstanceHeaders} renderExtra={this.renderExtra}

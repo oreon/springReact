@@ -40,6 +40,8 @@ public abstract class FieldBase extends BaseEntity {
 
 	;
 
+	@NotNull
+
 	@Column(name = "TYPE", unique = false)
 
 	protected FieldType type
@@ -69,6 +71,12 @@ public abstract class FieldBase extends BaseEntity {
 	@Column(name = "MAX", unique = false)
 
 	protected Integer max
+
+	;
+
+	@Column(name = "reg_ex", unique = false)
+
+	protected String regularEx
 
 	;
 
@@ -124,6 +132,15 @@ public abstract class FieldBase extends BaseEntity {
 	public Integer getMax() {
 
 		return max;
+	}
+
+	public void setRegularEx(String regularEx) {
+		this.regularEx = regularEx;
+	}
+
+	public String getRegularEx() {
+
+		return regularEx;
 	}
 
 	@Transient

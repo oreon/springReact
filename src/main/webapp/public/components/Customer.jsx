@@ -9,7 +9,7 @@ import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColu
 
 
 import Form from "react-jsonschema-form";
-import {BaseComponent, BaseEditComponent} from '../commons/BaseComponent.jsx'
+import {BaseComponent, BaseEditComponent, doPost} from '../commons/BaseComponent.jsx'
 import Griddle, {plugins} from 'griddle-react';
 
 import { Layout } from '../commons/Layout.jsx'
@@ -62,7 +62,12 @@ lastName:{ type: "string", title: "Last Name",
 
 
 
-
+//caseInstances:{ type: "integer", title: "Case Instances",   
+//
+// 'enum': LookupService.getLookup('caseInstances').map(x => x.id   ),
+// 'enumNames': LookupService.getLookup('caseInstances').map(x => x.displayName)
+//
+//},
 
 
     
@@ -121,6 +126,8 @@ caseInstances: {  'ui:placeholder': "Case Instances" },
 	 ]
 
 
+
+	import { CaseInstanceList} from './CaseInstance.jsx';
 
 
 let customerSchema = createSchema()
@@ -210,31 +217,51 @@ export class EditCustomer extends BaseEditComponent {
 
 export class ViewCustomer extends BaseEditComponent {
 
-  renderExtra(record: any) { <p> IN render </p> }
-  
-  constructor(props) {
-    super(props);
-    this.state = { record: {}, error: {}, message: {} };
-    this.entityName = 'customers';
-    //this.onSubmit = this.onSubmit.bind(this)
-  }
-  
-  render() {
-  
-    let record = this.state.entity
-    return (
-     <div>
-       <SimpleView  headers= {customerHeaders} renderExtra={this.renderExtra}
-       record={record}   entityName='Customer' /> 
-       
-       <Tabs>
-        
-         </Tabs>
-      </div>
-    )	
+    renderExtra(record: any) { <p> IN render </p> }
+    
+    constructor(props) {
+      super(props);
+      this.state = { entity: {}, error: {}, message: {} };
+      this.entityName = 'customers';
+      this.startCase = this.startCase.bind(this)
+    }
+    
+    startCase(){
+        doPost("/task/launch?customerId=" + this.state.entity.id)
+        //window.location.reload();
+    }
+    
+    render() {
+    
+      let record = this.state.entity
+     if(!record)
+         return null;
+      return (
+       <div>
+              
+         <button onClick={this.startCase}> Start AAM </button>
+         
+         <SimpleView  headers= {customerHeaders} renderExtra={this.renderExtra}
+         record={record}   entityName='Customer' /> 
+         
+         <Tabs>
+            <Tab label="CaseInstance" >
+            <CaseInstanceList records={record.caseInstances} 
+            nested={true}  
+            container={'customer_displayName'}
+            containerId={record.id}
+             prev={this.props.location?this.props.location.pathName:null }
+            
+             />
+             </Tab>
+            
+           </Tabs>
+        </div>
+      )   
 
+    }
   }
-}
+
 
 
 

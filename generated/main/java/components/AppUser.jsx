@@ -27,34 +27,6 @@ export function createSchema(){
 ],
     properties: {
     
-
-userName:{ type: "string", title: "User Name",  	
-},
-
-
-
-password:{ type: "string", title: "Password",  	
-},
-
-
-
-enabled:{ type: "boolean", title: "Enabled",  	
-},
-
-
-
-appRoles:{ type: "array", title: "App Roles",   
-
-    "items":{
- 'enum': LookupService.getLookup('appRoles').map(x => x.id .toString()  ),
- 'enumNames': LookupService.getLookup('appRoles').map(x => x.displayName)
-    },
-    "uniqueItems": true
-
-	
-},
-
-
     
     }
  };
@@ -97,6 +69,8 @@ appRoles: {  'ui:placeholder': "App Roles" },
 	 ]
 
 
+
+	import { AppRoleList} from './AppRole.jsx';
 
 
 let appUserSchema = createSchema()
@@ -198,13 +172,23 @@ export class ViewAppUser extends BaseEditComponent {
   render() {
   
     let record = this.state.entity
+     if(!record) return null;
     return (
      <div>
        <SimpleView  headers= {appUserHeaders} renderExtra={this.renderExtra}
        record={record}   entityName='AppUser' /> 
        
        <Tabs>
-        
+       	  <Tab label="AppRole" >
+          <AppRoleList records={record.appRoles} 
+          nested={true}  
+          container={'appUsers_displayName'}
+          containerId={record.id}
+           prev={this.props.location?this.props.location.pathName:null }
+          
+           />
+           </Tab>
+		  
          </Tabs>
       </div>
     )	

@@ -43,4 +43,9 @@ public interface FieldRepositoryBase extends BaseRepository<Field> {
 
 	Stream<Field> findByMax(@Param("max") Integer max);
 
+	Stream<Field> findByRegularExContainingAllIgnoringCase(@Param("regularEx") String regularEx);
+
+	Stream<Field> findByRegularEx(@Param("regularEx") String regularEx);
+	Stream<Field> findByRegularExIgnoringCase(@Param("regularEx") String regularEx);
+
 }

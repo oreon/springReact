@@ -1,7 +1,6 @@
 package com.td.bbwp.course.web;
 
 import java.net.URL;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -17,13 +16,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.td.bbwp.OptionsHelper;
+import com.td.bbwp.commerce.Customer;
+import com.td.bbwp.web.action.commerce.CustomerRepository;
 import com.td.bbwp.web.action.wf.CaseDefinitionRepository;
 import com.td.bbwp.web.action.wf.CaseInstanceRepository;
 import com.td.bbwp.web.action.wf.TaskDefinitionRepository;
@@ -39,12 +37,16 @@ import com.td.bbwp.wf.TaskInstance;
 @Service
 public class JbpmTaskService {
 
-	private static final String BB_AAM_AAM_LENDING = "bb_aam.aam_lending";
+	public static final String BB_AAM_AAM_LENDING = "bb_aam.aam_lending";
+
 
 	private TaskService taskService;
 
 	@Autowired
 	CaseInstanceRepository caseInstanceRepository;
+
+	@Autowired
+	CustomerRepository customerRepository;
 
 	@Autowired
 	TaskInstanceRepository taskInstanceRepository;
@@ -54,8 +56,8 @@ public class JbpmTaskService {
 
 	@Autowired
 	CaseDefinitionRepository caseDefinitionRepository;
-	
-	KieSession ksession ;
+
+	KieSession ksession;
 
 	ObjectMapper mapper = new ObjectMapper();
 
@@ -83,13 +85,12 @@ public class JbpmTaskService {
 
 		}
 
-		String deploymentId = "com.td.bb:bb_aam:1.0";
+		String deploymentId = "com.td.bb:bb_aam:1.2";
 
 		// String deploymentId = "demo:oneprocess:1.1";
 
 		RuntimeEngine engine = RemoteRuntimeEngineFactory.newRestBuilder().addUrl(serverRestUrl).addTimeout(5)
-				.addDeploymentId(deploymentId)
-				.addUserName(user).addPassword(password).disableTaskSecurity()
+				.addDeploymentId(deploymentId).addUserName(user).addPassword(password).disableTaskSecurity()
 
 				// if you're sending custom class parameters, make sure that
 				// the remote client instance knows about them!
@@ -100,13 +101,14 @@ public class JbpmTaskService {
 		ksession = engine.getKieSession();
 		taskService = engine.getTaskService();
 	}
-	
-	public long launchProcess(String deploymentId, String processId, Map<String, Object> params){
-		ProcessInstance processInstance = ksession.startProcess(BB_AAM_AAM_LENDING, params);
-		return  processInstance.getId();
-	}
 
-	
+	public long launchProcess(String deploymentId, Long customerId, Map<String, Object> params) {
+
+		ProcessInstance processInstance = ksession.startProcess(deploymentId, params);
+		CaseInstance caseInstance = createCaseInstance(deploymentId, processInstance.getId(), customerId);
+		caseInstanceRepository.save(caseInstance);
+		return processInstance.getId();
+	}
 
 	void populateTasks(List<TaskSummary> tasks) {
 		tasks.stream().forEach(x -> getCaseInstance(x));
@@ -114,23 +116,30 @@ public class JbpmTaskService {
 	}
 
 	public CaseInstance getCaseInstance(TaskSummary ts) {
-		// System.out.println(caseInstanceRepository.findByProcessInstanceId(ts.getProcessInstanceId()).get());
 		return caseInstanceRepository.findByProcessInstanceId(ts.getProcessInstanceId())
-				.orElseGet(() -> createCaseInstance(ts));
+				.orElseGet(() -> createCaseInstanceByTaskSummary(ts, 1L));
 	}
 
 	public TaskInstance getTaskInstance(TaskSummary ts) {
 		return taskInstanceRepository.findByTaskId(ts.getId()).orElseGet(() -> createTaskInstance(ts));
 	}
 
-	public CaseInstance createCaseInstance(TaskSummary ts) {
+	public CaseInstance createCaseInstanceByTaskSummary(TaskSummary ts, long cusotmerId) {
+		return createCaseInstance(ts.getProcessId(), ts.getProcessInstanceId(), 1L);
+	}
+
+	private CaseInstance createCaseInstance(String processDef, long processInstanceId, long customerId) {
 		CaseInstance caseInstance = new CaseInstance();
 
-		CaseDefinition caseDef = OptionsHelper.getOrThrow(caseDefinitionRepository.findByName(ts.getProcessId()),
-				new RuntimeException("No process configured " + ts.getProcessId()));
+		CaseDefinition caseDef = OptionsHelper.getOrThrow(caseDefinitionRepository.findByName(processDef),
+				new RuntimeException("No process configured " + processDef));
 
-		caseInstance.setProcessInstanceId(ts.getProcessInstanceId());
+		Customer customer = OptionsHelper.getOrThrow(customerRepository.findById(customerId),
+				new RuntimeException("No process configured " + processDef));
+
+		caseInstance.setProcessInstanceId(processInstanceId);
 		caseInstance.setCaseDefinition(caseDef);
+		caseInstance.setCustomer(customer);
 
 		caseInstanceRepository.save(caseInstance);
 		return caseInstance;
@@ -180,7 +189,7 @@ public class JbpmTaskService {
 		String userId = getAuthUser();
 
 		try {
-			//data.put("out_rework", Boolean.FALSE);
+			// data.put("out_rework", Boolean.FALSE);
 			this.getTaskService().complete(id, userId, data);
 
 			TaskInstance current = OptionsHelper.getOrThrow(taskInstanceRepository.findByTaskId(id),
@@ -193,8 +202,8 @@ public class JbpmTaskService {
 			throw new RuntimeException("Error writing as json", e);
 		}
 	}
-	
-	public String signalProcessInstance( Long id, String signal, String data) {
+
+	public String signalProcessInstance(Long id, String signal, String data) {
 		ksession.signalEvent(signal, null, id);
 		ksession.signalEvent("cls", null, 33);
 		return "Signal sent to instance (" + id + ") successfully";
