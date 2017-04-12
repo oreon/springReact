@@ -26,7 +26,7 @@ public class CaseInstanceDto
 
 	protected String name;
 
-	protected String status;
+	protected CaseStatus status;
 
 	protected com.td.bbwp.commerce.dto.CustomerDto customerDto;
 
@@ -72,11 +72,11 @@ public class CaseInstanceDto
 		return name;
 	}
 
-	public void setStatus(String status) {
+	public void setStatus(CaseStatus status) {
 		this.status = status;
 	}
 
-	public String getStatus() {
+	public CaseStatus getStatus() {
 		return status;
 	}
 

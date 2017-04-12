@@ -313,7 +313,7 @@ GET caseInstances/id,   Find a  CaseInstance by id,
   taskInstances ,   TaskInstance    Array , Task Instances
   processInstanceId ,   long   , Process Instance Id
   name ,  String   , Name
-  status ,  String   , Status
+  status ,   CaseStatus   , Status
   customer ,   Customer   , Customer
 
 dateCreated,DateTime, Timestamp of creation
@@ -332,7 +332,6 @@ findByProcessInstanceId,    Return unique CaseInstance for  given processInstanc
 
 findByName,    Find CaseInstances containing  name   , 
 
-findByStatus,    Find CaseInstances containing  status   , 
 
 
 

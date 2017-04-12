@@ -33,7 +33,7 @@ interface CaseInstanceCompleteProjectionBase {
 
 	Optional<String> getName();
 
-	Optional<String> getStatus();
+	Optional<com.td.bbwp.wf.CaseStatus> getStatus();
 
 	Optional<com.td.bbwp.commerce.Customer> getCustomer();
 

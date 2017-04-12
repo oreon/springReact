@@ -1,13 +1,8 @@
 package com.td.bbwp.course.web;
 
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
-import org.kie.api.runtime.process.ProcessInstance;
 //import org.jbpm.services.api.ProcessService;
 import org.kie.api.task.model.TaskSummary;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.td.bbwp.web.action.wf.CaseInstanceRepository;
+import com.td.bbwp.wf.TaskInstance;
 
 @RestController
 @RequestMapping("/api/task")
@@ -27,70 +22,45 @@ public class UserTaskController {
 
 
 	@Autowired
-	private JbpmTaskService jbpmTaskService;
+	private ProcessFacade processFacade;
 	
-	//@Autowired
-	//private ProcessService processService;
-
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public Collection<TaskSummary> getTasks() {
-		String userId =jbpmTaskService.getAuthUser();
-
-		String grp = userId.equalsIgnoreCase("krisv")?"lenders":"adjudicators";
-		
-		List<String> groups = Arrays.asList(new String[] { "lenders","adjudicators" });
-
-		List<TaskSummary> tasks = jbpmTaskService.getTaskService().getTasksByGroup(groups);
-
-		jbpmTaskService.populateTasks(tasks);
-
-		return tasks.stream().filter(task -> task.getStatusId().equalsIgnoreCase("Ready")).collect(Collectors.toList());
-	}
-
-	
-	
-	@RequestMapping(value = "/launch", method = RequestMethod.POST)
-	public Long newProcessInstance(@RequestParam Long customerId/*, @RequestParam Map<String,String> processParams*/) {
-		
-//		Map<String, Object> params = new HashMap<String, Object>();
-//		params.put("paramName", new MyType("name", 23));
-	
-		
-		long processInstanceId = jbpmTaskService.launchProcess(JbpmTaskService.BB_AAM_AAM_LENDING, customerId, null);
-		
-		return processInstanceId;
+		return processFacade.getTasks();
 	}
 	
-
-
 	@RequestMapping(value = "/myTasks", method = RequestMethod.GET)
 	public Collection<TaskSummary> getMyTasks() {
 		
-		String userId =jbpmTaskService.getAuthUser();
-
-		List<TaskSummary> tasks = jbpmTaskService.getTaskService().getTasksOwned(userId, "en-UK");
-		
-		jbpmTaskService.populateTasks(tasks);
-
-		return tasks;
+		return processFacade.getMyTasks();
 	}
+
+	
+	@RequestMapping(value = "/launch", method = RequestMethod.POST)
+	public ResponseEntity newProcessInstance(@RequestParam Long customerId/*, @RequestParam Map<String,String> processParams*/) {
+		
+//		Map<String, Object> params = new HashMap<String, Object>();
+//		params.put("paramName", new MyType("name", 23));		
+		
+		try {
+			return new ResponseEntity(processFacade.launchProcess(JbpmTaskService.BB_AAM_AAM_LENDING, customerId, null), HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity("CaseInstance launch for customer " + customerId + "  failed due to " + e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
+		
+	}
+	
 
 	@RequestMapping(value = "/show", method = RequestMethod.GET)
 	public CustomTask getTask(@RequestParam String id) {
-
-		return jbpmTaskService.getTask(id);
-
+		return processFacade.getTask(id);
 	}
 
 	@RequestMapping(value = "/complete", method = RequestMethod.POST)
-	public ResponseEntity completeTask(@RequestParam String id, @RequestBody Map<String, Object> data) {
-		//String userId =jbpmTaskService.getAuthUser();
-		Long idLong = Long.parseLong(id);
-
+	public ResponseEntity completeTask(@RequestParam long id, @RequestBody Map<String, Object> data) {
 		try {
-			jbpmTaskService.completeTask(idLong, data);
-			return new ResponseEntity("Task " + id + " completed successfully", HttpStatus.OK);
+			return new ResponseEntity(processFacade.completeTask(id, data), HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity("Task " + id + " complete failed due to " + e.getMessage(), HttpStatus.BAD_REQUEST);
 		}
@@ -98,46 +68,39 @@ public class UserTaskController {
 	}
 
 	@RequestMapping(value = "/claim", method = RequestMethod.POST)
-	public String claimTask(@RequestParam String id) {
-		String userId =jbpmTaskService.getAuthUser();
+	public ResponseEntity claimTask(@RequestParam long id) {
 		try {
-			jbpmTaskService.getTaskService().claim(Long.parseLong(id), userId);
-			return "Task " + id + " claimed successfully";
+			return new ResponseEntity(processFacade.claimTask(id), HttpStatus.OK);
 		} catch (Exception e) {
-			return "Task " + id + " claim failed due to " + e.getMessage();
+			return new ResponseEntity("Task " + id + " claim failed due to " + e.getMessage(), HttpStatus.BAD_REQUEST) ;
 		}
 	}
 
 	@RequestMapping(value = "/release", method = RequestMethod.POST)
-	public String releaseTask(@RequestParam String id) {
-		String userId =jbpmTaskService.getAuthUser();
+	public ResponseEntity releaseTask(@RequestParam long id) {
 		try {
-			jbpmTaskService.getTaskService().release(Long.parseLong(id), userId);
-			return "Task " + id + " released successfully";
+			return new ResponseEntity(processFacade.releaseTask(id), HttpStatus.OK);
 		} catch (Exception e) {
-			return "Task " + id + " release failed due to " + e.getMessage();
+			return new ResponseEntity("Task " + id + " release failed due to " + e.getMessage(), HttpStatus.BAD_REQUEST) ;
 		}
-
 	}
 
 	@RequestMapping(value = "/start", method = RequestMethod.POST)
-	public String startTask(@RequestParam String id) {
-		String userId =jbpmTaskService.getAuthUser();
+	public ResponseEntity startTask(@RequestParam long id) {
 		try {
-			jbpmTaskService.getTaskService().start(Long.parseLong(id), userId);
-			return "Task " + id + " started successfully";
+			return new ResponseEntity(processFacade.startTask(id), HttpStatus.OK);
 		} catch (Exception e) {
-			return "Task " + id + " start failed due to " + e.getMessage();
+			return new ResponseEntity("Task " + id + " start failed due to " + e.getMessage(), HttpStatus.BAD_REQUEST) ;
 		}
 	}
 	
 	@RequestMapping(value = "/close", method = RequestMethod.POST)
 	public ResponseEntity<?> closeProcess(@RequestParam Long id) {
 		try {
-			jbpmTaskService.signalProcessInstance(id, "cls", "cls");
+			processFacade.signalProcessInstance(id, "cls", "cls");
 			 return new ResponseEntity(id, HttpStatus.OK);
 		} catch (Exception e) {
-			return new ResponseEntity("Task " + id + " start failed due to " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity("Process Instance  " + id + " close failed due to  " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 	

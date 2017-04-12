@@ -69,7 +69,14 @@ public abstract class TaskInstanceBase extends BaseEntity {
 
 	@Column(name = "STATUS", unique = false)
 
-	protected String status
+	protected TaskStatus status
+
+	;
+
+	@Lob
+	@Column(name = "COMMENTS", unique = false)
+
+	protected String comments
 
 	;
 
@@ -118,13 +125,22 @@ public abstract class TaskInstanceBase extends BaseEntity {
 		return taskData;
 	}
 
-	public void setStatus(String status) {
+	public void setStatus(TaskStatus status) {
 		this.status = status;
 	}
 
-	public String getStatus() {
+	public TaskStatus getStatus() {
 
 		return status;
+	}
+
+	public void setComments(String comments) {
+		this.comments = comments;
+	}
+
+	public String getComments() {
+
+		return comments;
 	}
 
 	@Transient
@@ -134,6 +150,15 @@ public abstract class TaskInstanceBase extends BaseEntity {
 			return name;
 		} catch (Exception e) {
 			return "Exception - " + e.getMessage();
+		}
+	}
+
+	@Transient
+	public String getCommentsAbbreviated() {
+		try {
+			return org.apache.commons.lang.WordUtils.abbreviate(comments.trim(), 100, 200, "...");
+		} catch (Exception e) {
+			return comments != null ? comments : "";
 		}
 	}
 

@@ -31,7 +31,7 @@ public class CaseInstanceFixture extends BaseFixtureFactory<CaseInstance> implem
 			{
 				add("processInstanceId", random(Long.class, range(1L, 100L)));
 				add("name", uniqueRandom(arrayNames));
-				add("status", uniqueRandom(arrayNames));
+				add("status", random(com.td.bbwp.wf.CaseStatus.class));
 
 				add("caseDefinition", new com.td.bbwp.wf.testdata.CaseDefinitionFixture().getOneRecord());
 

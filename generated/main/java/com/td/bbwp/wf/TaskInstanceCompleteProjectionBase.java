@@ -35,8 +35,8 @@ interface TaskInstanceCompleteProjectionBase {
 
 	Optional<String> getTaskData();
 
-	Optional<String> getStatus();
-	
-	List<Field>  getFields();
+	Optional<com.td.bbwp.wf.TaskStatus> getStatus();
+
+	Optional<String> getComments();
 
 }

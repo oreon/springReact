@@ -1,7 +1,6 @@
-package fi.haagahelia.course;
+package com.td.bbwp.process;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -33,8 +32,8 @@ import org.springframework.web.context.WebApplicationContext;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.td.bbwp.MainApp;
-import com.td.bbwp.commerce.Customer;
-import com.td.bbwp.service.commerce.CustomerService;
+import com.td.bbwp.service.wf.CaseDefinitionService;
+import com.td.bbwp.wf.CaseDefinition;
 import com.td.bbwp.wf.TaskDefinition;
 
 /**
@@ -44,14 +43,14 @@ import com.td.bbwp.wf.TaskDefinition;
 @SpringApplicationConfiguration(classes = MainApp.class)
 @WebAppConfiguration
 @Transactional
-public class CustomerControllerTest {
+public class CaseDefinitionControllerTest {
 
 	private MockMvc mockMvc;
 	ObjectMapper ojbectMapper = new ObjectMapper();
 	private HttpMessageConverter mappingJackson2HttpMessageConverter;
 
 	@Autowired
-	CustomerService customerService;
+	CaseDefinitionService caseDefinitionService;
 
 	@Autowired
 	void setConverters(HttpMessageConverter<?>[] converters) {
@@ -81,66 +80,74 @@ public class CustomerControllerTest {
 
 	@Test
 	@WithUserDetails("admin")
-	public void testReadCustomerById() throws Exception {
-		mockMvc.perform(get("/rest/customers/1")).andExpect(status().isOk())
+	public void testReadCaseDefintionById() throws Exception {
+		mockMvc.perform(get("/rest/caseDefinitions/1")).andExpect(status().isOk())
 				// .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-				.andExpect(jsonPath("$.firstName").value("jab"));
+				.andExpect(jsonPath("$.name").value("bb_aam.aam_lending"));
 	}
-
+	
 	@Test
 	@WithUserDetails("admin")
-	public void testReadCustomers() throws Exception {
-		mockMvc.perform(get("/rest/customers/")).andExpect(status().isOk())
+	public void testReadCaseDefintions() throws Exception {
+		mockMvc.perform(get("/rest/caseDefinitions/")).andExpect(status().isOk())
 				// .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-				.andExpect(jsonPath("$.[0].firstName").value("jab"));
+				.andExpect(jsonPath("$.[0].name").value("bb_aam.aam_lending"));
 	}
 
 	@Test
 	@WithUserDetails("krisv")
-	public void testDeleteCustomerByIdNotAllowed() throws Exception {
-		mockMvc.perform(delete("/rest/customers/1")).andExpect(status().isOk());
+	public void testDeleteCaseDefintionByIdNotAllowed() throws Exception {
+		mockMvc.perform(delete("/rest/caseDefinitions/1")).andExpect(status().isOk());
 	}
 
 	@Test
 	@WithUserDetails("admin")
-	public void testReadCustomerByIdNF() throws Exception {
-		mockMvc.perform(get("/rest/customers/6889")).andExpect(status().isNotFound());
+	public void testReadCaseDefintionByIdNF() throws Exception {
+		mockMvc.perform(get("/rest/caseDefinitions/6889")).andExpect(status().isNotFound());
 	}
+	
+	
 
 	@Test
-	@WithUserDetails("krisv")
-	public void testCreationOfCustomer() throws Exception {
-		Customer customer = new Customer();
+	@WithUserDetails("admin")
+	public void testCreationOfCaseDefintion() throws Exception {
+		CaseDefinition caseDefinition = new CaseDefinition();
+		caseDefinition.setName("MyName");
+		TaskDefinition tdf = new TaskDefinition();
+		tdf.setName("one task");
+		caseDefinition.addTaskDefinition(tdf);
+		
+		System.out.println(json(caseDefinition));
 
-		System.out.println(json(customer));
-
-		this.mockMvc.perform(post("/rest/customers").contentType(contentType).content(json(customer)))
+		this.mockMvc.perform(post("/rest/caseDefinitions").contentType(contentType).content(json(caseDefinition)))
 				.andExpect(status().isCreated());
+
 	}
 
 	@Test
-	@WithUserDetails("krisv")
-	public void testEditOfCustomer() throws Exception {
+	@WithUserDetails("admin")
+	public void testEditOfCaseDefintion() throws Exception {
 
-		Customer caseDef = customerService.findOne(1L).map(x -> x)
+		CaseDefinition caseDef = caseDefinitionService.findOne(1L).map(x -> x)
 				.orElseThrow(() -> new RuntimeException("Record not found"));
+		
+		long records = caseDefinitionService.count();
 
-		long records = customerService.count();
-
-		this.mockMvc.perform(put("/rest/customers/1").contentType(contentType).content(json(caseDef)))
+		this.mockMvc.perform(put("/rest/caseDefinitions/1").contentType(contentType).content(json(caseDef)))
 				.andExpect(status().isOk());
-
-		assertEquals(records, customerService.count());
+		
+		assertEquals(records, caseDefinitionService.count());
 	}
 
-	//@Test
-	@WithUserDetails("krisv")
+	// @Test
+	// @WithUserDetails("admin")
 	public void testCreationOfANewProjectNA() throws Exception {
+		CaseDefinition caseDefinition = new CaseDefinition();
+		caseDefinition.setName("MyName");
 
-		mockMvc.perform(delete("/rest/customers/1").accept(MediaType.APPLICATION_JSON)
-				 .contentType(MediaType.APPLICATION_JSON)
-				.content("xxx"))
-				.andExpect(status().isMethodNotAllowed());
+		mockMvc.perform(post("/rest/caseDefinitions/").accept(MediaType.APPLICATION_JSON)
+				// .contentType(MediaType.APPLICATION_JSON)
+				.content(ojbectMapper.writeValueAsString(caseDefinition))).andExpect(status().isMethodNotAllowed());
 	}
 
 }

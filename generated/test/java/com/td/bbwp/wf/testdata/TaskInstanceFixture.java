@@ -32,7 +32,8 @@ public class TaskInstanceFixture extends BaseFixtureFactory<TaskInstance> implem
 				add("taskId", random(Long.class, range(1L, 100L)));
 				add("name", uniqueRandom(arrayNames));
 				add("taskData", uniqueRandom(arrayNames));
-				add("status", uniqueRandom(arrayNames));
+				add("status", random(com.td.bbwp.wf.TaskStatus.class));
+				add("comments", uniqueRandom(arrayNames));
 
 				add("taskDefinition", new com.td.bbwp.wf.testdata.TaskDefinitionFixture().getOneRecord());
 

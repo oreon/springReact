@@ -84,6 +84,10 @@ taskData: {  'ui:placeholder': "Task Data" },
 
 status: {  'ui:placeholder': "Status" },
 
+
+
+comments: { 'ui:widget': "textarea" , 'ui:placeholder': "Comments" },
+
  
          
      }

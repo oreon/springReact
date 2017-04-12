@@ -1,5 +1,7 @@
 package com.td.bbwp.course.web;
 
+import com.td.bbwp.wf.TaskInstance;
+
 public class CustomTask {
 
 	Long id;
@@ -13,6 +15,8 @@ public class CustomTask {
 	String description;
 
 	String taskType;
+	
+	private TaskInstance taskInsance;
 	
 	private Long processInstanceId;
 	
@@ -80,6 +84,14 @@ public class CustomTask {
 
 	public void setProcessInstanceId(Long processInstanceId) {
 		this.processInstanceId = processInstanceId;
+	}
+
+	public TaskInstance getTaskInsance() {
+		return taskInsance;
+	}
+
+	public void setTaskInsance(TaskInstance taskInsance) {
+		this.taskInsance = taskInsance;
 	}
 
 }

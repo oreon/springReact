@@ -64,7 +64,7 @@ public abstract class CaseInstanceBase extends BaseEntity {
 
 	@Column(name = "STATUS", unique = false)
 
-	protected String status
+	protected CaseStatus status
 
 	;
 
@@ -134,11 +134,11 @@ public abstract class CaseInstanceBase extends BaseEntity {
 		return name;
 	}
 
-	public void setStatus(String status) {
+	public void setStatus(CaseStatus status) {
 		this.status = status;
 	}
 
-	public String getStatus() {
+	public CaseStatus getStatus() {
 
 		return status;
 	}
