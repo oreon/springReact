@@ -297,11 +297,12 @@ export class TaskView extends React.Component {
       
        
         let schema = JSON.parse(this.state.task.schema)
+        //let uiSchcema = JSON.parse(this.state.task.formUISchema)
 
         return (
             <div>
-                <h3> {this.state.task.name} !!!</h3>
-                <Form schema= {schema} 
+                <h3> {this.state.task.name} </h3>
+                <Form schema= {schema}   
                     onSubmit={( {formData}) => this.onSubmit( formData )}
                     onError={log( "errors" )} />
             </div>

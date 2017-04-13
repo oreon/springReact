@@ -32,7 +32,7 @@ public class UserDetailServiceImpl implements UserDetailsService  {
     			.orElseThrow(() -> new UsernameNotFoundException(username));
     	
     	List<String> roleNames =  curruser.getAppRoles().stream().
-    			map(role -> role.getName()  ).collect(Collectors.toList())
+    			map(role -> "ROLE_" + role.getName().toUpperCase()  ).collect(Collectors.toList())
     			;
     	
     	String[] roles = new String[roleNames.size()];

@@ -177,38 +177,26 @@
 			</plugin>
 			
 			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>build-helper-maven-plugin</artifactId>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>0.7.5.201505241946</version>
 				<executions>
 					<execution>
-						<phase>generate-sources</phase>
+						<id>default-prepare-agent</id>
 						<goals>
-							<goal>add-source</goal>
+							<goal>prepare-agent</goal>
 						</goals>
-						<configuration>
-							<sources>
-								<source>generated/main/java</source>
-								<!-- <source>generated/test/java</source> -->
-
-							</sources>
-						</configuration>
 					</execution>
 					<execution>
-						<id>add-test-source</id>
-						<phase>generate-test-sources</phase>
+						<id>default-report</id>
+						<phase>prepare-package</phase>
 						<goals>
-							<goal>add-test-source</goal>
+							<goal>report</goal>
 						</goals>
-						<configuration>
-							<sources>
-								<source>generated/test/java</source>
-
-							</sources>
-						</configuration>
 					</execution>
 				</executions>
-
 			</plugin>
+			
 
 
 		</plugins>

@@ -63742,8 +63742,7 @@ var ViewCustomer = exports.ViewCustomer = function (_BaseEditComponent2) {
     _createClass(ViewCustomer, [{
         key: 'startCase',
         value: function startCase() {
-            (0, _BaseComponent2.doPost)("/task/launch?customerId=" + this.state.entity.id);
-            //window.location.reload();
+            (0, _BaseComponent2.doPost)("task/launch?customerId=" + this.props.match.params.id);
         }
     }, {
         key: 'render',
@@ -65536,6 +65535,7 @@ var TaskView = exports.TaskView = function (_React$Component4) {
             if (!this.state.task.name) return null;
 
             var schema = JSON.parse(this.state.task.schema);
+            //let uiSchcema = JSON.parse(this.state.task.formUISchema)
 
             return _react2.default.createElement(
                 'div',
@@ -65545,7 +65545,7 @@ var TaskView = exports.TaskView = function (_React$Component4) {
                     null,
                     ' ',
                     this.state.task.name,
-                    ' !!!'
+                    ' '
                 ),
                 _react2.default.createElement(_reactJsonschemaForm2.default, { schema: schema,
                     onSubmit: function onSubmit(_ref) {

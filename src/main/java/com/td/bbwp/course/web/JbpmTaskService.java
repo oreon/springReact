@@ -382,8 +382,8 @@ public  class JbpmTaskService implements ProcessFacade {
 	 */
 	@Override
 	public CaseInstance signalProcessInstance(final Long id, final String signal, String data) {
-		CaseInstance caseInstance = findCaseInstance(id);
 		ksession.signalEvent(signal, data, id);
+		CaseInstance caseInstance = findCaseInstance(id);
 		updateCaseInstanceStatus(caseInstance);
 		return caseInstance;
 	}
