@@ -14,6 +14,8 @@ import javax.persistence.InheritanceType;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.apache.commons.lang.StringUtils;
+
 @Entity
 @Table(name = "TASK_DEFINITION")
 
@@ -34,14 +36,33 @@ public class TaskDefinition extends TaskDefinitionBase implements java.io.Serial
 		String result = "{'title': '" + this.getName() + "','type': 'object','properties': {";
 		
 		String fields = getFields().stream().map(x ->  
-		 String.format( "'%s': {  'title': '%s','type': '%s', 'required':%s}", x.getName(), x.getName(), getType(x),
-				 (x.getRequired() ?"true":"false")
+		 String.format( "'%s': {  'title': '%s','type': '%s', 'required':%s %s}", x.getName(), x.getName(), getType(x),
+				 (x.getRequired() ?"true":"false"),
+				 getValidation(x)
 				 ))
 		.collect(Collectors.joining(", "));
 		
 		result =  (result + fields + "}}").replace("'", "\"");
 				
 		return result;
+	}
+
+	protected String getValidation(Field x) {
+		String minInd = "minimum";
+		String maxInd = "maximum";
+		StringBuilder ret =  new StringBuilder();
+		if(x.getType() == FieldType.string || x.getType() == FieldType.textBlob){
+			minInd = "minLength";
+			maxInd = "maxLength";
+		}
+		if(x.getMax() != null){
+			ret.append(String.format("'%s': %d,", maxInd, x.getMax()) );
+		}
+		if(x.getMin() != null){
+			ret.append(String.format("'%s': %d", minInd, x.getMin()) );
+		}
+		String result = ret.toString();
+		return StringUtils.isEmpty(result)?result:',' + result ;
 	}
 
 	private Object getType(Field x) {

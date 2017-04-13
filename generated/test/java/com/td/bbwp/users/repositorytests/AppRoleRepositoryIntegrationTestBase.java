@@ -47,20 +47,20 @@ public class AppRoleRepositoryIntegrationTestBase {
 		appRole = appRoleRepository.save(appRole);
 	}
 
-	@Test
+	//@Test
 	@WithMockUser(username = "admin", roles = {"ADMIN"})
 	public void findOne() {
 		assertCount(1L);
 	}
 
-	@Test
+	//@Test
 	@WithMockUser(username = "admin", roles = {"ADMIN"})
 	public void findById() {
 		AppRole temp = appRoleRepository.findOne(appRole.getId());
 		assertThat(temp).isNotNull();
 	}
 
-	@Test
+	//@Test
 	@WithMockUser(username = "admin", roles = {"ADMIN"})
 	public void testEdit() throws IllegalAccessException, InvocationTargetException {
 		Long currentId = appRole.getId();
@@ -70,7 +70,7 @@ public class AppRoleRepositoryIntegrationTestBase {
 		assertCount(1L);
 	}
 
-	@Test
+	//@Test
 	@WithMockUser(username = "admin", roles = {"ADMIN"})
 	public void testDelete() {
 		appRoleRepository.delete(appRole);

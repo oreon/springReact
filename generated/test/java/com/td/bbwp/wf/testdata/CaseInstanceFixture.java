@@ -30,7 +30,7 @@ public class CaseInstanceFixture extends BaseFixtureFactory<CaseInstance> implem
 		Fixture.of(CaseInstance.class).addTemplate(getName(), new Rule() {
 			{
 				add("processInstanceId", random(Long.class, range(1L, 100L)));
-				add("name", getUniqueNames());
+				add("name", random(getUniqueNames()));
 				add("status", random(com.td.bbwp.wf.CaseStatus.class));
 
 				add("caseDefinition", new com.td.bbwp.wf.testdata.CaseDefinitionFixture().getOneRecord());

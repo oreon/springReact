@@ -41,7 +41,7 @@ import com.td.bbwp.wf.TaskStatus;
  * Created by singj2b on 3/16/2017.
  */
 @Service
-public final class JbpmTaskService implements ProcessFacade {
+public  class JbpmTaskService implements ProcessFacade {
 
 	public static final String READY = "Ready";
 
@@ -217,7 +217,7 @@ public final class JbpmTaskService implements ProcessFacade {
 	 * com.td.bbwp.course.web.ProcessFacade#getCaseInstance(org.kie.api.task.
 	 * model.TaskSummary)
 	 */
-	@Override
+	//@Override
 	public CaseInstance getCaseInstance(TaskSummary ts) {
 		return caseInstanceRepository.findByProcessInstanceId(ts.getProcessInstanceId())
 				.orElseGet(() -> createCaseInstanceByTaskSummary(ts, 1L));
@@ -230,7 +230,7 @@ public final class JbpmTaskService implements ProcessFacade {
 	 * com.td.bbwp.course.web.ProcessFacade#getTaskInstance(org.kie.api.task.
 	 * model.TaskSummary)
 	 */
-	@Override
+	//@Override
 	public TaskInstance getTaskInstance(TaskSummary ts) {
 		return taskInstanceRepository.findByTaskId(ts.getId()).orElseGet(() -> createTaskInstance(ts));
 	}
@@ -242,7 +242,7 @@ public final class JbpmTaskService implements ProcessFacade {
 	 * com.td.bbwp.course.web.ProcessFacade#createCaseInstanceByTaskSummary(org.
 	 * kie.api.task.model.TaskSummary, long)
 	 */
-	@Override
+	//@Override
 	public CaseInstance createCaseInstanceByTaskSummary(TaskSummary ts, long cusotmerId) {
 		return createCaseInstance(ts.getProcessId(), ts.getProcessInstanceId(), 1L);
 	}
@@ -271,7 +271,7 @@ public final class JbpmTaskService implements ProcessFacade {
 	 * com.td.bbwp.course.web.ProcessFacade#createTaskInstance(org.kie.api.task.
 	 * model.TaskSummary)
 	 */
-	@Override
+	//@Override
 	public TaskInstance createTaskInstance(TaskSummary x) {
 
 		TaskDefinition taskDefinition = getTaskDefinitionByJbpmTaskId(x.getProcessId(), x.getName());
@@ -280,7 +280,7 @@ public final class JbpmTaskService implements ProcessFacade {
 		taskInstance.setTaskId(x.getId());
 		taskInstance.setTaskDefinition(taskDefinition);
 		taskInstance.setName(x.getName());
-		taskInstance.setCaseInstance(caseInstanceRepository.findByProcessInstanceId(x.getProcessInstanceId()).get());
+		taskInstance.setCaseInstance(findCaseInstance(x.getProcessInstanceId()));
 		taskInstanceRepository.save(taskInstance);
 		return taskInstance;
 
@@ -292,6 +292,11 @@ public final class JbpmTaskService implements ProcessFacade {
 
 		TaskDefinition taskDefinition = taskDefinitionRepository.findByNameAndCaseDefinition(taskName, caseDef).get();
 		return taskDefinition;
+	}
+	
+	private CaseInstance findCaseInstance(long processInstanceId){
+		return OptionsHelper.getOrThrow(caseInstanceRepository.findByProcessInstanceId(processInstanceId),
+				new RuntimeException("not caseInstance found for process instance id " + processInstanceId));
 	}
 
 	/*
@@ -355,6 +360,10 @@ public final class JbpmTaskService implements ProcessFacade {
 	private void updateCaseInstanceStatus(TaskInstance current) {
 		CaseInstance currentCase = current.getCaseInstance();
 
+		updateCaseInstanceStatus(currentCase);
+	}
+
+	private void updateCaseInstanceStatus(CaseInstance currentCase) {
 		ProcessInstanceLog processLog = auditService.findProcessInstance(currentCase.getProcessInstanceId());
 
 		if (processLog.getStatus() == ProcessInstance.STATE_COMPLETED) {
@@ -372,9 +381,11 @@ public final class JbpmTaskService implements ProcessFacade {
 	 * Long, java.lang.String, java.lang.String)
 	 */
 	@Override
-	public String signalProcessInstance(final Long id, final String signal, String data) {
+	public CaseInstance signalProcessInstance(final Long id, final String signal, String data) {
+		CaseInstance caseInstance = findCaseInstance(id);
 		ksession.signalEvent(signal, data, id);
-		return "Signal sent to instance (" + id + ") successfully";
+		updateCaseInstanceStatus(caseInstance);
+		return caseInstance;
 	}
 
 	protected String getAuthUser() {

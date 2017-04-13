@@ -4,10 +4,18 @@ import java.util.Collection;
 import java.util.Map;
 
 import org.kie.api.task.model.TaskSummary;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 import com.td.bbwp.wf.CaseInstance;
 import com.td.bbwp.wf.TaskInstance;
 
+/**
+ * The main process facade interface - contains the common funcaitonality for all of basic workflow actions
+ *  (should work across different bpms such as JBPM/Activiti etc)
+ *  
+ * @author singj2b
+ *
+ */
 public interface ProcessFacade {
 
 	CaseInstance launchProcess(String deploymentId, Long customerId, Map<String, Object> params);
@@ -24,16 +32,9 @@ public interface ProcessFacade {
 	
 	TaskInstance completeTask(Long id, Map<String, Object> data);
 
-	CaseInstance getCaseInstance(TaskSummary ts);
-
-	TaskInstance getTaskInstance(TaskSummary ts);
-
-	CaseInstance createCaseInstanceByTaskSummary(TaskSummary ts, long cusotmerId);
-
-	TaskInstance createTaskInstance(TaskSummary x);
-
 	CustomTask getTask(String id);
 
-	String signalProcessInstance(Long id, String signal, String data);
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	CaseInstance signalProcessInstance(Long id, String signal, String data);
 
 }

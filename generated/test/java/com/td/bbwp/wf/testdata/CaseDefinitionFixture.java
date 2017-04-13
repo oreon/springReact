@@ -29,7 +29,7 @@ public class CaseDefinitionFixture extends BaseFixtureFactory<CaseDefinition> im
 
 		Fixture.of(CaseDefinition.class).addTemplate(getName(), new Rule() {
 			{
-				add("name", getUniqueNames());
+				add("name", random(getUniqueNames()));
 				add("closable", random(true, false));
 
 			}

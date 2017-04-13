@@ -17,15 +17,15 @@ import javax.persistence.Table;
 @Inheritance(strategy = InheritanceType.JOINED) // inherit
 
 public class Field extends FieldBase implements java.io.Serializable {
-	
-	public  Field() {
+
+	public Field() {
 
 	}
 
 	public Field(String name, FieldType type, boolean required) {
 		this.name = name;
 		this.type = type;
-		 this.required = required;
+		this.required = required;
 	}
 
 	private static final long serialVersionUID = -864411485L;

@@ -31,9 +31,9 @@ public class EmployeeFixture extends BaseFixtureFactory<Employee> implements Tem
 			{
 				add("gender", random(com.td.bbwp.commerce.Gender.class));
 				add("dob", randomDate("2011-04-15", "2011-11-07", new SimpleDateFormat("yyyy-MM-dd")));
-				add("firstName", getUniqueNames());
-				add("lastName", getUniqueNames());
-				add("code", getUniqueNames());
+				add("firstName", random(getUniqueNames()));
+				add("lastName", random(getUniqueNames()));
+				add("code", random(getUniqueNames()));
 
 				add("department", new com.td.bbwp.commerce.testdata.DepartmentFixture().getOneRecord());
 

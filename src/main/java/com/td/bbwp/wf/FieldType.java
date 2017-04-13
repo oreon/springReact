@@ -9,6 +9,6 @@ public enum FieldType {
 
 	date,
 	
-	bool,
+	bool, textBlob,
 
 }

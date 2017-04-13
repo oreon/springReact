@@ -29,7 +29,7 @@ public class PaymentMethodFixture extends BaseFixtureFactory<PaymentMethod> impl
 
 		Fixture.of(PaymentMethod.class).addTemplate(getName(), new Rule() {
 			{
-				add("accountAddress", getUniqueNames());
+				add("accountAddress", random(getUniqueNames()));
 
 			}
 		});

@@ -29,8 +29,8 @@ public class CreditCardFixture extends BaseFixtureFactory<CreditCard> implements
 
 		Fixture.of(CreditCard.class).addTemplate(getName(), new Rule() {
 			{
-				add("accountAddress", getUniqueNames());
-				add("ccNumber", getUniqueNames());
+				add("accountAddress", random(getUniqueNames()));
+				add("ccNumber", random(getUniqueNames()));
 				add("expiry", randomDate("2011-04-15", "2011-11-07", new SimpleDateFormat("yyyy-MM-dd")));
 
 			}

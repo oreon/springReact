@@ -29,8 +29,8 @@ public class AppUserFixture extends BaseFixtureFactory<AppUser> implements Templ
 
 		Fixture.of(AppUser.class).addTemplate(getName(), new Rule() {
 			{
-				add("userName", getUniqueNames());
-				add("password", getUniqueNames());
+				add("userName", random(getUniqueNames()));
+				add("password", random(getUniqueNames()));
 				add("enabled", random(true, false));
 
 			}

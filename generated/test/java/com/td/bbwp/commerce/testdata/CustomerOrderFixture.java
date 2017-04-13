@@ -29,7 +29,7 @@ public class CustomerOrderFixture extends BaseFixtureFactory<CustomerOrder> impl
 
 		Fixture.of(CustomerOrder.class).addTemplate(getName(), new Rule() {
 			{
-				add("notes", getUniqueNames());
+				add("notes", random(getUniqueNames()));
 				add("shipDate", randomDate("2011-04-15", "2011-11-07", new SimpleDateFormat("yyyy-MM-dd")));
 
 				add("customer", new com.td.bbwp.commerce.testdata.CustomerFixture().getOneRecord());

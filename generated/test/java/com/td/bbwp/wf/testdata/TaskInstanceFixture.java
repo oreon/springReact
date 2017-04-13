@@ -30,10 +30,10 @@ public class TaskInstanceFixture extends BaseFixtureFactory<TaskInstance> implem
 		Fixture.of(TaskInstance.class).addTemplate(getName(), new Rule() {
 			{
 				add("taskId", random(Long.class, range(1L, 100L)));
-				add("name", getUniqueNames());
-				add("taskData", getUniqueNames());
+				add("name", random(getUniqueNames()));
+				add("taskData", random(getUniqueNames()));
 				add("status", random(com.td.bbwp.wf.TaskStatus.class));
-				add("comments", getUniqueNames());
+				add("comments", random(getUniqueNames()));
 
 				add("taskDefinition", new com.td.bbwp.wf.testdata.TaskDefinitionFixture().getOneRecord());
 

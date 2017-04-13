@@ -217,7 +217,7 @@ export class EditCustomer extends BaseEditComponent {
 
 export class ViewCustomer extends BaseEditComponent {
 
-    renderExtra(record: any) { <p> IN render </p> }
+    renderExtra(record) { <p> IN render </p> }
     
     constructor(props) {
       super(props);
@@ -227,8 +227,8 @@ export class ViewCustomer extends BaseEditComponent {
     }
     
     startCase(){
-        doPost("/task/launch?customerId=" + this.state.entity.id)
-        //window.location.reload();
+        doPost("task/launch?customerId=" + this.props.match.params.id)
+    
     }
     
     render() {
