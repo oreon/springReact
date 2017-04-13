@@ -25,6 +25,6 @@ import org.springframework.data.rest.core.config.Projection;
 @Projection(name = "complete", types = {PaymentMethod.class})
 interface PaymentMethodCompleteProjectionBase {
 
-	Optional<String> getAccountAddress();
+	String getAccountAddress();
 
 }

@@ -7,6 +7,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
@@ -21,10 +22,11 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.td.bbwp.MainApp;
-import com.td.bbwp.course.web.JbpmTaskService;
 import com.td.bbwp.course.web.ProcessFacade;
+import com.td.bbwp.course.web.UserTaskController;
 import com.td.bbwp.wf.CaseInstance;
 import com.td.bbwp.wf.CaseStatus;
+import com.td.bbwp.wf.TaskInstance;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = MainApp.class)
@@ -39,24 +41,38 @@ public class JbpmTaskServiceTest {
 	private ProcessFacade jbpmTaskService;
 
 	static TaskSummary writeupTask;
+	
+	static CaseInstance caseInstance;
 
 	private static boolean initialized = false;
+	
+	
+	
+	@AfterClass
+	@WithUserDetails("krisv")
+	public static void closeAaam() {
+		//jbpmTaskService.signalProcessInstance(caseInstance.getProcessInstanceId(), "cls", null);
+	}
 
 	@Before
 	@WithUserDetails("krisv")
 	public void launchAaam() {
 		if (!initialized) {
-			int grpTasksBefore = jbpmTaskService.getTasks().size();
-			Collection<TaskSummary> beforeTasks = jbpmTaskService.getTasks();
-			CaseInstance caseInstance = jbpmTaskService.launchProcess(JbpmTaskService.BB_AAM_AAM_LENDING, 1L, null);
-			assertNotNull(caseInstance);
-			assertEquals(caseInstance.getStatus(), CaseStatus.ACTIVE);
-			assertEquals(1 + grpTasksBefore, jbpmTaskService.getTasks().size());
-			Collection<TaskSummary> newlyCreated = jbpmTaskService.getTasks();
-			newlyCreated.removeAll(beforeTasks);
-			writeupTask = newlyCreated.iterator().next();
+			launchProcess();
 			initialized = true;
 		}
+	}
+
+	private void launchProcess() {
+		int grpTasksBefore = jbpmTaskService.getTasks().size();
+		Collection<TaskSummary> beforeTasks = jbpmTaskService.getTasks();
+		caseInstance = jbpmTaskService.launchProcess(UserTaskController.BB_AAM_AAM_LENDING, 1L, null);
+		assertNotNull(caseInstance);
+		assertEquals(caseInstance.getStatus(), CaseStatus.ACTIVE);
+		assertEquals(1 + grpTasksBefore, jbpmTaskService.getTasks().size());
+		Collection<TaskSummary> newlyCreated = jbpmTaskService.getTasks();
+		newlyCreated.removeAll(beforeTasks);
+		writeupTask = newlyCreated.iterator().next();
 	}
 
 	@Test
@@ -102,9 +118,19 @@ public class JbpmTaskServiceTest {
 		data.put("color", "red");
 		data.put("risk_rating", "red");
 		attemptClaim(writeupTask.getId());
-		jbpmTaskService.startTask(writeupTask.getId());
+		assertNotNull(jbpmTaskService.startTask(writeupTask.getId()));
 		assertNotNull(jbpmTaskService.completeTask(writeupTask.getId(), data));
 		assertEquals(myTasksBefore -1, jbpmTaskService.getMyTasks().size());
+		
+		TaskSummary assess = jbpmTaskService.getTasks().iterator().next();
+		
+		attemptClaim(assess.getId());
+		TaskInstance assessTask = jbpmTaskService.startTask(assess.getId());
+	//	assertEquals(assessTask.getCaseInstance().getStatus() , CaseStatus.ACTIVE);
+		data.put("out_rework", false);
+		assertNotNull(jbpmTaskService.completeTask(assess.getId(), data));
+		
+		assertEquals(assessTask.getCaseInstance().getStatus() , CaseStatus.COMPLETE);
 	}
 
 	

@@ -25,15 +25,15 @@ import org.springframework.data.rest.core.config.Projection;
 @Projection(name = "complete", types = {Customer.class})
 interface CustomerCompleteProjectionBase {
 
-	Optional<com.td.bbwp.commerce.Gender> getGender();
+	com.td.bbwp.commerce.Gender getGender();
 
-	Optional<Date> getDob();
+	Date getDob();
 
-	Optional<com.td.bbwp.commerce.Address> getAddress();
+	com.td.bbwp.commerce.Address getAddress();
 
-	Optional<String> getFirstName();
+	String getFirstName();
 
-	Optional<String> getLastName();
+	String getLastName();
 
 	List<com.td.bbwp.wf.CaseInstance> getCaseInstances();
 

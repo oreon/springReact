@@ -6,24 +6,10 @@
 
 package com.td.bbwp.commerce;
 
-import javax.persistence.*;
-import org.witchcraft.base.entity.FileAttachment;
-import org.witchcraft.base.entity.BaseEntity;
-import org.hibernate.annotations.Filter;
-import org.hibernate.annotations.Filters;
-import org.hibernate.annotations.Formula;
-import org.hibernate.annotations.IndexColumn;
-
-import javax.validation.constraints.*;
-
-import java.math.BigDecimal;
-
-import java.util.Optional;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Date;
-import org.witchcraft.base.entity.BaseEntity;
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "EMPLOYEE")

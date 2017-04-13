@@ -9,6 +9,8 @@ import java.util.stream.Collectors;
 
 import org.kie.api.runtime.KieSession;
 import org.kie.api.runtime.manager.RuntimeEngine;
+import org.kie.api.runtime.manager.audit.AuditService;
+import org.kie.api.runtime.manager.audit.ProcessInstanceLog;
 import org.kie.api.runtime.process.ProcessInstance;
 import org.kie.api.task.TaskService;
 import org.kie.api.task.model.Task;
@@ -43,7 +45,7 @@ public final class JbpmTaskService implements ProcessFacade {
 
 	public static final String READY = "Ready";
 
-	public static final String BB_AAM_AAM_LENDING = "bb_aam.aam_lending";
+	
 
 	private TaskService taskService;
 
@@ -63,6 +65,8 @@ public final class JbpmTaskService implements ProcessFacade {
 	CaseDefinitionRepository caseDefinitionRepository;
 
 	KieSession ksession;
+	
+	AuditService auditService;
 
 	ObjectMapper mapper = new ObjectMapper();
 
@@ -87,7 +91,7 @@ public final class JbpmTaskService implements ProcessFacade {
 		try {
 			serverRestUrl = new URL("http://localhost:8080/jbpm-console");
 		} catch (Exception ex) {
-
+			ex.printStackTrace();
 		}
 
 		String deploymentId = "com.td.bb:bb_aam:1.2";
@@ -105,10 +109,14 @@ public final class JbpmTaskService implements ProcessFacade {
 		// Create KieSession and TaskService instances and use them
 		ksession = engine.getKieSession();
 		taskService = engine.getTaskService();
+		auditService = engine.getAuditService();
 	}
 
-	/* (non-Javadoc)
-	 * @see com.td.bbwp.course.web.ProcessFacade#launchProcess(java.lang.String, java.lang.Long, java.util.Map)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.td.bbwp.course.web.ProcessFacade#launchProcess(java.lang.String,
+	 * java.lang.Long, java.util.Map)
 	 */
 	@Override
 	public CaseInstance launchProcess(String deploymentId, Long customerId, Map<String, Object> params) {
@@ -120,12 +128,14 @@ public final class JbpmTaskService implements ProcessFacade {
 		return caseInstance;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.td.bbwp.course.web.ProcessFacade#getTasks()
 	 */
 	@Override
 	public Collection<TaskSummary> getTasks() {
-	
+
 		List<String> groups = Arrays.asList(new String[] { "lenders", "adjudicators" });
 
 		List<TaskSummary> tasks = this.getTaskService().getTasksByGroup(groups);
@@ -134,7 +144,9 @@ public final class JbpmTaskService implements ProcessFacade {
 		return tasks.stream().filter(task -> task.getStatusId().equalsIgnoreCase(READY)).collect(Collectors.toList());
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.td.bbwp.course.web.ProcessFacade#getMyTasks()
 	 */
 	@Override
@@ -149,7 +161,9 @@ public final class JbpmTaskService implements ProcessFacade {
 		return tasks;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.td.bbwp.course.web.ProcessFacade#claimTask(long)
 	 */
 	@Override
@@ -159,18 +173,19 @@ public final class JbpmTaskService implements ProcessFacade {
 	}
 
 	private TaskInstance updateTaskStatus(long id, TaskStatus status) {
-		return taskInstanceRepository.findByTaskId(id)
-		.map(x -> doUpdateTaskStatus(x, status))
-		.orElseThrow(() -> new RuntimeException("No task found for taskId " + id));
-		
+		return taskInstanceRepository.findByTaskId(id).map(x -> doUpdateTaskStatus(x, status))
+				.orElseThrow(() -> new RuntimeException("No task found for taskId " + id));
+
 	}
-	
-	private TaskInstance doUpdateTaskStatus(TaskInstance x, TaskStatus status){
-		x.setStatus(status)  ; 
+
+	private TaskInstance doUpdateTaskStatus(TaskInstance x, TaskStatus status) {
+		x.setStatus(status);
 		return taskInstanceRepository.save(x);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.td.bbwp.course.web.ProcessFacade#releaseTask(long)
 	 */
 	@Override
@@ -179,7 +194,9 @@ public final class JbpmTaskService implements ProcessFacade {
 		return updateTaskStatus(id, TaskStatus.READY);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.td.bbwp.course.web.ProcessFacade#startTask(long)
 	 */
 	@Override
@@ -193,8 +210,12 @@ public final class JbpmTaskService implements ProcessFacade {
 		tasks.stream().forEach(x -> getTaskInstance(x));
 	}
 
-	/* (non-Javadoc)
-	 * @see com.td.bbwp.course.web.ProcessFacade#getCaseInstance(org.kie.api.task.model.TaskSummary)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.td.bbwp.course.web.ProcessFacade#getCaseInstance(org.kie.api.task.
+	 * model.TaskSummary)
 	 */
 	@Override
 	public CaseInstance getCaseInstance(TaskSummary ts) {
@@ -202,16 +223,24 @@ public final class JbpmTaskService implements ProcessFacade {
 				.orElseGet(() -> createCaseInstanceByTaskSummary(ts, 1L));
 	}
 
-	/* (non-Javadoc)
-	 * @see com.td.bbwp.course.web.ProcessFacade#getTaskInstance(org.kie.api.task.model.TaskSummary)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.td.bbwp.course.web.ProcessFacade#getTaskInstance(org.kie.api.task.
+	 * model.TaskSummary)
 	 */
 	@Override
 	public TaskInstance getTaskInstance(TaskSummary ts) {
 		return taskInstanceRepository.findByTaskId(ts.getId()).orElseGet(() -> createTaskInstance(ts));
 	}
 
-	/* (non-Javadoc)
-	 * @see com.td.bbwp.course.web.ProcessFacade#createCaseInstanceByTaskSummary(org.kie.api.task.model.TaskSummary, long)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.td.bbwp.course.web.ProcessFacade#createCaseInstanceByTaskSummary(org.
+	 * kie.api.task.model.TaskSummary, long)
 	 */
 	@Override
 	public CaseInstance createCaseInstanceByTaskSummary(TaskSummary ts, long cusotmerId) {
@@ -227,7 +256,6 @@ public final class JbpmTaskService implements ProcessFacade {
 		Customer customer = OptionsHelper.getOrThrow(customerRepository.findById(customerId),
 				new RuntimeException("No process configured " + processDef));
 
-
 		caseInstance.setProcessInstanceId(processInstanceId);
 		caseInstance.setCaseDefinition(caseDef);
 		caseInstance.setCustomer(customer);
@@ -236,8 +264,12 @@ public final class JbpmTaskService implements ProcessFacade {
 		return caseInstance;
 	}
 
-	/* (non-Javadoc)
-	 * @see com.td.bbwp.course.web.ProcessFacade#createTaskInstance(org.kie.api.task.model.TaskSummary)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.td.bbwp.course.web.ProcessFacade#createTaskInstance(org.kie.api.task.
+	 * model.TaskSummary)
 	 */
 	@Override
 	public TaskInstance createTaskInstance(TaskSummary x) {
@@ -262,7 +294,9 @@ public final class JbpmTaskService implements ProcessFacade {
 		return taskDefinition;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.td.bbwp.course.web.ProcessFacade#getTask(java.lang.String)
 	 */
 	@Override
@@ -285,8 +319,11 @@ public final class JbpmTaskService implements ProcessFacade {
 		return customTask;
 	}
 
-	/* (non-Javadoc)
-	 * @see com.td.bbwp.course.web.ProcessFacade#completeTask(java.lang.Long, java.util.Map)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.td.bbwp.course.web.ProcessFacade#completeTask(java.lang.Long,
+	 * java.util.Map)
 	 */
 	@Override
 	public TaskInstance completeTask(Long id, Map<String, Object> data) {
@@ -299,18 +336,40 @@ public final class JbpmTaskService implements ProcessFacade {
 					new RuntimeException("not taskInstance found for task id " + id));
 
 			current.setTaskData(mapper.writeValueAsString(data));
-			
+
 			current = taskInstanceRepository.save(current);
 			doUpdateTaskStatus(current, TaskStatus.COMPLETED);
-		
+
+			updateCaseInstanceStatus(current);
+
 			return current;
 		} catch (JsonProcessingException e) {
 			throw new RuntimeException("Error writing as json", e);
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see com.td.bbwp.course.web.ProcessFacade#signalProcessInstance(java.lang.Long, java.lang.String, java.lang.String)
+	/**
+	 * Update the status if the case is completed - get from jbpm
+	 * @param current
+	 */
+	private void updateCaseInstanceStatus(TaskInstance current) {
+		CaseInstance currentCase = current.getCaseInstance();
+
+		ProcessInstanceLog processLog = auditService.findProcessInstance(currentCase.getProcessInstanceId());
+
+		if (processLog.getStatus() == ProcessInstance.STATE_COMPLETED) {
+			currentCase.setStatus(CaseStatus.COMPLETE);
+			//currentCase.setActive(active);
+			caseInstanceRepository.save(currentCase);
+		}
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.td.bbwp.course.web.ProcessFacade#signalProcessInstance(java.lang.
+	 * Long, java.lang.String, java.lang.String)
 	 */
 	@Override
 	public String signalProcessInstance(final Long id, final String signal, String data) {

@@ -25,14 +25,14 @@ import org.springframework.data.rest.core.config.Projection;
 @Projection(name = "complete", types = {CustomerOrder.class})
 interface CustomerOrderCompleteProjectionBase {
 
-	Optional<String> getNotes();
+	String getNotes();
 
-	Optional<com.td.bbwp.commerce.Customer> getCustomer();
+	com.td.bbwp.commerce.Customer getCustomer();
 
 	List<com.td.bbwp.commerce.OrderItem> getOrderItems();
 
-	Optional<Date> getShipDate();
+	Date getShipDate();
 
-	Optional<com.td.bbwp.commerce.PaymentMethod> getPaymentMethod();
+	com.td.bbwp.commerce.PaymentMethod getPaymentMethod();
 
 }

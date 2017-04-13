@@ -27,6 +27,16 @@ export function createSchema(){
 ],
     properties: {
     
+
+accountAddress:{ type: "string", title: "Account Address",  	
+},
+
+
+
+paypalAccountNumber:{ type: "string", title: "Paypal Account Number",  	
+},
+
+
     
     }
  };
@@ -147,7 +157,7 @@ export class EditPayPal extends BaseEditComponent {
 
 export class ViewPayPal extends BaseEditComponent {
 
-  renderExtra(record: any) { <p> IN render </p> }
+  renderExtra(record) { <p> IN render </p> }
   
   constructor(props) {
     super(props);

@@ -25,8 +25,8 @@ import org.springframework.data.rest.core.config.Projection;
 @Projection(name = "complete", types = {PayPal.class})
 interface PayPalCompleteProjectionBase {
 
-	Optional<String> getAccountAddress();
+	String getAccountAddress();
 
-	Optional<String> getPaypalAccountNumber();
+	String getPaypalAccountNumber();
 
 }

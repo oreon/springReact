@@ -27,6 +27,22 @@ export function createSchema(){
 ],
     properties: {
     
+
+employees:{ type: "integer", title: "Employees",   
+
+ 'enum': LookupService.getLookup('employees').map(x => x.id   ),
+ 'enumNames': LookupService.getLookup('employees').map(x => x.displayName)
+
+
+	
+},
+
+
+
+name:{ type: "string", title: "Name",  	
+},
+
+
     
     }
  };
@@ -146,7 +162,7 @@ export class EditDepartment extends BaseEditComponent {
 
 export class ViewDepartment extends BaseEditComponent {
 
-  renderExtra(record: any) { <p> IN render </p> }
+  renderExtra(record) { <p> IN render </p> }
   
   constructor(props) {
     super(props);

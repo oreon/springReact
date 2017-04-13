@@ -6,24 +6,10 @@
 
 package com.td.bbwp.users;
 
-import javax.persistence.*;
-import org.witchcraft.base.entity.FileAttachment;
-import org.witchcraft.base.entity.BaseEntity;
-import org.hibernate.annotations.Filter;
-import org.hibernate.annotations.Filters;
-import org.hibernate.annotations.Formula;
-import org.hibernate.annotations.IndexColumn;
-
-import javax.validation.constraints.*;
-
-import java.math.BigDecimal;
-
-import java.util.Optional;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Date;
-import org.witchcraft.base.entity.BaseEntity;
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "APP_USER")
@@ -31,5 +17,13 @@ import org.witchcraft.base.entity.BaseEntity;
 @Inheritance(strategy = InheritanceType.JOINED) //inherit
 
 public class AppUser extends AppUserBase implements java.io.Serializable {
+	
+	public AppUser(){}
+	
+	public AppUser(String name, String password) {
+		this.userName = name;
+		this.password = password;
+	}
+
 	private static final long serialVersionUID = -1510385050L;
 }

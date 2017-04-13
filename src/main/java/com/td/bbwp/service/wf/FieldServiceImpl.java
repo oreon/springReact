@@ -7,9 +7,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.witchcraft.base.entity.BaseRepository;
 import org.witchcraft.base.spring.BaseServiceImpl;
 
-import com.td.bbwp.wf.Field;
-
 import com.td.bbwp.web.action.wf.FieldRepository;
+import com.td.bbwp.wf.Field;
 
 @Service
 @Transactional

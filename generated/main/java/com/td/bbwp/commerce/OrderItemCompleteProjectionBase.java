@@ -25,10 +25,10 @@ import org.springframework.data.rest.core.config.Projection;
 @Projection(name = "complete", types = {OrderItem.class})
 interface OrderItemCompleteProjectionBase {
 
-	Optional<Integer> getQty();
+	Integer getQty();
 
-	Optional<com.td.bbwp.commerce.Product> getProduct();
+	com.td.bbwp.commerce.Product getProduct();
 
-	Optional<com.td.bbwp.commerce.CustomerOrder> getCustomerOrder();
+	com.td.bbwp.commerce.CustomerOrder getCustomerOrder();
 
 }

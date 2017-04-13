@@ -29,7 +29,7 @@ public class DepartmentFixture extends BaseFixtureFactory<Department> implements
 
 		Fixture.of(Department.class).addTemplate(getName(), new Rule() {
 			{
-				add("name", uniqueRandom(arrayNames));
+				add("name", getUniqueNames());
 
 			}
 		});

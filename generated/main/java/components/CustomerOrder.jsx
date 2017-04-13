@@ -27,7 +27,75 @@ export function createSchema(){
 ],
     properties: {
     
+
+notes:{ type: "string", title: "Notes",  	
+},
+
+
+
+customer:{ type: "integer", title: "Customer",   
+
+ 'enum': LookupService.getLookup('customers').map(x => x.id   ),
+ 'enumNames': LookupService.getLookup('customers').map(x => x.displayName)
+
+
+	
+},
+
+
+
+shipDate:{ type: "string", title: "Ship Date",   "format": "date"	
+},
+
+
+
+paymentMethod:{ type: "integer", title: "Payment Method",   
+
+ 'enum': LookupService.getLookup('paymentMethods').map(x => x.id   ),
+ 'enumNames': LookupService.getLookup('paymentMethods').map(x => x.displayName)
+
+
+	
+},
+
+
     
+orderItems: {
+            title: "Order Items",
+            type: "array",
+            required: [
+],
+            items: {
+                "type": "object",
+                "properties": {
+                 
+
+qty:{ type: "integer", title: "Qty",  	
+},
+
+
+
+product:{ type: "integer", title: "Product",   
+
+ 'enum': LookupService.getLookup('products').map(x => x.id   ),
+ 'enumNames': LookupService.getLookup('products').map(x => x.displayName)
+
+
+	
+},
+
+
+  
+customerOrder: {
+      "type": "number",
+    },
+
+ 
+                 
+                }
+            }
+        },
+
     }
  };
 
@@ -184,7 +252,7 @@ export class EditCustomerOrder extends BaseEditComponent {
 
 export class ViewCustomerOrder extends BaseEditComponent {
 
-  renderExtra(record: any) { <p> IN render </p> }
+  renderExtra(record) { <p> IN render </p> }
   
   constructor(props) {
     super(props);

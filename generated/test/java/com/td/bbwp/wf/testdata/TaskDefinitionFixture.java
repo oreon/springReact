@@ -29,8 +29,8 @@ public class TaskDefinitionFixture extends BaseFixtureFactory<TaskDefinition> im
 
 		Fixture.of(TaskDefinition.class).addTemplate(getName(), new Rule() {
 			{
-				add("name", uniqueRandom(arrayNames));
-				add("formSchema", uniqueRandom(arrayNames));
+				add("name", getUniqueNames());
+				add("formSchema", getUniqueNames());
 
 				add("caseDefinition", new com.td.bbwp.wf.testdata.CaseDefinitionFixture().getOneRecord());
 

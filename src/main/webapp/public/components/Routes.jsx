@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Route, NavLink, Switch, Redirect } from 'react-router-dom';
 import { StudentList, EditStudent } from './Student.jsx'
 import { CustomerList, EditCustomer, ViewCustomer } from './Customer.jsx'
-import { CaseDefinitionList, EditCaseDefinition } from './CaseDefinition.jsx';
+import { CaseDefinitionList, EditCaseDefinition, ViewCaseDefinition } from './CaseDefinition.jsx';
 import {CaseInstanceList,EditCaseInstance, ViewCaseInstance} from './CaseInstance.jsx';
 
 import { TaskList, TaskView } from './taskList.jsx';
@@ -35,6 +35,7 @@ export const Home = ( props ) => (
                 <Route path="/entities/customers" component={CustomerList} />
 
                 <Route path="/entities/CaseDefinitions/edit/:id(\d+)?" component={EditCaseDefinition} />
+                <Route path="/entities/CaseDefinitions/view/:id(\d+)?" component={ViewCaseDefinition}/>
                 <Route path="/entities/CaseDefinitions" component={CaseDefinitionList} />
 
                 <Route path="/entities/task/:id(\d+)" component={TaskView} />

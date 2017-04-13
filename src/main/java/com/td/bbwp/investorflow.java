@@ -6,11 +6,6 @@
 
 package com.td.bbwp;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Date;
-import org.witchcraft.base.entity.BaseEntity;
-
 public class investorflow extends investorflowBase implements java.io.Serializable {
 	private static final long serialVersionUID = -2142646558L;
 }

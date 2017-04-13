@@ -7,9 +7,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.witchcraft.base.entity.BaseRepository;
 import org.witchcraft.base.spring.BaseServiceImpl;
 
-import com.td.bbwp.wf.TaskDefinition;
-
 import com.td.bbwp.web.action.wf.TaskDefinitionRepository;
+import com.td.bbwp.wf.TaskDefinition;
 
 @Service
 @Transactional

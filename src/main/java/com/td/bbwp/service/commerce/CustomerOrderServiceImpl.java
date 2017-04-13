@@ -8,7 +8,6 @@ import org.witchcraft.base.entity.BaseRepository;
 import org.witchcraft.base.spring.BaseServiceImpl;
 
 import com.td.bbwp.commerce.CustomerOrder;
-
 import com.td.bbwp.web.action.commerce.CustomerOrderRepository;
 
 @Service

@@ -29,8 +29,8 @@ public class PayPalFixture extends BaseFixtureFactory<PayPal> implements Templat
 
 		Fixture.of(PayPal.class).addTemplate(getName(), new Rule() {
 			{
-				add("accountAddress", uniqueRandom(arrayNames));
-				add("paypalAccountNumber", uniqueRandom(arrayNames));
+				add("accountAddress", getUniqueNames());
+				add("paypalAccountNumber", getUniqueNames());
 
 			}
 		});

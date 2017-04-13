@@ -27,6 +27,21 @@ export function createSchema(){
 ],
     properties: {
     
+
+accountAddress:{ type: "string", title: "Account Address",  	
+},
+
+
+
+ccNumber:{ type: "string", title: "Cc Number",  	
+},
+
+
+
+expiry:{ type: "string", title: "Expiry",   "format": "date"	
+},
+
+
     
     }
  };
@@ -154,7 +169,7 @@ export class EditCreditCard extends BaseEditComponent {
 
 export class ViewCreditCard extends BaseEditComponent {
 
-  renderExtra(record: any) { <p> IN render </p> }
+  renderExtra(record) { <p> IN render </p> }
   
   constructor(props) {
     super(props);

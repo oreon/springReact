@@ -59,7 +59,7 @@ public abstract class AppUserBase extends BaseEntity {
 
 	;
 
-	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
+	@ManyToMany(cascade = {CascadeType.MERGE}, fetch = FetchType.EAGER)
 	@JoinTable(name = "appUsers_appRoles", joinColumns = @JoinColumn(name = "APP_USERS_ID"), inverseJoinColumns = @JoinColumn(name = "APP_ROLES_ID"))
 	//@IndexColumn(name = "appUsers_order")
 

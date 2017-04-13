@@ -25,18 +25,18 @@ import org.springframework.data.rest.core.config.Projection;
 @Projection(name = "complete", types = {TaskInstance.class})
 interface TaskInstanceCompleteProjectionBase {
 
-	Optional<Long> getTaskId();
+	Long getTaskId();
 
-	Optional<String> getName();
+	String getName();
 
-	Optional<com.td.bbwp.wf.TaskDefinition> getTaskDefinition();
+	com.td.bbwp.wf.TaskDefinition getTaskDefinition();
 
-	Optional<com.td.bbwp.wf.CaseInstance> getCaseInstance();
+	com.td.bbwp.wf.CaseInstance getCaseInstance();
 
-	Optional<String> getTaskData();
+	String getTaskData();
 
-	Optional<com.td.bbwp.wf.TaskStatus> getStatus();
+	com.td.bbwp.wf.TaskStatus getStatus();
 
-	Optional<String> getComments();
+	String getComments();
 
 }

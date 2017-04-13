@@ -27,7 +27,104 @@ export function createSchema(){
 ],
     properties: {
     
+
+name:{ type: "string", title: "Name",  	
+},
+
+
+
+closable:{ type: "boolean", title: "Closable",  	
+},
+
+
     
+taskDefinitions: {
+            title: "Task Definitions",
+            type: "array",
+            required: [
+],
+            items: {
+                "type": "object",
+                "properties": {
+                 
+
+name:{ type: "string", title: "Name",  	
+},
+
+
+  
+caseDefinition: {
+      "type": "number",
+    },
+
+
+
+formSchema:{ type: "string", title: "Form Schema",  	
+},
+
+ 
+                 
+fields: {
+            title: "Fields",
+            type: "array",
+            required: [
+],
+            items: {
+                "type": "object",
+                "properties": {
+                 
+
+name:{ type: "string", title: "Name",  	
+},
+
+
+
+type:{ type: "string", title: "Type",   
+'enum' : [
+'','0' ,'1' ,'2' ,'3' ,'4'   
+],
+'enumNames' : [
+'Select','string' ,'number' ,'date' ,'bool' ,'textBlob'   
+]
+	
+},
+
+
+  
+taskDefinition: {
+      "type": "number",
+    },
+
+
+
+required:{ type: "boolean", title: "Required",  	
+},
+
+
+
+min:{ type: "integer", title: "Min",  	
+},
+
+
+
+max:{ type: "integer", title: "Max",  	
+},
+
+
+
+regularEx:{ type: "string", title: "Regular Ex",  	
+},
+
+ 
+                 
+                }
+            }
+        },
+
+                }
+            }
+        },
+
     }
  };
 
@@ -207,7 +304,7 @@ export class EditCaseDefinition extends BaseEditComponent {
 
 export class ViewCaseDefinition extends BaseEditComponent {
 
-  renderExtra(record: any) { <p> IN render </p> }
+  renderExtra(record) { <p> IN render </p> }
   
   constructor(props) {
     super(props);

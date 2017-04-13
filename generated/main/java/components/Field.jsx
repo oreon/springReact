@@ -27,6 +27,49 @@ export function createSchema(){
 ],
     properties: {
     
+
+name:{ type: "string", title: "Name",  	
+},
+
+
+
+type:{ type: "string", title: "Type",   
+'enum' : [
+'','0' ,'1' ,'2' ,'3' ,'4'   
+],
+'enumNames' : [
+'Select','string' ,'number' ,'date' ,'bool' ,'textBlob'   
+]
+	
+},
+
+
+  
+taskDefinition: {
+      "type": "number",
+    },
+
+
+
+required:{ type: "boolean", title: "Required",  	
+},
+
+
+
+min:{ type: "integer", title: "Min",  	
+},
+
+
+
+max:{ type: "integer", title: "Max",  	
+},
+
+
+
+regularEx:{ type: "string", title: "Regular Ex",  	
+},
+
+
     
     }
  };
@@ -184,7 +227,7 @@ export class EditField extends BaseEditComponent {
 
 export class ViewField extends BaseEditComponent {
 
-  renderExtra(record: any) { <p> IN render </p> }
+  renderExtra(record) { <p> IN render </p> }
   
   constructor(props) {
     super(props);

@@ -34,8 +34,6 @@ public interface ProcessFacade {
 
 	CustomTask getTask(String id);
 
-	
-
 	String signalProcessInstance(Long id, String signal, String data);
 
 }

@@ -25,10 +25,10 @@ import org.springframework.data.rest.core.config.Projection;
 @Projection(name = "complete", types = {CreditCard.class})
 interface CreditCardCompleteProjectionBase {
 
-	Optional<String> getAccountAddress();
+	String getAccountAddress();
 
-	Optional<String> getCcNumber();
+	String getCcNumber();
 
-	Optional<Date> getExpiry();
+	Date getExpiry();
 
 }

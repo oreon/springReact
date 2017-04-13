@@ -28,7 +28,38 @@ export function createSchema(){
     properties: {
     
 
-address:{ type: "integer", title: "Address",   
+gender:{ type: "string", title: "Gender",   
+'enum' : [
+'','0' ,'1'   
+],
+'enumNames' : [
+'Select','MALE' ,'FEMALE'   
+]
+	
+},
+
+
+
+dob:{ type: "string", title: "Dob",   "format": "date"	
+},
+
+
+
+firstName:{ type: "string", title: "First Name",  	
+},
+
+
+
+lastName:{ type: "string", title: "Last Name",  	
+},
+
+
+
+caseInstances:{ type: "integer", title: "Case Instances",   
+
+ 'enum': LookupService.getLookup('caseInstances').map(x => x.id   ),
+ 'enumNames': LookupService.getLookup('caseInstances').map(x => x.displayName)
+
 
 	
 },
@@ -181,7 +212,7 @@ export class EditCustomer extends BaseEditComponent {
 
 export class ViewCustomer extends BaseEditComponent {
 
-  renderExtra(record: any) { <p> IN render </p> }
+  renderExtra(record) { <p> IN render </p> }
   
   constructor(props) {
     super(props);

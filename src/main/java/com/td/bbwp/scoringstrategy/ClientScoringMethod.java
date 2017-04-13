@@ -6,11 +6,6 @@
 
 package com.td.bbwp.scoringstrategy;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Date;
-import org.witchcraft.base.entity.BaseEntity;
-
 public class ClientScoringMethod extends ClientScoringMethodBase implements java.io.Serializable {
 	private static final long serialVersionUID = -484973605L;
 }

@@ -27,6 +27,34 @@ export function createSchema(){
 ],
     properties: {
     
+
+userName:{ type: "string", title: "User Name",  	
+},
+
+
+
+password:{ type: "string", title: "Password",  	
+},
+
+
+
+enabled:{ type: "boolean", title: "Enabled",  	
+},
+
+
+
+appRoles:{ type: "array", title: "App Roles",   
+
+    "items":{
+ 'enum': LookupService.getLookup('appRoles').map(x => x.id .toString()  ),
+ 'enumNames': LookupService.getLookup('appRoles').map(x => x.displayName)
+    },
+    "uniqueItems": true
+
+	
+},
+
+
     
     }
  };
@@ -160,7 +188,7 @@ export class EditAppUser extends BaseEditComponent {
 
 export class ViewAppUser extends BaseEditComponent {
 
-  renderExtra(record: any) { <p> IN render </p> }
+  renderExtra(record) { <p> IN render </p> }
   
   constructor(props) {
     super(props);

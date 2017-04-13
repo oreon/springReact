@@ -239,8 +239,6 @@ export class TaskView extends React.Component {
         // this.deleteRecord = this.deleteRecord.bind( this );
         // this.editRecord = this.editRecord.bind( this );
         //
-
-
         this.url = URL + "show?id=" + this.props.match.params.id
 
         this.state = {
@@ -297,14 +295,13 @@ export class TaskView extends React.Component {
       if ( !this.state.task.name )
             return null;
       
-          console.log(this.state.task.schema)
-        
+       
         let schema = JSON.parse(this.state.task.schema)
 
         return (
             <div>
                 <h3> {this.state.task.name} !!!</h3>
-                <Form schema= {schema}
+                <Form schema= {schema} 
                     onSubmit={( {formData}) => this.onSubmit( formData )}
                     onError={log( "errors" )} />
             </div>

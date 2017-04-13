@@ -27,6 +27,11 @@ export function createSchema(){
 ],
     properties: {
     
+
+name:{ type: "string", title: "Name",  	
+},
+
+
     
     }
  };
@@ -140,7 +145,7 @@ export class EditProduct extends BaseEditComponent {
 
 export class ViewProduct extends BaseEditComponent {
 
-  renderExtra(record: any) { <p> IN render </p> }
+  renderExtra(record) { <p> IN render </p> }
   
   constructor(props) {
     super(props);

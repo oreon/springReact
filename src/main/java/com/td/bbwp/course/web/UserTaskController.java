@@ -14,8 +14,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.td.bbwp.wf.TaskInstance;
-
 @RestController
 @RequestMapping("/api/task")
 public class UserTaskController {
@@ -23,6 +21,8 @@ public class UserTaskController {
 
 	@Autowired
 	private ProcessFacade processFacade;
+	
+	public static final String BB_AAM_AAM_LENDING = "bb_aam.aam_lending";
 	
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
@@ -44,7 +44,7 @@ public class UserTaskController {
 //		params.put("paramName", new MyType("name", 23));		
 		
 		try {
-			return new ResponseEntity(processFacade.launchProcess(JbpmTaskService.BB_AAM_AAM_LENDING, customerId, null), HttpStatus.OK);
+			return new ResponseEntity(processFacade.launchProcess(BB_AAM_AAM_LENDING, customerId, null), HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity("CaseInstance launch for customer " + customerId + "  failed due to " + e.getMessage(), HttpStatus.BAD_REQUEST);
 		}

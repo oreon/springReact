@@ -25,7 +25,7 @@ import org.springframework.data.rest.core.config.Projection;
 @Projection(name = "complete", types = {AppRole.class})
 interface AppRoleCompleteProjectionBase {
 
-	Optional<String> getName();
+	String getName();
 
 	List<com.td.bbwp.users.AppUser> getAppUsers();
 

@@ -25,11 +25,11 @@ import org.springframework.data.rest.core.config.Projection;
 @Projection(name = "complete", types = {AppUser.class})
 interface AppUserCompleteProjectionBase {
 
-	Optional<String> getUserName();
+	String getUserName();
 
-	Optional<String> getPassword();
+	String getPassword();
 
-	Optional<Boolean> getEnabled();
+	Boolean getEnabled();
 
 	List<com.td.bbwp.users.AppRole> getAppRoles();
 

@@ -90,7 +90,7 @@ export class BaseEditComponent extends React.Component {
 
 
     fetchSingleRecord( id ) {
-        let url = URL + this.entityName + "/" + id
+        let url = URL + this.entityName + "/" + id + "?projection=complete"
 
         console.log( "Fetching " + url )
         fetch( url,

@@ -1,15 +1,16 @@
 package org.witchcraft.base.test;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
-import org.springframework.core.GenericTypeResolver;
 import org.witchcraft.base.entity.BaseEntity;
-
-import com.td.bbwp.commerce.Customer;
 
 import br.com.six2six.fixturefactory.Fixture;
 
 public abstract class BaseFixtureFactory<T extends BaseEntity> {
+	
+	protected static int UNIQUE_ID = 0;
 	
 	protected String arrayNames[] = { "Anderson", "Arthur", "Katy", "Mary", "John", "Hesus", "Ricardo" };
 	
@@ -24,6 +25,14 @@ public abstract class BaseFixtureFactory<T extends BaseEntity> {
 	
 	public T getOneRecord() {
 		return getRecords(1).get(0);
+	}
+	
+	public Object[] getUniqueNames(){ 
+		return Arrays.asList(arrayNames).stream()
+			.map(x -> x + (UNIQUE_ID++))
+			.collect(Collectors.toSet())
+			.toArray();
+		
 	}
 
 }

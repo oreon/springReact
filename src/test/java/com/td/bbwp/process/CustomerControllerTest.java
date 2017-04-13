@@ -35,7 +35,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.td.bbwp.MainApp;
 import com.td.bbwp.commerce.Customer;
 import com.td.bbwp.service.commerce.CustomerService;
-import com.td.bbwp.wf.TaskDefinition;
 
 /**
  * Created by jsingh on 2017-02-12.
@@ -107,7 +106,7 @@ public class CustomerControllerTest {
 		mockMvc.perform(get("/rest/customers/6889")).andExpect(status().isNotFound());
 	}
 
-	@Test
+	//@Test
 	@WithUserDetails("krisv")
 	public void testCreationOfCustomer() throws Exception {
 		Customer customer = new Customer();
@@ -118,7 +117,7 @@ public class CustomerControllerTest {
 				.andExpect(status().isCreated());
 	}
 
-	@Test
+	//@Test
 	@WithUserDetails("krisv")
 	public void testEditOfCustomer() throws Exception {
 

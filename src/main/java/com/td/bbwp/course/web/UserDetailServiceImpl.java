@@ -1,5 +1,8 @@
 package com.td.bbwp.course.web;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -7,8 +10,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.td.bbwp.course.domain.User;
-import com.td.bbwp.course.domain.UserRepository;
+import com.td.bbwp.users.AppUser;
+import com.td.bbwp.web.action.users.AppUserRepository;
 
 
 /**
@@ -16,19 +19,28 @@ import com.td.bbwp.course.domain.UserRepository;
  **/
 @Service
 public class UserDetailServiceImpl implements UserDetailsService  {
-	private final UserRepository repository;
+	private final AppUserRepository repository;
 
 	@Autowired
-	public UserDetailServiceImpl(UserRepository userRepository) {
+	public UserDetailServiceImpl(AppUserRepository userRepository) {
 		this.repository = userRepository;
 	}
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {   
-    	User curruser = repository.findByUsername(username);
-        UserDetails user = new org.springframework.security.core.userdetails.User(username, curruser.getPasswordHash(), 
-        		AuthorityUtils.createAuthorityList(curruser.getRole()));
-        return user;
+    	AppUser curruser = repository.findByUserName(username)
+    			.orElseThrow(() -> new UsernameNotFoundException(username));
+    	
+    	List<String> roleNames =  curruser.getAppRoles().stream().
+    			map(role -> role.getName()  ).collect(Collectors.toList())
+    			;
+    	
+    	String[] roles = new String[roleNames.size()];
+    	roles = roleNames.toArray(roles);
+    			
+        return new org.springframework.security.core.userdetails.User(username, curruser.getPassword(), 
+        		AuthorityUtils.createAuthorityList(roles));
+        
     }   
     
     

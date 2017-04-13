@@ -29,12 +29,12 @@ public class FieldFixture extends BaseFixtureFactory<Field> implements TemplateL
 
 		Fixture.of(Field.class).addTemplate(getName(), new Rule() {
 			{
-				add("name", uniqueRandom(arrayNames));
+				add("name", getUniqueNames());
 				add("type", random(com.td.bbwp.wf.FieldType.class));
 				add("required", random(true, false));
 				add("min", random(Integer.class, range(1, 200)));
 				add("max", random(Integer.class, range(1, 200)));
-				add("regularEx", uniqueRandom(arrayNames));
+				add("regularEx", getUniqueNames());
 
 				add("taskDefinition", new com.td.bbwp.wf.testdata.TaskDefinitionFixture().getOneRecord());
 

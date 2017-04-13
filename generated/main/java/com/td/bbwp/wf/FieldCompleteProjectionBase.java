@@ -25,18 +25,18 @@ import org.springframework.data.rest.core.config.Projection;
 @Projection(name = "complete", types = {Field.class})
 interface FieldCompleteProjectionBase {
 
-	Optional<String> getName();
+	String getName();
 
-	Optional<com.td.bbwp.wf.FieldType> getType();
+	com.td.bbwp.wf.FieldType getType();
 
-	Optional<com.td.bbwp.wf.TaskDefinition> getTaskDefinition();
+	com.td.bbwp.wf.TaskDefinition getTaskDefinition();
 
-	Optional<Boolean> getRequired();
+	Boolean getRequired();
 
-	Optional<Integer> getMin();
+	Integer getMin();
 
-	Optional<Integer> getMax();
+	Integer getMax();
 
-	Optional<String> getRegularEx();
+	String getRegularEx();
 
 }

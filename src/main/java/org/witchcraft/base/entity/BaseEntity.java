@@ -17,6 +17,8 @@ import javax.persistence.Transient;
 import javax.persistence.Version;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.domain.Persistable;
@@ -46,6 +48,7 @@ public abstract class BaseEntity implements Serializable, Persistable<Long>{
     
     @ManyToOne(optional=true, fetch=FetchType.LAZY)
     @JoinColumn(name="created_by_user_id", nullable=true)
+    @CreatedBy
     private AppUser createdByUser;
     
     @LastModifiedBy
@@ -55,6 +58,7 @@ public abstract class BaseEntity implements Serializable, Persistable<Long>{
     
     //@Temporal(TemporalType.TIMESTAMP)
     @Column(name="date_created")
+    @CreatedDate
     private Date  dateCreated;
     
    // @Temporal(TemporalType.TIMESTAMP)

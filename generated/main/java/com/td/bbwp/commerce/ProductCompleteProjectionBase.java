@@ -25,6 +25,6 @@ import org.springframework.data.rest.core.config.Projection;
 @Projection(name = "complete", types = {Product.class})
 interface ProductCompleteProjectionBase {
 
-	Optional<String> getName();
+	String getName();
 
 }

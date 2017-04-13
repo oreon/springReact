@@ -259,7 +259,7 @@ export class EditTaskDefinition extends BaseEditComponent {
 
 export class ViewTaskDefinition extends BaseEditComponent {
 
-  renderExtra(record: any) { <p> IN render </p> }
+  renderExtra(record) { <p> IN render </p> }
   
   constructor(props) {
     super(props);

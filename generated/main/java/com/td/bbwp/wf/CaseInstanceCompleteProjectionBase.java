@@ -25,16 +25,16 @@ import org.springframework.data.rest.core.config.Projection;
 @Projection(name = "complete", types = {CaseInstance.class})
 interface CaseInstanceCompleteProjectionBase {
 
-	Optional<com.td.bbwp.wf.CaseDefinition> getCaseDefinition();
+	com.td.bbwp.wf.CaseDefinition getCaseDefinition();
 
 	List<com.td.bbwp.wf.TaskInstance> getTaskInstances();
 
-	Optional<Long> getProcessInstanceId();
+	Long getProcessInstanceId();
 
-	Optional<String> getName();
+	String getName();
 
-	Optional<com.td.bbwp.wf.CaseStatus> getStatus();
+	com.td.bbwp.wf.CaseStatus getStatus();
 
-	Optional<com.td.bbwp.commerce.Customer> getCustomer();
+	com.td.bbwp.commerce.Customer getCustomer();
 
 }

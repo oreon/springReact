@@ -25,12 +25,12 @@ import org.springframework.data.rest.core.config.Projection;
 @Projection(name = "complete", types = {TaskDefinition.class})
 interface TaskDefinitionCompleteProjectionBase {
 
-	Optional<String> getName();
+	String getName();
 
-	Optional<com.td.bbwp.wf.CaseDefinition> getCaseDefinition();
+	com.td.bbwp.wf.CaseDefinition getCaseDefinition();
 
 	List<com.td.bbwp.wf.Field> getFields();
 
-	Optional<String> getFormSchema();
+	String getFormSchema();
 
 }

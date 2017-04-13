@@ -27,7 +27,114 @@ export function createSchema(){
 ],
     properties: {
     
+
+caseDefinition:{ type: "integer", title: "Case Definition",   
+
+ 'enum': LookupService.getLookup('caseDefinitions').map(x => x.id   ),
+ 'enumNames': LookupService.getLookup('caseDefinitions').map(x => x.displayName)
+
+
+	
+},
+
+
+
+processInstanceId:{ type: "integer", title: "Process Instance Id",  	
+},
+
+
+
+name:{ type: "string", title: "Name",  	
+},
+
+
+
+status:{ type: "string", title: "Status",   
+'enum' : [
+'','0' ,'1' ,'2'   
+],
+'enumNames' : [
+'Select','ACTIVe' ,'COMPLETE' ,'ABORTED'   
+]
+	
+},
+
+
+
+customer:{ type: "integer", title: "Customer",   
+
+ 'enum': LookupService.getLookup('customers').map(x => x.id   ),
+ 'enumNames': LookupService.getLookup('customers').map(x => x.displayName)
+
+
+	
+},
+
+
     
+taskInstances: {
+            title: "Task Instances",
+            type: "array",
+            required: [
+],
+            items: {
+                "type": "object",
+                "properties": {
+                 
+
+taskId:{ type: "integer", title: "Task Id",  	
+},
+
+
+
+name:{ type: "string", title: "Name",  	
+},
+
+
+
+taskDefinition:{ type: "integer", title: "Task Definition",   
+
+ 'enum': LookupService.getLookup('taskDefinitions').map(x => x.id   ),
+ 'enumNames': LookupService.getLookup('taskDefinitions').map(x => x.displayName)
+
+
+	
+},
+
+
+  
+caseInstance: {
+      "type": "number",
+    },
+
+
+
+taskData:{ type: "string", title: "Task Data",  	
+},
+
+
+
+status:{ type: "string", title: "Status",   
+'enum' : [
+'','0' ,'1' ,'2' ,'3' ,'4' ,'5'   
+],
+'enumNames' : [
+'Select','CREATED' ,'READY' ,'RESERVED' ,'IN_PROGRESS' ,'COMPLETED' ,'FAILED'   
+]
+	
+},
+
+
+
+comments:{ type: "string", title: "Comments",  	
+},
+
+ 
+                 
+                }
+            }
+        },
+
     }
  };
 
@@ -207,7 +314,7 @@ export class EditCaseInstance extends BaseEditComponent {
 
 export class ViewCaseInstance extends BaseEditComponent {
 
-  renderExtra(record: any) { <p> IN render </p> }
+  renderExtra(record) { <p> IN render </p> }
   
   constructor(props) {
     super(props);

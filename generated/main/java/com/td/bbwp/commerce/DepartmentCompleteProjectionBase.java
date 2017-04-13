@@ -27,6 +27,6 @@ interface DepartmentCompleteProjectionBase {
 
 	List<com.td.bbwp.commerce.Employee> getEmployees();
 
-	Optional<String> getName();
+	String getName();
 
 }

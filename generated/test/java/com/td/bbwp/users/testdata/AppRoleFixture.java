@@ -29,7 +29,7 @@ public class AppRoleFixture extends BaseFixtureFactory<AppRole> implements Templ
 
 		Fixture.of(AppRole.class).addTemplate(getName(), new Rule() {
 			{
-				add("name", uniqueRandom(arrayNames));
+				add("name", getUniqueNames());
 
 			}
 		});

@@ -8,5 +8,7 @@ public enum CaseStatus {
 	COMPLETE,
 
 	ABORTED,
+	
+	SUSPENDED
 
 }

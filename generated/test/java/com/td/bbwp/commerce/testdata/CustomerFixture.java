@@ -31,8 +31,8 @@ public class CustomerFixture extends BaseFixtureFactory<Customer> implements Tem
 			{
 				add("gender", random(com.td.bbwp.commerce.Gender.class));
 				add("dob", randomDate("2011-04-15", "2011-11-07", new SimpleDateFormat("yyyy-MM-dd")));
-				add("firstName", uniqueRandom(arrayNames));
-				add("lastName", uniqueRandom(arrayNames));
+				add("firstName", getUniqueNames());
+				add("lastName", getUniqueNames());
 
 			}
 		});

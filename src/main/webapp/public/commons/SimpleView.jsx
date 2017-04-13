@@ -34,11 +34,11 @@ export class SimpleView extends React.Component{
                         <RaisedButton onClick={() => this.props.data.gotoList()}>Cancel</RaisedButton>
                     </CardActions>
                     <CardText>
-                        <table className="table table-striped">
+                       <table className="table table-striped">
                         <tbody>
                         {vals}
                         </tbody>
-                        </table>
+                       </table>
                     </CardText>
                     {this.props.renderExtra( current )}
                 </Card>

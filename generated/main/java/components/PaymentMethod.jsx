@@ -27,6 +27,11 @@ export function createSchema(){
 ],
     properties: {
     
+
+accountAddress:{ type: "string", title: "Account Address",  	
+},
+
+
     
     }
  };
@@ -140,7 +145,7 @@ export class EditPaymentMethod extends BaseEditComponent {
 
 export class ViewPaymentMethod extends BaseEditComponent {
 
-  renderExtra(record: any) { <p> IN render </p> }
+  renderExtra(record) { <p> IN render </p> }
   
   constructor(props) {
     super(props);

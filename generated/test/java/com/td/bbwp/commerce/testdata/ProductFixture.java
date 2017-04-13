@@ -29,7 +29,7 @@ public class ProductFixture extends BaseFixtureFactory<Product> implements Templ
 
 		Fixture.of(Product.class).addTemplate(getName(), new Rule() {
 			{
-				add("name", uniqueRandom(arrayNames));
+				add("name", getUniqueNames());
 
 			}
 		});

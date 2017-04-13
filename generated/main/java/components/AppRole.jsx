@@ -27,6 +27,19 @@ export function createSchema(){
 ],
     properties: {
     
+
+name:{ type: "string", title: "Name",  	
+},
+
+
+
+appUsers:{ type: "string", title: "App Users",   
+
+
+	
+},
+
+
     
     }
  };
@@ -144,7 +157,7 @@ export class EditAppRole extends BaseEditComponent {
 
 export class ViewAppRole extends BaseEditComponent {
 
-  renderExtra(record: any) { <p> IN render </p> }
+  renderExtra(record) { <p> IN render </p> }
   
   constructor(props) {
     super(props);

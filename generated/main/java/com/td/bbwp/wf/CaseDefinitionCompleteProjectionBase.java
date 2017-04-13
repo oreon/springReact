@@ -25,10 +25,10 @@ import org.springframework.data.rest.core.config.Projection;
 @Projection(name = "complete", types = {CaseDefinition.class})
 interface CaseDefinitionCompleteProjectionBase {
 
-	Optional<String> getName();
+	String getName();
 
 	List<com.td.bbwp.wf.TaskDefinition> getTaskDefinitions();
 
-	Optional<Boolean> getClosable();
+	Boolean getClosable();
 
 }
